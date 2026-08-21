@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Together Strong">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Together Strong</title>
+<style>
+:root{
+ --bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;
+ --soft:#f2f4f7;--accent:#111827;--pink:#ec4899;--green:#067647;--greenbg:#dcfae6;
+ --red:#b42318;--redbg:#fee4e2;--orange:#b54708;--orangebg:#ffead5;--blue:#175cd3;--bluebg:#eff8ff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 14px calc(88px + env(safe-area-inset-bottom))}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 2px 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:12px;background:#111827;color:white;display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:20px;margin:0}.tiny{font-size:12px;color:var(--muted)}
+.statusDot{font-size:11px;padding:7px 9px;border-radius:999px;background:var(--soft);font-weight:700;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 2px 12px rgba(16,24,40,.035)}
+.hero h2{font-size:28px;line-height:1.05;margin:0 0 7px}.hero p{margin:0;color:var(--muted);line-height:1.4}
+.weekstrip{display:flex;gap:8px;overflow:auto;padding-bottom:2px}
+.daybtn{min-width:112px;text-align:left;border:1px solid var(--line);background:white;border-radius:14px;padding:11px}
+.daybtn.active{background:var(--accent);color:white;border-color:var(--accent)}
+.daybtn small{display:block;opacity:.72;margin-top:3px}
+.sectionTitle{font-weight:850;font-size:17px;margin-bottom:10px}
+.attend{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice{border:1px solid var(--line);background:var(--soft);border-radius:13px;padding:12px;font-weight:750}
+.choice.active{background:var(--accent);color:white;border-color:var(--accent)}
+.notice{font-size:12px;line-height:1.45;border-radius:12px;padding:10px 11px;margin-top:10px;background:var(--bluebg);color:#1849a9}
+.warm li{margin:6px 0;color:#344054}
+.progressTrack{height:8px;background:#eaecf0;border-radius:999px;overflow:hidden;margin:14px 0 8px}
+.progressBar{height:100%;background:var(--accent);width:0;transition:.2s}
+.progressText{font-size:12px;color:var(--muted)}
+.exercise{padding:0;overflow:hidden}
+.exHead{display:grid;grid-template-columns:172px 1fr;gap:13px;padding:14px}
+.demoPair{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+.demoTile{position:relative;cursor:pointer;text-align:center}
+.thumbWrap{position:relative}
+.thumb{width:82px;height:82px;border-radius:13px;object-fit:cover;background:#f2f4f7;border:1px solid var(--line);display:block}
+.thumb.noDemo{display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;line-height:1.25;color:#8a8f98;padding:4px;box-sizing:border-box}
+.demoLabel{font-size:9px;font-weight:900;line-height:1.1;margin-top:5px;color:#475467;text-transform:uppercase}
+.youtubeTile{width:82px;height:82px;border-radius:13px;background:#111827;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.youtubeTile img{width:100%;height:100%;object-fit:cover;display:block}
+.youtubeFallback{background:#ff0033;color:white;font-size:12px;font-weight:900;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+.youtubeFallback .ytPlay{font-size:26px;line-height:1}
+.demoTile .playBadge{right:4px;bottom:21px;padding:4px 6px;font-size:9px}
+.playBadge{position:absolute;right:6px;bottom:6px;background:rgba(17,24,39,.92);color:white;border-radius:999px;padding:5px 7px;font-size:11px;font-weight:800}
+.exName{font-size:18px;font-weight:900;line-height:1.12}
+.exOfficial{font-size:11px;color:var(--muted);margin-top:4px}
+.exMeta{font-size:13px;color:#475467;margin-top:7px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--soft);color:#475467}
+.exBody{border-top:1px solid var(--line);padding:13px}
+.person{border:1px solid var(--line);background:#fcfcfd;border-radius:14px;padding:11px;margin-top:9px}
+.personTitle{display:flex;justify-content:space-between;align-items:center;font-weight:850}
+.last{font-size:11px;color:var(--muted);font-weight:600}
+.inputs{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:7px;margin-top:8px}
+input{min-width:0;width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:10px;background:white;font-size:15px}
+.feel{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.feel button{border:0;border-radius:999px;background:var(--soft);padding:7px 9px;font-size:11px;font-weight:800}
+.feel button.on{background:var(--accent);color:white}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{flex:1;border:0;border-radius:11px;padding:10px;font-weight:800}
+.how{background:var(--accent);color:white}.sub{background:var(--soft);color:var(--text)}
+.mutedLine{font-size:12px;color:var(--muted);margin-top:7px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:rgba(245,247,251,.92);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:30}
+.bottomInner{max-width:760px;margin:auto;display:flex;gap:8px}
+.finish{flex:1;border:0;border-radius:14px;padding:13px;background:var(--accent);color:white;font-weight:900}
+.reset{border:0;border-radius:14px;padding:13px;background:white;border:1px solid var(--line);font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.62);display:flex;align-items:flex-end;justify-content:center;z-index:80}
+.modal.hidden{display:none}
+.sheet{width:min(760px,100%);max-height:92vh;overflow:auto;background:white;border-radius:24px 24px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+.sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.sheet h3{font-size:23px;line-height:1.08;margin:5px 0}
+.close{border:0;background:var(--soft);border-radius:11px;padding:9px 11px;font-weight:800}
+.demo{display:block;width:min(360px,100%);aspect-ratio:1;border-radius:18px;object-fit:cover;background:#f2f4f7;margin:14px auto;border:1px solid var(--line)}
+.steps{padding-left:22px}.steps li{margin:8px 0;line-height:1.38}
+.attribution{text-align:center;color:var(--muted);font-size:10px;margin-top:8px}
+.subcard{display:grid;grid-template-columns:82px 1fr;gap:10px;border:1px solid var(--line);border-radius:14px;padding:9px;margin:9px 0}
+.subcard img{width:82px;height:82px;border-radius:11px;object-fit:cover;background:var(--soft)}
+.subcard b{line-height:1.15}.use{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--accent);color:white;font-weight:800}
+.safety{background:var(--orangebg);color:#93370d;border-radius:13px;padding:11px;font-size:12px;line-height:1.4}
+.summaryBox{background:var(--greenbg);color:#05603a;border-radius:14px;padding:12px;line-height:1.45}
+@media(max-width:520px){
+ .exHead{grid-template-columns:146px 1fr;gap:10px}.thumb,.youtubeTile{width:69px;height:69px}.inputs{grid-template-columns:1fr 1fr}.inputs .weight{grid-column:1/-1}
+}
+
+.builderTabs{display:flex;gap:8px;margin:12px 0}.builderTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:13px;padding:11px;font-weight:850}.builderTabs button.active{background:var(--accent);color:white}
+.builderPanel.hidden{display:none}.searchRow{display:grid;grid-template-columns:1fr 150px;gap:8px}.searchRow input,.searchRow select{border:1px solid #d0d5dd;border-radius:11px;padding:11px;background:white}
+.exercisePicker{max-height:420px;overflow:auto;margin-top:10px}.pickItem{display:grid;grid-template-columns:66px 1fr auto;gap:10px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.pickItem img{width:66px;height:66px;border-radius:10px;object-fit:cover}
+.addBtn,.smallBtn{border:0;border-radius:9px;padding:8px 10px;font-weight:800}.addBtn{background:var(--accent);color:white}.routineItem{display:grid;grid-template-columns:1fr 58px 78px 36px;gap:7px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.removeBtn{border:0;border-radius:8px;background:var(--redbg);color:var(--red);font-weight:900;padding:8px}
+.savedRoutine{border:1px solid var(--line);border-radius:14px;padding:12px;margin:9px 0}.savedRoutineTop{display:flex;justify-content:space-between;gap:8px;align-items:center}.runBtn{background:var(--accent);color:white}
+@media(max-width:560px){.searchRow{grid-template-columns:1fr}.pickItem{grid-template-columns:58px 1fr auto}.pickItem img{width:58px;height:58px}}
+
+
+.subFilters{display:flex;gap:7px;overflow:auto;padding:4px 0 8px}.subFilters button{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800}.subFilters button.active{background:var(--accent);color:white;border-color:var(--accent)}
+.subSearch{width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px;margin:8px 0}.subcard{grid-template-columns:88px 1fr}.subcard .meta2{font-size:11px;color:var(--muted);margin-top:4px}.previewBtn{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--soft);font-weight:800}.supportBadge{display:inline-block;margin-top:5px;font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--bluebg);color:#1849a9}
+
+
+.ytDemo{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;background:#111;margin:14px auto;display:none}.demoChoice{display:flex;gap:7px;margin:10px 0}.demoChoice button{border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:800}.demoChoice button.active{background:var(--accent);color:white}.sourceBadge{display:inline-block;font-size:10px;font-weight:850;padding:5px 8px;border-radius:999px;background:var(--greenbg);color:var(--green);margin-top:5px}
+
+.exactThumb{position:relative;width:104px;height:104px;border-radius:15px;overflow:hidden;background:#111827;border:1px solid var(--line)}
+.exactThumb img{width:100%;height:100%;object-fit:cover;display:block}
+.sourceBadge{position:absolute;left:6px;top:6px;background:#067647;color:white;border-radius:999px;padding:5px 7px;font-size:10px;font-weight:900}
+.demoTabs{display:flex;gap:7px;margin:10px 0}.demoTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:11px;padding:10px;font-weight:850}.demoTabs button.active{background:var(--accent);color:white}
+.ytWrap{position:relative;width:100%;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111827;margin:14px 0}
+.ytWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hiddenMedia{display:none!important}
+
+
+.versionBanner{background:#dcfae6;color:#05603a;border:1px solid #abefc6;border-radius:14px;padding:10px 12px;font-size:13px;font-weight:900;margin:8px 0 12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="topbar">
+  <div class="brand"><div class="logo">TS</div><div><h1>Together Strong</h1><div class="tiny">Eli + Rochelle · Week 1 · v0.4.8 beta</div></div></div>
+  <div class="statusDot" id="libraryStatus">Loading demos…</div>
+ </div>
+
+ <div class="versionBanner">v0.5 — Personalized weekly program: rotating equipment, progressive overload, per-person tracking</div>
+ <div class="builderTabs">
+   <button id="tabProgram" class="active" onclick="showMainTab('program')">This Week</button>
+   <button id="tabBuilder" onclick="showMainTab('builder')">Build My Routine</button>
+ </div>
+ <div id="programPanel" class="builderPanel">
+ <div class="card hero">
+  <h2 id="dayTitle"></h2>
+  <p id="dayDesc"></p>
+ </div>
+
+ <div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+   <div class="sectionTitle" id="weekLabel">Week 1</div>
+   <button class="close" onclick="nextWeek()">Start Next Week →</button>
+  </div>
+  <div class="weekstrip" id="dayStrip"></div>
+ </div>
+
+ <div class="card">
+  <div class="sectionTitle">Who is training today?</div>
+  <div class="attend">
+   <button class="choice active" data-att="both">Eli + Rochelle</button>
+   <button class="choice" data-att="eli">Eli only</button>
+   <button class="choice" data-att="rochelle">Rochelle only</button>
+   <button class="choice" data-att="none">Neither / Missed</button>
+  </div>
+  <div class="notice" id="attendanceNote">Both profiles will be tracked. You can alternate sets and share one phone.</div>
+ </div>
+
+ <div class="card warm">
+  <div class="sectionTitle">10-minute warm-up</div>
+  <ul id="warmup"></ul>
+ </div>
+
+ <div class="card">
+   <div class="sectionTitle">Today's progress</div>
+   <div class="progressTrack"><div class="progressBar" id="progressBar"></div></div>
+   <div class="progressText" id="progressText">0% logged</div>
+ </div>
+
+ <div class="safety">If a movement causes sharp, increasing, or joint pain, stop that movement and use Substitute. This app is a workout tracker, not a diagnosis or treatment tool. For persistent shoulder, knee, or SI-joint pain, follow the guidance of your clinician or physical therapist.</div>
+
+ <div id="exerciseList"></div>
+ </div>
+ <div id="builderPanel" class="builderPanel hidden">
+   <div class="card">
+     <div class="sectionTitle">Build My Routine</div>
+     <div class="tiny">Search the exercise library, preview the demo, add exercises, choose your sets/reps, and save the routine.</div>
+     <div class="searchRow" style="margin-top:10px">
+       <input id="exerciseSearch" placeholder="Search exercises…" oninput="renderExercisePicker()">
+       <select id="equipmentFilter" onchange="renderExercisePicker()"><option value="">All equipment</option></select>
+     </div>
+     <div id="exercisePicker" class="exercisePicker"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Current Routine</div>
+     <input id="routineName" placeholder="Routine name" style="width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px">
+     <div id="currentRoutine"></div>
+     <div class="actions"><button class="sub" onclick="clearCurrentRoutine()">Clear</button><button class="how" onclick="saveCustomRoutine()">Save Routine</button></div>
+   </div>
+   <div class="card"><div class="sectionTitle">Saved Routines</div><div id="savedRoutines"></div></div>
+ </div>
+</div>
+
+<div class="bottom"><div class="bottomInner">
+ <button class="reset" id="resetBtn">Reset day</button>
+ <button class="finish" id="finishBtn">Finish Workout</button>
+</div></div>
+
+<div class="modal hidden" id="howModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">EXERCISE DEMONSTRATION</div><h3 id="howTitle"></h3><div class="tiny" id="howMeta"></div></div><button class="close" onclick="closeModal('howModal')">Close</button></div>
+ <div class="demoChoice" id="demoChoice" style="display:none"><button id="ytChoice" onclick="chooseDemo('youtube')">Exact video</button><button id="gifChoice" onclick="chooseDemo('gif')">Library animation</button></div>
+ 
+ <div class="demoTabs" id="demoTabs">
+   <button id="tabExact" onclick="switchDemo('exact')">YouTube Video</button>
+   <button id="tabLibrary" onclick="switchDemo('library')">Quick Demo</button>
+ </div>
+ <div id="ytContainer" class="ytWrap hiddenMedia"><iframe id="howYoutube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+ <img class="demo hiddenMedia" id="howGif" alt="Exercise demonstration">
+ <h4>How to do it</h4><ol class="steps" id="howSteps"></ol>
+ <div class="attribution" id="howAttr"></div>
+</div></div>
+
+<div class="modal hidden" id="subModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">SAME PURPOSE, DIFFERENT EXERCISE</div><h3>Substitute exercise</h3></div><button class="close" onclick="closeModal('subModal')">Close</button></div>
+ <div class="notice">Alternatives target the same primary muscle or movement pattern across all equipment. Preview any option before choosing it.</div>
+ <input id="subSearch" class="subSearch" placeholder="Search substitute exercises…" oninput="renderSubstitutes()">
+ <div class="subFilters" id="subFilters"></div>
+ <div id="subList"></div>
+</div></div>
+
+<div class="modal hidden" id="doneModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">WORKOUT SAVED</div><h3>Nice work.</h3></div><button class="close" onclick="closeModal('doneModal')">Close</button></div>
+ <div class="summaryBox" id="doneSummary"></div>
+</div></div>
+
+<script src="exercise-library.js"></script>
+<script src="progression.js"></script>
+<script src="generator.js"></script>
+<script>
+
+(function clearOldBetaCaches(){
+  setTimeout(async ()=>{
+    try{
+      if('serviceWorker' in navigator){
+        const regs=await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r=>r.unregister()));
+      }
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+    }catch(e){}
+  },0);
+})();
+
+const DATA_URL = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/data/exercises.json';
+const MEDIA_BASE = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/';
+
+
+const CURATED_DEMOS = {
+  'kettlebell goblet squat': {type:'youtube', id:'U8xBjZal_I8', label:'Exact kettlebell goblet squat'},
+  'kettlebell glute bridge': {type:'youtube', id:'Yao9ShODVZA', label:'Exact kettlebell glute bridge'},
+  'supported one arm kettlebell row': {type:'youtube', id:'l_cgMGUbFfc', label:'Exact bench-supported kettlebell row'},
+  'kettlebell floor press': {type:'youtube', id:'yXstm050X84', label:'Exact kettlebell floor press'},
+  'kettlebell pullover from bench': {type:'youtube', id:'em05uXR3jZk', label:'Exact kettlebell pullover on bench'},
+  'kettlebell suitcase carry': {type:'youtube', id:'MIuduO8krNM', label:'Exact kettlebell suitcase carry'}
+};
+function ytThumb(id){ return `https://i.ytimg.com/vi/${id}/hqdefault.jpg?v=048`; }
+
+// WEEK is now generated dynamically from EXERCISE_LIBRARY via buildWeek() in
+// generator.js, instead of a fixed 4-day array. It's populated once state is
+// loaded (see bottom of script) and refreshed by nextWeek().
+let WEEK = [];
+// External-dataset equipment names differ slightly from our internal tags for
+// a couple of categories -- this only affects the minor tie-breaker score in
+// findBest(), not correctness, but keeps matching as accurate as possible.
+const EXTERNAL_EQUIPMENT_ALIAS = {landmine:'barbell', curl_bar:'barbell'};
+
+let LIB=[], day=0, attendance='both', substitutionMap={};
+const MANUAL_EXACT={
+ 'kettlebell goblet squat':['goblet squat','kettlebell squat','front squat'],
+ 'kettlebell glute bridge':['glute bridge','hip bridge','hip raise','hip thrust'],
+ 'supported one arm kettlebell row':['one arm row','single arm row','supported row','dumbbell row'],
+ 'kettlebell floor press':['floor press','lying press','dumbbell floor press'],
+ 'kettlebell pullover from bench':['pullover','dumbbell pullover'],
+ 'kettlebell suitcase carry':['suitcase carry','farmer carry','farmers walk'],
+ 'smith machine box squat':['box squat','smith squat','squat'],
+ 'smith machine hip thrust':['hip thrust','glute bridge','hip bridge'],
+ 'b52 seated cable row':['seated cable row','cable row','seated row'],
+ 'smith machine incline bench press':['incline bench press','incline press','bench press'],
+ 'cable standing glute kickback':['glute kickback','cable kickback','hip extension','kickback'],
+ 'b52 pallof press':['pallof press','anti rotation press','cable anti rotation'],
+ 'low dumbbell step up':['step up','dumbbell step up'],
+ 'dumbbell bench press':['dumbbell bench press','bench press','chest press'],
+ 'dumbbell glute bridge':['glute bridge','hip bridge','hip raise','hip thrust'],
+ 'chest supported dumbbell row':['chest supported row','incline row','dumbbell row','supported row'],
+ 'dumbbell sit to stand':['sit to stand','chair squat','box squat','goblet squat'],
+ 'dumbbell farmer carry':['farmer carry','farmers walk','suitcase carry'],
+ 'landmine squat':['landmine squat','front squat','goblet squat'],
+ 'half kneeling single arm landmine press':['half kneeling press','kneeling landmine press','landmine press','single arm press'],
+ 'supported landmine row':['landmine row','t bar row','supported row'],
+ 'landmine reverse squat belt squat style':['landmine squat','belt squat','reverse squat','front squat'],
+ 'leg curl machine':['leg curl','seated leg curl','lying leg curl','hamstring curl'],
+ 'landmine anti rotation':['pallof press','anti rotation','landmine anti rotation']
+};
+
+// Movement-family guardrails: Quick Demo may use different equipment, but it must show the same movement pattern.
+const MOVEMENT_GUARDS={
+ 'kettlebell goblet squat':['squat'],
+ 'kettlebell glute bridge':['bridge','thrust','hip raise'],
+ 'supported one arm kettlebell row':['row'],
+ 'kettlebell floor press':['floor press','lying press'],
+ 'kettlebell pullover from bench':['pullover'],
+ 'kettlebell suitcase carry':['carry','farmer','walk'],
+ 'smith machine box squat':['squat'],
+ 'smith machine hip thrust':['thrust','bridge'],
+ 'b52 seated cable row':['row'],
+ 'smith machine incline bench press':['incline','bench press','chest press'],
+ 'cable standing glute kickback':['kickback','hip extension'],
+ 'b52 pallof press':['pallof','anti rotation'],
+ 'low dumbbell step up':['step up'],
+ 'dumbbell bench press':['bench press','chest press'],
+ 'dumbbell glute bridge':['bridge','thrust','hip raise'],
+ 'chest supported dumbbell row':['row'],
+ 'dumbbell sit to stand':['sit to stand','chair squat','box squat','goblet squat'],
+ 'dumbbell farmer carry':['carry','farmer','walk'],
+ 'landmine squat':['squat'],
+ 'half kneeling single arm landmine press':['press'],
+ 'supported landmine row':['row'],
+ 'landmine reverse squat belt squat style':['squat'],
+ 'leg curl machine':['leg curl','hamstring curl'],
+ 'landmine anti rotation':['anti rotation','pallof']
+};
+function movementSafe(def,ex){
+ if(!def||!ex)return false;
+ const en=norm(ex.name), guards=MOVEMENT_GUARDS[norm(def.name)]||[];
+ return !guards.length || guards.some(g=>en.includes(norm(g)));
+}
+
+const todayKey = () => new Date().toISOString().slice(0,10);
+const STORE='togetherStrongV045';
+function readState(){
+  try{
+    return JSON.parse(localStorage.getItem(STORE)||'{"logs":{},"attendance":{},"finished":{},"customRoutines":[]}');
+  }catch(e){
+    return {"logs":{},"attendance":{},"finished":{},"customRoutines":[]};
+  }
+}
+let state = readState();
+state.weekNumber = state.weekNumber || 1;
+
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}
+}
+function norm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function media(path){return MEDIA_BASE+(path||'').replace(/^\/+/,'')}
+
+function score(ex, query, eq){
+ let n=norm(ex.name), q=norm(query), s=0;
+ if(n===q)s+=140;
+ if(n.includes(q))s+=75;
+ const qw=q.split(' ').filter(w=>w.length>2);
+ qw.forEach(w=>{if(n.includes(w))s+=12});
+ if(eq && norm(ex.equipment)===norm(eq))s+=32;
+ else if(eq && norm(ex.equipment).includes(norm(eq)))s+=18;
+ return s;
+}
+function findBest(def){
+ if(!LIB.length)return null;
+ const exacts=MANUAL_EXACT[norm(def.name)]||def.q||[];
+ let best=null, bs=-1;
+ for(const q of exacts){
+  const qn=norm(q);
+  const qw=qn.split(' ').filter(w=>w.length>2);
+  for(const ex of LIB){
+   if(!movementSafe(def,ex))continue;
+   const en=norm(ex.name);
+   let sc=0, hits=0;
+   const substring = en===qn || en.includes(qn) || qn.includes(en);
+   if(en===qn)sc+=500;
+   else if(substring)sc+=260;
+   qw.forEach(w=>{if(en.includes(w)){sc+=28;hits++;}});
+   // Equipment is a tie-breaker only. Never trade the movement for matching equipment.
+   if(def.eq && norm(ex.equipment)===norm(def.eq))sc+=18;
+   // A single generic word (e.g. just "row" or "squat") is NOT enough on its own to
+   // claim a match — that was the actual cause of wrong thumbnails. Require either a
+   // real substring match on the full phrase, or at least 2 distinct keyword hits.
+   const qualifies = substring || hits>=2;
+   if(qualifies && sc>bs){bs=sc;best=ex}
+  }
+ }
+ // Do not display an unrelated animation just to fill the Quick Demo slot.
+ return bs>=40?best:null;
+}
+
+// Demo display rule (v0.4.6):
+// Every exercise gets TWO choices:
+// 1) Quick Demo: the closest library animation/thumbnail, even when equipment is not exact.
+// 2) YouTube Detail: a hand-curated video when available; otherwise an exact YouTube search for that exercise.
+// This lets experienced users get a fast visual refresher while preserving a detailed learning option.
+function isAccurateLibraryDemo(def, ex){
+ if(!def||!ex)return false;
+ if(norm(ex.equipment)!==norm(def.eq))return false;
+ const en=norm(ex.name);
+ const exacts=MANUAL_EXACT[norm(def.name)]||def.q||[];
+ return exacts.some(q=>{
+   const qn=norm(q);
+   return en===qn || en.includes(qn) || qn.includes(en);
+ });
+}
+function handleThumbError(el){
+ const wrap = el.closest('.thumbWrap');
+ if(wrap) wrap.innerHTML = '<div class="thumb noDemo">No verified demo — use YouTube</div>';
+}
+function ytSearchUrl(name){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(name+' exercise form short'); }
+function demoPlan(def, ex){
+ const curated=CURATED_DEMOS[norm(def.name)]||null;
+ return {library:ex, libraryExact:isAccurateLibraryDemo(def,ex), curated};
+}
+function defaultReps(ex){
+ if(/carry|suitcase/i.test(ex.name)) return {low:20, high:30, unit:'sec'};
+ if(ex.primary==='core' || ex.primary==='arms') return {low:10, high:12, unit:'reps'};
+ return {low:8, high:10, unit:'reps'};
+}
+function getDef(i){
+ const base = WEEK[day].ex[i];
+ const subKey=`${state.weekNumber}-${day}-${i}`;
+ let ex = base;
+ if(substitutionMap[subKey]){
+   const subEx = EXERCISE_LIBRARY.find(x=>x.id===substitutionMap[subKey]);
+   if(subEx) ex = subEx;
+ }
+ const reps = defaultReps(ex);
+ const unitLabel = reps.unit==='sec' ? ' sec / side' : (reps.high>reps.low?'':' reps');
+ return Object.assign({}, ex, {
+   rx: `2 × ${reps.low}${reps.high!==reps.low?'–'+reps.high:''}${unitLabel}`,
+   eq: EXTERNAL_EQUIPMENT_ALIAS[ex.equipment] || ex.equipment,
+   q: [ex.name],
+   note: ex.cue,
+   tags: [ex.primary].concat(ex.secondary||[]),
+   repsLow: reps.low, repsHigh: reps.high, repsUnit: reps.unit,
+   _sub: ex.id !== base.id
+ });
+}
+function logKey(i,p){return `${todayKey()}|w${state.weekNumber}|d${day}|e${i}|${p}`}
+function getLog(i,p){return state.logs[logKey(i,p)]||{}}
+function updateLog(i,p,field,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k][field]=val; save(); updateProgress();
+}
+function feel(i,p,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k].feel=val; save();
+ const def=getDef(i), L=getLog(i,p), pState=getExerciseState(p,def.id);
+ const weight = Number(L.weight) || (pState?pState.currentWeight:0);
+ if(pState) logProgressSession(p, def.id, weight, Number(L.s1)||0, Number(L.s2)||0, val);
+ renderExercises(); updateProgress();
+}
+function setStartWeight(i,p){
+ const def=getDef(i);
+ const input=document.getElementById(`startWeight-${i}-${p}`);
+ const val=Number(input.value);
+ if(!val || val<=0){alert('Enter a starting weight in pounds.');return}
+ initExerciseState(p, def.id, val, def.repsLow, def.repsHigh);
+ renderExercises();
+}
+function bumpWeight(i,p){
+ const def=getDef(i), pState=getExerciseState(p,def.id); if(!pState)return;
+ const increment=(def.primary==='arms'||def.primary==='core')?2.5:5;
+ applyWeightIncrease(p, def.id, pState.currentWeight+increment);
+ renderExercises();
+}
+function personHTML(i,p){
+ if(attendance!=='both' && attendance!==p)return '';
+ const label=p==='eli'?'Eli':'Rochelle';
+ const def=getDef(i), L=getLog(i,p);
+ const pState=getExerciseState(p, def.id);
+ if(!pState){
+   return `<div class="person">
+    <div class="personTitle"><span>${label}</span><span class="last">New exercise</span></div>
+    <div class="notice">First time on this one — enter a starting weight to begin tracking progress.</div>
+    <div class="inputs"><input class="weight" id="startWeight-${i}-${p}" inputmode="decimal" placeholder="Starting weight (lb)"></div>
+    <div class="actions"><button class="how" onclick="setStartWeight(${i},'${p}')">Save starting weight</button></div>
+   </div>`;
+ }
+ const readiness=evaluateReadiness(p, def.id);
+ const boxClass = readiness.action==='caution' ? 'safety' : (readiness.action==='increase_weight'||readiness.action==='increase_reps') ? 'summaryBox' : 'notice';
+ return `<div class="person">
+  <div class="personTitle"><span>${label}</span><span class="last">Current: ${pState.currentWeight} lb</span></div>
+  <div class="inputs">
+   <input class="weight" inputmode="decimal" placeholder="Weight (lb)" value="${L.weight||pState.currentWeight}" onchange="updateLog(${i},'${p}','weight',this.value)">
+   <input inputmode="numeric" placeholder="Set 1 (${pState.currentRepsTarget})" value="${L.s1||''}" onchange="updateLog(${i},'${p}','s1',this.value)">
+   <input inputmode="numeric" placeholder="Set 2 (${pState.currentRepsTarget})" value="${L.s2||''}" onchange="updateLog(${i},'${p}','s2',this.value)">
+  </div>
+  <div class="feel">${['Easy','Good','Hard','Pain'].map(v=>`<button class="${L.feel===v?'on':''}" onclick="feel(${i},'${p}','${v}')">${v}</button>`).join('')}</div>
+  ${readiness.message?`<div class="${boxClass}" style="margin-top:8px">${readiness.message}</div>`:''}
+  ${readiness.action==='increase_weight'?`<div class="actions"><button class="how" onclick="bumpWeight(${i},'${p}')">Bump weight +${(def.primary==='arms'||def.primary==='core')?'2.5':'5'} lb for next time</button></div>`:''}
+ </div>`;
+}
+function renderDays(){
+ const s=document.getElementById('dayStrip');s.innerHTML='';
+ WEEK.forEach((d,i)=>{
+   const b=document.createElement('button');b.className='daybtn'+(i===day?' active':'');
+   b.innerHTML=`<b>Day ${i+1}</b><small>${(d.dominantEquipment||'').replace('_',' ')}</small>`;
+   b.onclick=()=>{day=i;substitutionMap={};renderAll();scrollTo({top:0,behavior:'smooth'})}; s.appendChild(b);
+ });
+}
+function renderExercises(){
+ const holder=document.getElementById('exerciseList'); holder.innerHTML='';
+ WEEK[day].ex.forEach((orig,i)=>{
+  const def=getDef(i), ex=findBest(def), plan=demoPlan(def,ex);
+  const img=ex && ex.image ? media(ex.image) : '';
+  const off=ex && norm(ex.name)!==norm(def.name) ? ex.name : '';
+  const ytVisual=plan.curated
+    ? `<div class="youtubeTile"><img src="${ytThumb(plan.curated.id)}" alt="YouTube detail: ${def.name}"><span class="playBadge">▶</span></div>`
+    : `<div class="youtubeTile youtubeFallback"><span class="ytPlay">▶</span><span>YouTube</span></div>`;
+  const c=document.createElement('div');c.className='card exercise';
+  c.innerHTML=`<div class="exHead">
+   <div class="demoPair">
+     <div class="demoTile" onclick="showHow(${i},'library')">
+       <div class="thumbWrap">${img?`<img class="thumb" src="${img}" alt="Quick demo: ${def.name}" onerror="handleThumbError(this)">`:`<div class="thumb noDemo">No verified demo — use YouTube</div>`}${img?'<span class="playBadge">▶</span>':''}</div>
+       <div class="demoLabel">Quick Demo</div>
+     </div>
+     <div class="demoTile" onclick="showHow(${i},'youtube')">
+       ${ytVisual}
+       <div class="demoLabel">YouTube Detail</div>
+     </div>
+   </div>
+   <div><div class="exName">${i+1}. ${def.name}</div>${off?`<div class="exOfficial">Quick demo match: ${off}</div>`:''}
+    <div class="exMeta">${def.rx} · ${def.eq}</div>
+    <div class="tags">${def.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    ${def.note?`<div class="mutedLine">${def.note}</div>`:''}
+   </div>
+  </div>
+  <div class="exBody">${personHTML(i,'eli')}${personHTML(i,'rochelle')}
+   <div class="actions"><button class="how" onclick="showHow(${i},'library')">▶ Quick Demo</button><button class="sub" onclick="showSubs(${i})">↻ Substitute</button></div>
+  </div>`;
+  holder.appendChild(c);
+ });
+}
+function updateProgress(){
+ let total=0, done=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{
+   if(attendance!=='both' && attendance!==p)return;
+   total++;
+   const L=getLog(i,p);
+   if(L.s1||L.s2||L.feel)done++;
+ }));
+ const pct=total?Math.round(done/total*100):100;
+ document.getElementById('progressBar').style.width=pct+'%';
+ document.getElementById('progressText').textContent=attendance==='none'?'Workout marked missed':pct+'% logged';
+}
+function regenerateWeek(){
+ WEEK = buildWeek(state.weekNumber).days;
+}
+function nextWeek(){
+ if(!confirm(`Start Week ${state.weekNumber+1}? This builds a fresh set of exercises — equipment focus rotates and progression carries over per exercise.`))return;
+ state.weekNumber++; day=0; substitutionMap={}; save();
+ regenerateWeek(); renderAll(); scrollTo({top:0,behavior:'smooth'});
+}
+function renderAll(){
+ const d=WEEK[day];
+ document.getElementById('dayTitle').textContent=d.title;
+ document.getElementById('dayDesc').textContent=d.desc;
+ document.getElementById('warmup').innerHTML=d.warm.map(x=>`<li>${x}</li>`).join('');
+ const foundation = isFoundationWeek(state.weekNumber);
+ document.getElementById('weekLabel').textContent = `Week ${state.weekNumber}${foundation?' — Foundation phase':''}`;
+ document.querySelector('.tiny').textContent = `Eli + Rochelle · Week ${state.weekNumber}${foundation?' · Foundation':''} · v0.5`;
+ renderDays();renderExercises();updateProgress();
+}
+
+let currentDemo={exact:null,library:null,name:''};
+function switchDemo(which){
+  const yt=document.getElementById('ytContainer'), gif=document.getElementById('howGif');
+  document.getElementById('tabExact').classList.toggle('active',which==='exact');
+  document.getElementById('tabLibrary').classList.toggle('active',which==='library');
+  if(which==='exact'){
+    if(currentDemo.exact){
+      yt.classList.remove('hiddenMedia'); gif.classList.add('hiddenMedia');
+      document.getElementById('howYoutube').src=`https://www.youtube.com/embed/${currentDemo.exact.id}?rel=0&modestbranding=1&playsinline=1&v=048`;
+    }else{
+      window.open(ytSearchUrl(currentDemo.name),'_blank','noopener');
+      document.getElementById('tabLibrary').click();
+    }
+  } else if(currentDemo.library){
+    yt.classList.add('hiddenMedia'); gif.classList.remove('hiddenMedia');
+    document.getElementById('howYoutube').src='';
+    gif.src=media(currentDemo.library.gif_url);
+  }
+}
+const FIXED_STEPS={
+ 'kettlebell goblet squat':['Hold one kettlebell at your chest with both hands.','Stand about shoulder-width with your ribs stacked over your hips.','Sit down between your hips while keeping your knees tracking over your toes.','Drive through your feet to stand tall without leaning back.'],
+ 'kettlebell glute bridge':['Lie on your back with knees bent and feet flat about hip-width apart.','Place the kettlebell securely across the front of your hips and hold it in place.','Brace your core, press through your heels, and squeeze your glutes to lift your hips.','Pause at the top, then lower under control without over-arching your back.'],
+ 'supported one arm kettlebell row':['Support one hand on a bench and keep your spine long.','Hold the kettlebell in the other hand with the arm hanging straight down.','Pull your elbow toward your back pocket without twisting your torso.','Lower the kettlebell slowly until the arm is straight again.'],
+ 'kettlebell floor press':['Lie on your back with knees bent and the kettlebell held securely in one or both hands.','Start with the upper arm resting lightly on the floor and wrist stacked over elbow.','Press the kettlebell upward until the arm is straight without shrugging.','Lower under control until the upper arm gently contacts the floor.'],
+ 'kettlebell pullover from bench':['Lie securely on the bench and hold a light kettlebell with both hands above your chest.','Keep a soft bend in your elbows and your ribs controlled.','Lower the kettlebell behind your head only as far as your shoulders comfortably allow.','Use your lats and chest to bring it back over your chest.'],
+ 'kettlebell suitcase carry':['Hold one kettlebell at your side like a suitcase.','Stand tall with shoulders level and ribs stacked over hips.','Walk slowly without leaning toward or away from the weight.','Turn carefully, then switch hands for the other side.'],
+ 'smith machine box squat':['Set the box or bench behind you as a depth target and position the Smith bar comfortably.','Brace, unlock the bar, and sit your hips down and back toward the box.','Touch the box lightly without collapsing or rocking.','Drive through your feet to stand tall.'],
+ 'smith machine hip thrust':['Sit with your upper back supported on a bench and the Smith bar padded across your hips.','Plant your feet and tuck your chin slightly.','Drive through your heels and squeeze your glutes to raise your hips.','Stop when your torso and thighs form a straight line, then lower under control.'],
+ 'b52 seated cable row':['Sit tall with feet braced and grasp the cable handle.','Start with arms long and shoulders relaxed.','Pull the handle toward your lower ribs while squeezing your shoulder blades back.','Return slowly without rounding forward.'],
+ 'smith machine incline bench press':['Set the bench to a comfortable incline under the Smith bar.','Grip slightly wider than shoulder-width and keep shoulder blades set against the bench.','Lower the bar toward the upper chest within a pain-free range.','Press the bar up smoothly without bouncing or shrugging.'],
+ 'cable standing glute kickback':['Attach the ankle strap and stand tall while holding the machine for support.','Brace your core and keep the working knee softly bent.','Drive the leg backward from the hip without arching your lower back.','Squeeze the glute, then return slowly without letting the stack slam.'],
+ 'b52 pallof press':['Stand sideways to the cable with the handle held at your chest.','Brace your core and keep hips and shoulders square.','Press the handle straight away from your chest without letting your torso rotate.','Pause, bring it back in, and repeat before switching sides.'],
+ 'low dumbbell step up':['Face a low stable box while holding light dumbbells at your sides.','Place your whole working foot on the box.','Drive through that foot to stand on the box without pushing hard off the trailing leg.','Step down under control and repeat before switching sides.'],
+ 'dumbbell bench press':['Lie on the bench with dumbbells over your chest and feet planted.','Set your shoulder blades gently back and down.','Lower the dumbbells until your elbows reach a comfortable depth.','Press them back up while keeping wrists stacked over elbows.'],
+ 'dumbbell glute bridge':['Lie on your back with knees bent and feet flat.','Place the dumbbell securely across your hips and hold it in place.','Drive through your heels and squeeze your glutes to lift your hips.','Pause at the top, then lower under control.'],
+ 'chest supported dumbbell row':['Set an incline bench and lie chest-down with a dumbbell in each hand.','Let your arms hang while keeping your chest supported.','Row the dumbbells toward your ribs without lifting your chest off the bench.','Lower slowly until your arms are straight.'],
+ 'dumbbell sit to stand':['Sit near the front of a stable bench or box and hold one dumbbell at your chest.','Place your feet where you can stand without rocking.','Lean forward slightly and drive through your feet to stand.','Push your hips back and lower under control until you sit softly.'],
+ 'dumbbell farmer carry':['Hold a dumbbell in each hand at your sides.','Stand tall with shoulders relaxed and core braced.','Walk with short controlled steps while keeping the weights quiet.','Turn carefully and maintain upright posture for the full interval.'],
+ 'landmine squat':['Hold the end of the landmine bar at chest height with both hands.','Stand in a comfortable squat stance and brace your core.','Sit down between your hips while keeping your chest tall.','Drive through your feet to stand while keeping the bar close.'],
+ 'half kneeling single arm landmine press':['Kneel on one knee with the landmine held in the opposite or same-side hand as comfortable.','Brace your core and keep your ribs down.','Press the bar up and forward along its natural arc.','Lower it back to shoulder height under control without twisting.'],
+ 'supported landmine row':['Set up over the landmine with your torso supported if available and spine long.','Grip the handle or bar securely.','Pull the weight toward your lower ribs while keeping elbows controlled.','Lower until your arms are long without rounding your back.'],
+ 'landmine reverse squat belt squat style':['Face away from or position yourself to the landmine so the load stays in front/under you as demonstrated by your setup.','Brace your core and keep a comfortable squat stance.','Lower by bending knees and hips while staying tall.','Drive through your feet to stand without turning it into a hinge.'],
+ 'leg curl machine':['Adjust the machine so your knees line up with its pivot and the pad sits comfortably above your heels.','Brace against the seat or bench.','Curl your heels toward you by bending your knees.','Squeeze your hamstrings, then return slowly without letting the weight slam.'],
+ 'landmine anti rotation':['Stand or kneel with the landmine held in front of you.','Brace your core and keep hips and ribs square.','Move the bar only through the prescribed small controlled path while resisting torso rotation.','Return to center under control; the goal is resisting twist, not swinging the bar side to side.']
+};
+function fixedStepsFor(def){return FIXED_STEPS[norm(def.name)]||null}
+function showHow(i,preferred='library'){
+ const def=getDef(i), ex=findBest(def), plan=demoPlan(def,ex), exact=plan.curated;
+ currentDemo={exact,library:ex,name:def.name};
+ document.getElementById('howTitle').textContent=def.name;
+ document.getElementById('howMeta').textContent=def.rx+' · '+def.eq;
+ const steps=document.getElementById('howSteps');
+ const fixed=fixedStepsFor(def);
+ const ss=fixed||((ex?.instruction_steps&&ex.instruction_steps.en)||[]);
+ steps.innerHTML=(ss.length?ss:[ex?.instructions?.en||'Move slowly under control and use the exact equipment listed.']).map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=plan.libraryExact ? (ex?.attribution||'Exercise-library demonstration.') : (ex ? 'Quick visual refresher uses the closest library movement; follow the listed equipment for your workout.' : '');
+ document.getElementById('tabExact').style.display='';
+ document.getElementById('tabExact').textContent=exact?'YouTube Video':'Search YouTube';
+ document.getElementById('tabLibrary').style.display=ex?'':'none';
+ document.getElementById('tabLibrary').textContent='Quick Demo';
+ if(ex) document.getElementById('howGif').src=media(ex.gif_url);
+ document.getElementById('howModal').classList.remove('hidden');
+ if(preferred==='youtube') switchDemo('exact'); else switchDemo('library');
+}
+
+function supportHint(ex){
+ const n=norm(ex.name);
+ if(n.includes('chest supported')||n.includes('incline row')||n.includes('bench row'))return 'More supported';
+ if(n.includes('seated')||n.includes('machine'))return 'Supported position';
+ if(n.includes('pallof')||n.includes('glute bridge')||n.includes('hip thrust'))return 'Low hinge demand';
+ return '';
+}
+function riskBadge(ex){
+ if(ex.kneeRisk==='high'||ex.backRisk==='high') return '<span class="supportBadge" style="background:var(--redbg);color:var(--red)">Higher knee/back demand</span>';
+ return '';
+}
+const SUB_EQUIPMENT_GROUPS=['All','kettlebell','smith_machine','dumbbell','landmine','band','cable','medicine_ball','curl_bar','leverage_machine','plyo_box','pull_up_bar','bodyweight'];
+function renderSubFilterButtons(){
+ const box=document.getElementById('subFilters'); if(!box)return;
+ box.innerHTML=SUB_EQUIPMENT_GROUPS.map(v=>`<button class="${subContext.filter===v?'active':''}" onclick="subContext.filter='${v}';renderSubFilterButtons();renderSubstitutes()">${v==='All'?'All equipment':v.replace('_',' ')}</button>`).join('');
+}
+function showSubs(i){
+ subContext={index:i,filter:'All'};
+ document.getElementById('subSearch').value='';
+ renderSubFilterButtons(); renderSubstitutes();
+ document.getElementById('subModal').classList.remove('hidden');
+}
+function renderSubstitutes(){
+ const i=subContext.index, def=getDef(i);
+ const q=norm(document.getElementById('subSearch')?.value||'');
+ let list=substitutesFor(def.id);
+ if(subContext.filter!=='All')list=list.filter(e=>e.equipment===subContext.filter);
+ if(q)list=list.filter(e=>norm(e.name).includes(q)||norm(e.primary).includes(q)||norm(e.equipment).includes(q));
+ const h=document.getElementById('subList');
+ h.innerHTML=list.length?list.map(e=>{
+   const hint=supportHint(e);
+   const demoEx=findBest({name:e.name, eq:EXTERNAL_EQUIPMENT_ALIAS[e.equipment]||e.equipment, q:[e.name]});
+   const img=demoEx?media(demoEx.image):'';
+   return `<div class="subcard">${img?`<img src="${img}" onclick="previewSubExercise('${e.id}')" alt="${e.name}">`:`<div class="thumb noDemo" onclick="previewSubExercise('${e.id}')">No verified demo</div>`}<div><b>${e.name}</b><div class="meta2">${e.equipment.replace('_',' ')} · ${e.primary}</div>${hint?`<span class="supportBadge">${hint}</span>`:''}${riskBadge(e)}<div><button class="previewBtn" onclick="previewSubExercise('${e.id}')">▶ Preview demo</button><button class="use" onclick="useSub(${i},'${e.id}')">Use this exercise</button></div></div></div>`;
+ }).join(''):'<div class="notice">No substitutes match that filter. Try All equipment or a different search.</div>';
+}
+
+function previewSubExercise(id){
+ const e=EXERCISE_LIBRARY.find(x=>x.id===id); if(!e)return;
+ const def={name:e.name, eq:EXTERNAL_EQUIPMENT_ALIAS[e.equipment]||e.equipment, rx:'', q:[e.name]};
+ const ex=findBest(def), plan=demoPlan(def,ex), exact=plan.curated;
+ currentDemo={exact,library:ex,name:e.name};
+ document.getElementById('howTitle').textContent=e.name;
+ document.getElementById('howMeta').textContent=e.equipment.replace('_',' ')+' · '+e.primary;
+ const fixed=FIXED_STEPS[norm(e.name)]||null;
+ const ss=fixed||((ex?.instruction_steps&&ex.instruction_steps.en)||[]);
+ document.getElementById('howSteps').innerHTML=(ss.length?ss:[ex?.instructions?.en||e.cue||'Move slowly under control.']).map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=plan.libraryExact ? (ex?.attribution||'Exercise-library demonstration.') : (ex ? 'Quick visual refresher uses the closest library movement.' : '');
+ document.getElementById('tabExact').style.display='';
+ document.getElementById('tabExact').textContent=exact?'YouTube Video':'Search YouTube';
+ document.getElementById('tabLibrary').style.display=ex?'':'none';
+ if(ex) document.getElementById('howGif').src=media(ex.gif_url);
+ document.getElementById('howModal').classList.remove('hidden');
+ if(exact) switchDemo('exact'); else switchDemo('library');
+}
+
+function useSub(i,id){
+ substitutionMap[`${state.weekNumber}-${day}-${i}`]=id; closeModal('subModal'); renderExercises();
+}
+function previewExercise(id){
+ const ex=LIB.find(x=>x.id===id); if(!ex)return;
+ document.getElementById('howTitle').textContent=ex.name;
+ document.getElementById('howMeta').textContent=ex.equipment+' · '+ex.target;
+ currentDemo={exact:CURATED_DEMOS[norm(ex.name)]||null,library:ex};
+ const ss=(ex.instruction_steps&&ex.instruction_steps.en)||[];
+ document.getElementById('howSteps').innerHTML=ss.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=currentDemo.exact?'Exact demonstration embedded from YouTube.':(ex.attribution||'');
+ document.getElementById('tabExact').style.display=currentDemo.exact?'':'none';
+ document.getElementById('tabLibrary').style.display='';
+ if(currentDemo.exact) switchDemo('exact'); else switchDemo('library');
+ document.getElementById('howModal').classList.remove('hidden');
+}
+function closeModal(id){document.getElementById(id).classList.add('hidden'); if(id==='howModal'){document.getElementById('howYoutube').src='';}}
+function setAttendance(a){
+ attendance=a;
+ document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('active',b.dataset.att===a));
+ const n={both:'Both profiles will be tracked. You can alternate sets and share one phone.',eli:'Rochelle is recorded as absent. Only Eli’s set fields are shown.',rochelle:'Eli is recorded as absent. Only Rochelle’s set fields are shown.',none:'Both are recorded as missing this workout. No set entry is required.'};
+ document.getElementById('attendanceNote').textContent=n[a];
+ state.attendance[`${todayKey()}|w${state.weekNumber}|d${day}`]=a;save();renderExercises();updateProgress();
+}
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>setAttendance(b.dataset.att)));
+document.getElementById('finishBtn').onclick=()=>{
+ const key=`${todayKey()}|w${state.weekNumber}|d${day}`;
+ state.finished[key]={time:new Date().toISOString(),attendance};save();
+ let logged=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{const L=getLog(i,p);if(L.s1||L.s2||L.feel)logged++}));
+ document.getElementById('doneSummary').innerHTML=attendance==='none'
+  ? `<b>${WEEK[day].title}</b><br>Recorded as missed for both Eli and Rochelle.`
+  : `<b>${WEEK[day].title}</b><br>Saved for ${attendance==='both'?'Eli + Rochelle':attendance==='eli'?'Eli':'Rochelle'}.<br>${logged} person-exercise entries logged.`;
+ document.getElementById('doneModal').classList.remove('hidden');
+};
+document.getElementById('resetBtn').onclick=()=>{
+ if(!confirm('Clear today’s entries for this workout day?'))return;
+ Object.keys(state.logs).filter(k=>k.startsWith(`${todayKey()}|w${state.weekNumber}|d${day}|`)).forEach(k=>delete state.logs[k]);
+ delete state.finished[`${todayKey()}|w${state.weekNumber}|d${day}`];save();renderExercises();updateProgress();
+};
+
+
+let mainTab='program', customRoutine=[];
+state.customRoutines = state.customRoutines || [];
+
+function showMainTab(tab){
+  mainTab=tab;
+  document.getElementById('programPanel').classList.toggle('hidden',tab!=='program');
+  document.getElementById('builderPanel').classList.toggle('hidden',tab!=='builder');
+  document.getElementById('tabProgram').classList.toggle('active',tab==='program');
+  document.getElementById('tabBuilder').classList.toggle('active',tab==='builder');
+  document.querySelector('.bottom').style.display=tab==='program'?'':'none';
+  if(tab==='builder'){populateEquipmentFilter();renderExercisePicker();renderCurrentRoutine();renderSavedRoutines();}
+}
+function populateEquipmentFilter(){
+  const s=document.getElementById('equipmentFilter'); if(!s||s.dataset.ready||!LIB.length)return;
+  [...new Set(LIB.map(e=>e.equipment).filter(Boolean))].sort().forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)}); s.dataset.ready='1';
+}
+function renderExercisePicker(){
+  const box=document.getElementById('exercisePicker'); if(!box)return;
+  if(!LIB.length){box.innerHTML='<div class="notice">Exercise library is still loading…</div>';return}
+  const q=norm(document.getElementById('exerciseSearch').value), eq=document.getElementById('equipmentFilter').value;
+  const rows=LIB.filter(e=>(!eq||e.equipment===eq)&&(!q||norm(e.name).includes(q)||norm(e.target).includes(q))).slice(0,80);
+  box.innerHTML=rows.map(e=>`<div class="pickItem"><img src="${media(e.image)}" onclick="previewExercise('${e.id}')"><div><b>${e.name}</b><div class="tiny">${e.equipment} · ${e.target}</div></div><button class="addBtn" onclick="addToRoutine('${e.id}')">+ Add</button></div>`).join('')||'<div class="notice">No matches.</div>';
+}
+function addToRoutine(id){const e=LIB.find(x=>x.id===id);if(!e)return;customRoutine.push({id:e.id,name:e.name,equipment:e.equipment,target:e.target,sets:2,reps:'8–10'});renderCurrentRoutine()}
+function renderCurrentRoutine(){
+ const b=document.getElementById('currentRoutine'); if(!b)return;
+ b.innerHTML=customRoutine.length?customRoutine.map((x,i)=>`<div class="routineItem"><div><b>${i+1}. ${x.name}</b><div class="tiny">${x.equipment}</div></div><input value="${x.sets}" onchange="customRoutine[${i}].sets=this.value"><input value="${x.reps}" onchange="customRoutine[${i}].reps=this.value"><button class="removeBtn" onclick="customRoutine.splice(${i},1);renderCurrentRoutine()">×</button></div>`).join(''):'<div class="notice">No exercises added yet.</div>';
+}
+function clearCurrentRoutine(){customRoutine=[];document.getElementById('routineName').value='';renderCurrentRoutine()}
+function saveCustomRoutine(){
+ const name=document.getElementById('routineName').value.trim(); if(!name||!customRoutine.length){alert('Add a name and at least one exercise.');return}
+ state.customRoutines.push({id:'r'+Date.now(),name,exercises:JSON.parse(JSON.stringify(customRoutine))});save();clearCurrentRoutine();renderSavedRoutines();
+}
+function renderSavedRoutines(){
+ const b=document.getElementById('savedRoutines'); if(!b)return;
+ b.innerHTML=state.customRoutines.length?state.customRoutines.slice().reverse().map(r=>`<div class="savedRoutine"><div class="savedRoutineTop"><div><b>${r.name}</b><div class="tiny">${r.exercises.length} exercises</div></div><div><button class="smallBtn runBtn" onclick="runCustomRoutine('${r.id}')">Start</button> <button class="smallBtn" onclick="deleteCustomRoutine('${r.id}')">Delete</button></div></div><div class="tiny" style="margin-top:7px">${r.exercises.map(e=>e.name).join(' · ')}</div></div>`).join(''):'<div class="notice">No saved routines yet.</div>';
+}
+function deleteCustomRoutine(id){if(!confirm('Delete this routine?'))return;state.customRoutines=state.customRoutines.filter(r=>r.id!==id);save();renderSavedRoutines()}
+function runCustomRoutine(id){
+ const r=state.customRoutines.find(x=>x.id===id); if(!r)return;
+ WEEK.push({title:r.name,dominantEquipment:'custom',desc:'Your custom routine.',warm:['Treadmill walk — 5 min','Gentle mobility — 5 min'],ex:r.exercises.map((x,idx)=>({
+   id:`custom_${r.id}_${idx}`, name:x.name, equipment:x.equipment||'bodyweight', primary:x.target||'core', secondary:[],
+   kneeRisk:'low', backRisk:'low', level:1, cue:''
+ }))});
+ day=WEEK.length-1;showMainTab('program');renderAll();scrollTo({top:0,behavior:'smooth'});
+}
+
+async function loadLibrary(){
+ try{
+   const r=await fetch(DATA_URL,{cache:'force-cache'});
+   if(!r.ok)throw new Error(r.status);
+   LIB=await r.json();
+   document.getElementById('libraryStatus').textContent=LIB.length+' demos ready';
+   document.getElementById('libraryStatus').style.color='#067647';
+   renderExercises();
+   populateEquipmentFilter();
+ }catch(e){
+   document.getElementById('libraryStatus').textContent='Demos need internet';
+   document.getElementById('libraryStatus').style.color='#b42318';
+ }
+}
+
+
+regenerateWeek();
+const savedAtt=state.attendance[`${todayKey()}|w${state.weekNumber}|d0`]; if(savedAtt)attendance=savedAtt;
+renderAll(); setAttendance(attendance); loadLibrary();
+</script>
+</body>
+</html>
