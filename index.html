@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Together Strong">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Together Strong</title>
+<style>
+:root{
+ --bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;
+ --soft:#f2f4f7;--accent:#111827;--pink:#ec4899;--green:#067647;--greenbg:#dcfae6;
+ --red:#b42318;--redbg:#fee4e2;--orange:#b54708;--orangebg:#ffead5;--blue:#175cd3;--bluebg:#eff8ff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 14px calc(88px + env(safe-area-inset-bottom))}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 2px 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:12px;background:#111827;color:white;display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:20px;margin:0}.tiny{font-size:12px;color:var(--muted)}
+.statusDot{font-size:11px;padding:7px 9px;border-radius:999px;background:var(--soft);font-weight:700;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 2px 12px rgba(16,24,40,.035)}
+.hero h2{font-size:28px;line-height:1.05;margin:0 0 7px}.hero p{margin:0;color:var(--muted);line-height:1.4}
+.weekstrip{display:flex;gap:8px;overflow:auto;padding-bottom:2px}
+.daybtn{min-width:112px;text-align:left;border:1px solid var(--line);background:white;border-radius:14px;padding:11px}
+.daybtn.active{background:var(--accent);color:white;border-color:var(--accent)}
+.daybtn small{display:block;opacity:.72;margin-top:3px}
+.sectionTitle{font-weight:850;font-size:17px;margin-bottom:10px}
+.attend{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice{border:1px solid var(--line);background:var(--soft);border-radius:13px;padding:12px;font-weight:750}
+.choice.active{background:var(--accent);color:white;border-color:var(--accent)}
+.notice{font-size:12px;line-height:1.45;border-radius:12px;padding:10px 11px;margin-top:10px;background:var(--bluebg);color:#1849a9}
+.warm li{margin:6px 0;color:#344054}
+.progressTrack{height:8px;background:#eaecf0;border-radius:999px;overflow:hidden;margin:14px 0 8px}
+.progressBar{height:100%;background:var(--accent);width:0;transition:.2s}
+.progressText{font-size:12px;color:var(--muted)}
+.exercise{padding:0;overflow:hidden}
+.exHead{display:grid;grid-template-columns:104px 1fr;gap:13px;padding:14px}
+.thumbWrap{position:relative}
+.thumb{width:104px;height:104px;border-radius:15px;object-fit:cover;background:#f2f4f7;border:1px solid var(--line);display:block}
+.playBadge{position:absolute;right:6px;bottom:6px;background:rgba(17,24,39,.92);color:white;border-radius:999px;padding:5px 7px;font-size:11px;font-weight:800}
+.exName{font-size:18px;font-weight:900;line-height:1.12}
+.exOfficial{font-size:11px;color:var(--muted);margin-top:4px}
+.exMeta{font-size:13px;color:#475467;margin-top:7px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--soft);color:#475467}
+.exBody{border-top:1px solid var(--line);padding:13px}
+.person{border:1px solid var(--line);background:#fcfcfd;border-radius:14px;padding:11px;margin-top:9px}
+.personTitle{display:flex;justify-content:space-between;align-items:center;font-weight:850}
+.last{font-size:11px;color:var(--muted);font-weight:600}
+.inputs{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:7px;margin-top:8px}
+input{min-width:0;width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:10px;background:white;font-size:15px}
+.feel{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.feel button{border:0;border-radius:999px;background:var(--soft);padding:7px 9px;font-size:11px;font-weight:800}
+.feel button.on{background:var(--accent);color:white}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{flex:1;border:0;border-radius:11px;padding:10px;font-weight:800}
+.how{background:var(--accent);color:white}.sub{background:var(--soft);color:var(--text)}
+.mutedLine{font-size:12px;color:var(--muted);margin-top:7px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:rgba(245,247,251,.92);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:30}
+.bottomInner{max-width:760px;margin:auto;display:flex;gap:8px}
+.finish{flex:1;border:0;border-radius:14px;padding:13px;background:var(--accent);color:white;font-weight:900}
+.reset{border:0;border-radius:14px;padding:13px;background:white;border:1px solid var(--line);font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.62);display:flex;align-items:flex-end;justify-content:center;z-index:80}
+.modal.hidden{display:none}
+.sheet{width:min(760px,100%);max-height:92vh;overflow:auto;background:white;border-radius:24px 24px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+.sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.sheet h3{font-size:23px;line-height:1.08;margin:5px 0}
+.close{border:0;background:var(--soft);border-radius:11px;padding:9px 11px;font-weight:800}
+.demo{display:block;width:min(360px,100%);aspect-ratio:1;border-radius:18px;object-fit:cover;background:#f2f4f7;margin:14px auto;border:1px solid var(--line)}
+.steps{padding-left:22px}.steps li{margin:8px 0;line-height:1.38}
+.attribution{text-align:center;color:var(--muted);font-size:10px;margin-top:8px}
+.subcard{display:grid;grid-template-columns:82px 1fr;gap:10px;border:1px solid var(--line);border-radius:14px;padding:9px;margin:9px 0}
+.subcard img{width:82px;height:82px;border-radius:11px;object-fit:cover;background:var(--soft)}
+.subcard b{line-height:1.15}.use{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--accent);color:white;font-weight:800}
+.safety{background:var(--orangebg);color:#93370d;border-radius:13px;padding:11px;font-size:12px;line-height:1.4}
+.summaryBox{background:var(--greenbg);color:#05603a;border-radius:14px;padding:12px;line-height:1.45}
+@media(max-width:520px){
+ .exHead{grid-template-columns:90px 1fr}.thumb{width:90px;height:90px}.inputs{grid-template-columns:1fr 1fr}.inputs .weight{grid-column:1/-1}
+}
+
+.builderTabs{display:flex;gap:8px;margin:12px 0}.builderTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:13px;padding:11px;font-weight:850}.builderTabs button.active{background:var(--accent);color:white}
+.builderPanel.hidden{display:none}.searchRow{display:grid;grid-template-columns:1fr 150px;gap:8px}.searchRow input,.searchRow select{border:1px solid #d0d5dd;border-radius:11px;padding:11px;background:white}
+.exercisePicker{max-height:420px;overflow:auto;margin-top:10px}.pickItem{display:grid;grid-template-columns:66px 1fr auto;gap:10px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.pickItem img{width:66px;height:66px;border-radius:10px;object-fit:cover}
+.addBtn,.smallBtn{border:0;border-radius:9px;padding:8px 10px;font-weight:800}.addBtn{background:var(--accent);color:white}.routineItem{display:grid;grid-template-columns:1fr 58px 78px 36px;gap:7px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.removeBtn{border:0;border-radius:8px;background:var(--redbg);color:var(--red);font-weight:900;padding:8px}
+.savedRoutine{border:1px solid var(--line);border-radius:14px;padding:12px;margin:9px 0}.savedRoutineTop{display:flex;justify-content:space-between;gap:8px;align-items:center}.runBtn{background:var(--accent);color:white}
+@media(max-width:560px){.searchRow{grid-template-columns:1fr}.pickItem{grid-template-columns:58px 1fr auto}.pickItem img{width:58px;height:58px}}
+
+
+.subFilters{display:flex;gap:7px;overflow:auto;padding:4px 0 8px}.subFilters button{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800}.subFilters button.active{background:var(--accent);color:white;border-color:var(--accent)}
+.subSearch{width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px;margin:8px 0}.subcard{grid-template-columns:88px 1fr}.subcard .meta2{font-size:11px;color:var(--muted);margin-top:4px}.previewBtn{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--soft);font-weight:800}.supportBadge{display:inline-block;margin-top:5px;font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--bluebg);color:#1849a9}
+
+
+.sourceBadge{display:inline-block;font-size:10px;font-weight:850;padding:5px 8px;border-radius:999px;background:var(--greenbg);color:var(--green);margin-top:5px}
+
+.exactThumb{position:relative;width:104px;height:104px;border-radius:15px;overflow:hidden;background:#111827;border:1px solid var(--line)}
+.exactThumb img{width:100%;height:100%;object-fit:cover;display:block}
+.sourceBadge{position:absolute;left:6px;top:6px;background:#067647;color:white;border-radius:999px;padding:5px 7px;font-size:10px;font-weight:900}
+.demoTabs{display:flex;gap:7px;margin:10px 0}.demoTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:11px;padding:10px;font-weight:850}.demoTabs button.active{background:var(--accent);color:white}
+.ytWrap{position:relative;width:100%;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111827;margin:14px 0}
+.ytWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hiddenMedia{display:none!important}
+
+
+.versionBanner{background:#dcfae6;color:#05603a;border:1px solid #abefc6;border-radius:14px;padding:10px 12px;font-size:13px;font-weight:900;margin:8px 0 12px;text-align:center}
+#howModal{z-index:95}
+#subModal{z-index:90}
+#doneModal{z-index:95}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="topbar">
+  <div class="brand"><div class="logo">TS</div><div><h1>Together Strong</h1><div class="tiny">Eli + Rochelle · Week 1 · v0.4.4 audited beta</div></div></div>
+  <div class="statusDot" id="libraryStatus">Loading demos…</div>
+ </div>
+
+ <div class="versionBanner">v0.4.4 AUDITED BUILD — Day 1 uses curated video thumbnails</div>
+ <div class="builderTabs">
+   <button id="tabProgram" class="active" onclick="showMainTab('program')">Week 1 Program</button>
+   <button id="tabBuilder" onclick="showMainTab('builder')">Build My Routine</button>
+ </div>
+ <div id="programPanel" class="builderPanel">
+ <div class="card hero">
+  <h2 id="dayTitle"></h2>
+  <p id="dayDesc"></p>
+ </div>
+
+ <div class="card">
+  <div class="sectionTitle">Week 1</div>
+  <div class="weekstrip" id="dayStrip"></div>
+ </div>
+
+ <div class="card">
+  <div class="sectionTitle">Who is training today?</div>
+  <div class="attend">
+   <button class="choice active" data-att="both">Eli + Rochelle</button>
+   <button class="choice" data-att="eli">Eli only</button>
+   <button class="choice" data-att="rochelle">Rochelle only</button>
+   <button class="choice" data-att="none">Neither / Missed</button>
+  </div>
+  <div class="notice" id="attendanceNote">Both profiles will be tracked. You can alternate sets and share one phone.</div>
+ </div>
+
+ <div class="card warm">
+  <div class="sectionTitle">10-minute warm-up</div>
+  <ul id="warmup"></ul>
+ </div>
+
+ <div class="card">
+   <div class="sectionTitle">Today's progress</div>
+   <div class="progressTrack"><div class="progressBar" id="progressBar"></div></div>
+   <div class="progressText" id="progressText">0% logged</div>
+ </div>
+
+ <div class="safety">If a movement causes sharp, increasing, or joint pain, stop that movement and use Substitute. This app is a workout tracker, not a diagnosis or treatment tool. For persistent shoulder, knee, or SI-joint pain, follow the guidance of your clinician or physical therapist.</div>
+
+ <div id="exerciseList"></div>
+ </div>
+ <div id="builderPanel" class="builderPanel hidden">
+   <div class="card">
+     <div class="sectionTitle">Build My Routine</div>
+     <div class="tiny">Search the exercise library, preview the demo, add exercises, choose your sets/reps, and save the routine.</div>
+     <div class="searchRow" style="margin-top:10px">
+       <input id="exerciseSearch" placeholder="Search exercises…" oninput="renderExercisePicker()">
+       <select id="equipmentFilter" onchange="renderExercisePicker()"><option value="">All equipment</option></select>
+     </div>
+     <div id="exercisePicker" class="exercisePicker"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Current Routine</div>
+     <input id="routineName" placeholder="Routine name" style="width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px">
+     <div id="currentRoutine"></div>
+     <div class="actions"><button class="sub" onclick="clearCurrentRoutine()">Clear</button><button class="how" onclick="saveCustomRoutine()">Save Routine</button></div>
+   </div>
+   <div class="card"><div class="sectionTitle">Saved Routines</div><div id="savedRoutines"></div></div>
+ </div>
+</div>
+
+<div class="bottom"><div class="bottomInner">
+ <button class="reset" id="resetBtn">Reset day</button>
+ <button class="finish" id="finishBtn">Finish Workout</button>
+</div></div>
+
+<div class="modal hidden" id="howModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">EXERCISE DEMONSTRATION</div><h3 id="howTitle"></h3><div class="tiny" id="howMeta"></div></div><button class="close" onclick="closeModal('howModal')">Close</button></div>
+<div class="demoTabs" id="demoTabs">
+   <button id="tabExact" onclick="switchDemo('exact')">Exact Video</button>
+   <button id="tabLibrary" onclick="switchDemo('library')">Library Animation</button>
+ </div>
+ <div id="ytContainer" class="ytWrap hiddenMedia"><iframe id="howYoutube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+ <img class="demo hiddenMedia" id="howGif" alt="Exercise demonstration">
+ <h4>How to do it</h4><ol class="steps" id="howSteps"></ol>
+ <div class="attribution" id="howAttr"></div>
+</div></div>
+
+<div class="modal hidden" id="subModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">SAME PURPOSE, DIFFERENT EXERCISE</div><h3>Substitute exercise</h3></div><button class="close" onclick="closeModal('subModal')">Close</button></div>
+ <div class="notice">Alternatives target the same primary muscle or movement pattern across all equipment. Preview any option before choosing it.</div>
+ <input id="subSearch" class="subSearch" placeholder="Search substitute exercises…" oninput="renderSubstitutes()">
+ <div class="subFilters" id="subFilters"></div>
+ <div id="subList"></div>
+</div></div>
+
+<div class="modal hidden" id="doneModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">WORKOUT SAVED</div><h3>Nice work.</h3></div><button class="close" onclick="closeModal('doneModal')">Close</button></div>
+ <div class="summaryBox" id="doneSummary"></div>
+</div></div>
+
+<script>
+
+const DATA_URL = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/data/exercises.json';
+const MEDIA_BASE = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/';
+
+
+const CURATED_DEMOS = {
+  'kettlebell goblet squat': {type:'youtube', id:'MeIiIdhvXT4', label:'Exact kettlebell goblet squat'},
+  'kettlebell glute bridge': {type:'youtube', id:'Yao9ShODVZA', label:'Exact kettlebell glute bridge'},
+  'supported one arm kettlebell row': {type:'youtube', id:'6RFQ-U1Liig', label:'Bench-supported single-arm kettlebell row'},
+  'kettlebell floor press': {type:'youtube', id:'yXstm050X84', label:'Exact kettlebell floor press'},
+  'kettlebell pullover': {type:'youtube', id:'ktgHzzV4aLI', label:'Kettlebell pullover demonstration'},
+  'kettlebell suitcase carry': {type:'youtube', id:'MIuduO8krNM', label:'Exact kettlebell suitcase carry'}
+};
+function ytThumb(id){ return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }
+
+const WEEK = [
+ {title:'Day 1 — Kettlebell Foundation', short:'Kettlebell', desc:'Full-body foundation with extra attention to legs, glutes, posterior chain and core.',
+  warm:['Treadmill walk — 5 min','Bodyweight box squat — 8 reps','Glute bridge — 10 reps','Standing march — 30 sec','Band pull-apart — 10 reps','Gentle hip/ankle mobility'],
+  ex:[
+   {name:'Kettlebell Goblet Squat',eq:'kettlebell',rx:'2 × 8–10',q:['goblet squat','kettlebell squat'],tags:['legs','glutes','core']},
+   {name:'Kettlebell Glute Bridge',eq:'kettlebell',rx:'2 × 10–12',q:['kettlebell glute bridge'],tags:['glutes','posterior chain'],note:'EXACT VIDEO: kettlebell across the hips — not a barbell.'},
+   {name:'Supported One-Arm Kettlebell Row',eq:'kettlebell',rx:'2 × 8–10 / arm',q:['kettlebell one arm row','one arm row'],tags:['back','biceps']},
+   {name:'Kettlebell Floor Press',eq:'kettlebell',rx:'2 × 8–10',q:['kettlebell floor press','floor press'],tags:['chest','triceps']},
+   {name:'Kettlebell Pullover',eq:'kettlebell',rx:'2 × 8 controlled',q:['kettlebell pullover'],tags:['core','chest','lats'],note:'Use a light kettlebell with bench support. Shoulder pain = substitute.'},
+   {name:'Kettlebell Suitcase Carry',eq:'kettlebell',rx:'2 × 30 sec / side',q:['kettlebell suitcase carry','suitcase carry'],tags:['core','grip','balance'],note:'One kettlebell held on one side while walking tall. If the demo shows two weights, use Substitute.'}
+ ]},
+ {title:'Day 2 — Smith / B52 Strength', short:'Smith / B52', desc:'Stable full-body strength while staying almost entirely at the Major Fitness B52.',
+  warm:['Treadmill walk — 5 min','Bodyweight sit-to-stand — 8 reps','Glute bridge — 10 reps','Band pull-apart — 10 reps','Standing march — 30 sec','Gentle shoulder mobility'],
+  ex:[
+   {name:'Smith Machine Box Squat',eq:'smith machine',rx:'2 × 8–10',q:['smith squat','smith machine squat'],tags:['legs','glutes'],note:'Bench/box is a depth target. Keep range comfortable for the knees.'},
+   {name:'Smith Machine Hip Thrust',eq:'smith machine',rx:'2 × 10–12',q:['smith hip thrust','smith machine hip thrust'],tags:['glutes','posterior chain']},
+   {name:'B52 Seated Cable Row',eq:'cable',rx:'2 × 8–10',q:['seated cable row','cable seated row'],tags:['back','biceps']},
+   {name:'Smith Machine Incline Bench Press',eq:'smith machine',rx:'2 × 8–10',q:['smith incline bench press','smith machine incline bench press'],tags:['chest','triceps'],note:'Use a comfortable range. Shoulder pain = substitute.'},
+   {name:'Cable Standing Glute Kickback',eq:'cable',rx:'2 × 10 / leg',q:['cable glute kickback','cable kickback','hip extension'],tags:['glutes','hip'],note:'Used instead of cable pull-through to reduce repeated painful hinging.'},
+   {name:'B52 Pallof Press',eq:'cable',rx:'2 × 8–10 / side',q:['pallof press','cable pallof press'],tags:['core','anti-rotation']}
+ ]},
+ {title:'Day 3 — Dumbbell Balance & Strength', short:'Dumbbells', desc:'Independent-limb strength, balance and stability with a dumbbell focus.',
+  warm:['Treadmill walk — 5 min','Bodyweight sit-to-stand — 8 reps','Glute bridge — 10 reps','Standing march — 30 sec','Band pull-apart — 10 reps','Gentle ankle/hip mobility'],
+  ex:[
+   {name:'Low Dumbbell Step-Up',eq:'dumbbell',rx:'2 × 8 / leg',q:['dumbbell step up','step up'],tags:['legs','glutes','balance'],note:'Use the lowest box and light/no weight if knees complain.'},
+   {name:'Dumbbell Bench Press',eq:'dumbbell',rx:'2 × 8–10',q:['dumbbell bench press'],tags:['chest','triceps']},
+   {name:'Dumbbell Glute Bridge',eq:'dumbbell',rx:'2 × 10–12',q:['dumbbell glute bridge','glute bridge'],tags:['glutes','posterior chain'],note:'Month 1 replacement for the dumbbell RDL if hinging hurts.'},
+   {name:'Chest-Supported Dumbbell Row',eq:'dumbbell',rx:'2 × 8–10',q:['dumbbell incline row','chest supported dumbbell row','dumbbell row'],tags:['back','biceps']},
+   {name:'Dumbbell Sit-to-Stand',eq:'dumbbell',rx:'2 × 10',q:['dumbbell squat','goblet squat'],tags:['legs','glutes'],note:'Reverse lunges are intentionally saved for Month 2.'},
+   {name:'Dumbbell Farmer Carry',eq:'dumbbell',rx:'2 × 30–45 sec',q:['dumbbell farmers carry','farmers walk','farmer carry'],tags:['core','grip','posture']}
+ ]},
+ {title:'Day 4 — Landmine Functional Strength', short:'Landmine', desc:'Full-body functional strength with extra core and stability work.',
+  warm:['Treadmill walk — 5 min','Bodyweight sit-to-stand — 8 reps','Glute bridge — 10 reps','Standing march — 30 sec','Band pull-apart — 10 reps','Gentle shoulder mobility'],
+  ex:[
+   {name:'Landmine Squat',eq:'barbell',rx:'2 × 8–10',q:['landmine squat'],tags:['legs','glutes','core']},
+   {name:'Half-Kneeling Single-Arm Landmine Press',eq:'barbell',rx:'2 × 8 / arm',q:['landmine press','kneeling landmine press'],tags:['chest','shoulders','core'],note:'Angled press usually requires less overhead range; pain still means substitute.'},
+   {name:'Supported Landmine Row',eq:'barbell',rx:'2 × 8–10',q:['landmine row','t bar row'],tags:['back','biceps']},
+   {name:'Landmine Reverse Squat / Belt-Squat Style',eq:'barbell',rx:'2 × 8–10',q:['landmine squat'],tags:['legs','glutes'],note:'We are avoiding a repeated RDL/hinge here in Month 1.'},
+   {name:'Leg Curl Machine',eq:'leverage machine',rx:'2 × 10–12',q:['leg curl','seated leg curl','lying leg curl'],tags:['hamstrings']},
+   {name:'Landmine Anti-Rotation',eq:'barbell',rx:'2 × 6–8 / side',q:['landmine rotation','landmine 180'],tags:['core','anti-rotation']}
+ ]}
+];
+
+let LIB=[], day=0, attendance='both', substitutionMap={};
+const MANUAL_EXACT={
+ 'kettlebell goblet squat':['kettlebell goblet squat','goblet squat'],
+ 'kettlebell glute bridge':['kettlebell glute bridge'],
+ 'supported one arm kettlebell row':['kettlebell one arm row','one arm kettlebell row'],
+ 'kettlebell floor press':['kettlebell floor press'],
+ 'kettlebell pullover from bench':['kettlebell pullover'],
+ 'kettlebell suitcase carry':['kettlebell suitcase carry','suitcase carry']
+};
+
+const todayKey = () => new Date().toISOString().slice(0,10);
+const STORE='togetherStrongV044';
+const storage = (()=>{try{const k='__ts_test__';localStorage.setItem(k,'1');localStorage.removeItem(k);return localStorage;}catch(e){const m={};return {getItem:k=>m[k]??null,setItem:(k,v)=>{m[k]=String(v)},removeItem:k=>{delete m[k]}};}})();
+let state = JSON.parse(storage.getItem(STORE)||'{"logs":{},"attendance":{},"finished":{}}');
+
+function save(){storage.setItem(STORE,JSON.stringify(state))}
+function norm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function media(path){return MEDIA_BASE+(path||'').replace(/^\/+/,'')}
+
+function score(ex, query, eq){
+ let n=norm(ex.name), q=norm(query), s=0;
+ if(n===q)s+=140;
+ if(n.includes(q))s+=75;
+ const qw=q.split(' ').filter(w=>w.length>2);
+ qw.forEach(w=>{if(n.includes(w))s+=12});
+ if(eq && norm(ex.equipment)===norm(eq))s+=32;
+ else if(eq && norm(ex.equipment).includes(norm(eq)))s+=18;
+ return s;
+}
+function findBest(def){
+ if(!LIB.length)return null;
+ const exacts=MANUAL_EXACT[norm(def.name)]||def.q||[];
+ let pool=LIB;
+ const eqPool=pool.filter(ex=>norm(ex.equipment)===norm(def.eq));
+ if(eqPool.length)pool=eqPool;
+ let best=null, bs=-1;
+ for(const q of exacts){
+  for(const ex of pool){
+   const sc=score(ex,q,def.eq);
+   if(sc>bs){bs=sc;best=ex}
+  }
+ }
+ if(!best||bs<15){
+  for(const q of exacts){
+   for(const ex of LIB){
+    const sc=score(ex,q,def.eq);
+    if(sc>bs){bs=sc;best=ex}
+   }
+  }
+ }
+ return best;
+}
+function getDef(i){
+ const d=JSON.parse(JSON.stringify(WEEK[day].ex[i]));
+ const subKey=`${day}-${i}`;
+ if(substitutionMap[subKey]) {
+   const ex=LIB.find(x=>x.id===substitutionMap[subKey]);
+   if(ex){d.name=ex.name;d.eq=ex.equipment;d.q=[ex.name];d._sub=true}
+ }
+ return d;
+}
+function logKey(i,p){return `${todayKey()}|d${day}|e${i}|${p}`}
+function getLog(i,p){return state.logs[logKey(i,p)]||{}}
+function updateLog(i,p,field,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k][field]=val; save(); updateProgress();
+}
+function feel(i,p,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k].feel=val; save(); renderExercises(); updateProgress();
+}
+function personHTML(i,p){
+ if(attendance!=='both' && attendance!==p)return '';
+ const label=p==='eli'?'Eli':'Rochelle', L=getLog(i,p);
+ return `<div class="person">
+  <div class="personTitle"><span>${label}</span><span class="last">${L.weight?'Saved '+L.weight+' lb':''}</span></div>
+  <div class="inputs">
+   <input class="weight" inputmode="decimal" placeholder="Weight (lb)" value="${L.weight||''}" onchange="updateLog(${i},'${p}','weight',this.value)">
+   <input inputmode="numeric" placeholder="Set 1" value="${L.s1||''}" onchange="updateLog(${i},'${p}','s1',this.value)">
+   <input inputmode="numeric" placeholder="Set 2" value="${L.s2||''}" onchange="updateLog(${i},'${p}','s2',this.value)">
+  </div>
+  <div class="feel">${['Easy','Good','Hard','Pain'].map(v=>`<button class="${L.feel===v?'on':''}" onclick="feel(${i},'${p}','${v}')">${v}</button>`).join('')}</div>
+ </div>`;
+}
+function renderDays(){
+ const s=document.getElementById('dayStrip');s.innerHTML='';
+ WEEK.forEach((d,i)=>{
+   const b=document.createElement('button');b.className='daybtn'+(i===day?' active':'');
+   b.innerHTML=`<b>Day ${i+1}</b><small>${d.short}</small>`;
+   b.onclick=()=>{day=i;substitutionMap={};renderAll();scrollTo({top:0,behavior:'smooth'})}; s.appendChild(b);
+ });
+}
+function renderExercises(){
+ const holder=document.getElementById('exerciseList'); holder.innerHTML='';
+ WEEK[day].ex.forEach((orig,i)=>{
+  const def=getDef(i), ex=findBest(def);
+  const img=ex?media(ex.image):'';
+  const off=ex && norm(ex.name)!==norm(def.name) ? ex.name : '';
+  const c=document.createElement('div');c.className='card exercise';
+  c.innerHTML=`<div class="exHead">
+   ${CURATED_DEMOS[norm(def.name)] ? `
+   <div class="exactThumb" onclick="showHow(${i})">
+     <img src="${ytThumb(CURATED_DEMOS[norm(def.name)].id)}" alt="Exact demo: ${def.name}">
+     <span class="sourceBadge">EXACT VIDEO</span>
+     <span class="playBadge">▶ WATCH</span>
+   </div>` : `
+   <div class="thumbWrap" onclick="showHow(${i})">
+     ${img?`<img class="thumb" src="${img}" alt="${def.name}">`:`<div class="thumb"></div>`}
+     <span class="playBadge">▶ DEMO</span>
+   </div>`}
+   <div><div class="exName">${i+1}. ${def.name}</div>${off?`<div class="exOfficial">Demo match: ${off}</div>`:''}
+    <div class="exMeta">${def.rx} · ${def.eq}</div>
+    <div class="tags">${def.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    ${def.note?`<div class="mutedLine">${def.note}</div>`:''}
+   </div>
+  </div>
+  <div class="exBody">${personHTML(i,'eli')}${personHTML(i,'rochelle')}
+   <div class="actions"><button class="how" onclick="showHow(${i})">▶ How to</button><button class="sub" onclick="showSubs(${i})">↻ Substitute</button></div>
+  </div>`;
+  holder.appendChild(c);
+ });
+}
+function updateProgress(){
+ let total=0, done=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{
+   if(attendance!=='both' && attendance!==p)return;
+   total++;
+   const L=getLog(i,p);
+   if(L.s1||L.s2||L.feel)done++;
+ }));
+ const pct=total?Math.round(done/total*100):100;
+ document.getElementById('progressBar').style.width=pct+'%';
+ document.getElementById('progressText').textContent=attendance==='none'?'Workout marked missed':pct+'% logged';
+}
+function renderAll(){
+ const d=WEEK[day];
+ document.getElementById('dayTitle').textContent=d.title;
+ document.getElementById('dayDesc').textContent=d.desc;
+ document.getElementById('warmup').innerHTML=d.warm.map(x=>`<li>${x}</li>`).join('');
+ renderDays();renderExercises();updateProgress();
+}
+
+let currentDemo={exact:null,library:null};
+function switchDemo(which){
+  const yt=document.getElementById('ytContainer'), gif=document.getElementById('howGif');
+  document.getElementById('tabExact').classList.toggle('active',which==='exact');
+  document.getElementById('tabLibrary').classList.toggle('active',which==='library');
+  if(which==='exact' && currentDemo.exact){
+    yt.classList.remove('hiddenMedia'); gif.classList.add('hiddenMedia');
+    document.getElementById('howYoutube').src=`https://www.youtube.com/embed/${currentDemo.exact.id}?rel=0&modestbranding=1&playsinline=1&end=30`;
+  } else if(currentDemo.library){
+    yt.classList.add('hiddenMedia'); gif.classList.remove('hiddenMedia');
+    const f=document.getElementById('howYoutube'); if(f)f.src='';
+    gif.src=media(currentDemo.library.gif_url);
+  }
+}
+function showHow(i){
+ const def=getDef(i), ex=findBest(def), exact=CURATED_DEMOS[norm(def.name)]||null;
+ currentDemo={exact,library:ex};
+ document.getElementById('howTitle').textContent=def.name;
+ document.getElementById('howMeta').textContent=def.rx+' · '+def.eq;
+ const steps=document.getElementById('howSteps');
+ const ss=(ex?.instruction_steps&&ex.instruction_steps.en)||[];
+ steps.innerHTML=(ss.length?ss:[ex?.instructions?.en||'Use the exact video above and move slowly under control.']).map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=exact ? 'Exact exercise/equipment demonstration embedded from YouTube. Library animation is optional.' : (ex?.attribution||'');
+ document.getElementById('tabExact').style.display=exact?'':'none';
+ document.getElementById('tabLibrary').style.display=ex?'':'none';
+ if(ex) document.getElementById('howGif').src=media(ex.gif_url);
+ if(exact) switchDemo('exact'); else switchDemo('library');
+ document.getElementById('howModal').classList.remove('hidden');
+}
+
+function samePurpose(base,candidate){
+ let s=0; if(!base||candidate.id===base.id)return -999;
+ if(candidate.target===base.target)s+=70;
+ if(candidate.body_part===base.body_part)s+=30;
+ if(candidate.muscle_group&&base.muscle_group&&candidate.muscle_group===base.muscle_group)s+=20;
+ const bn=norm(base.name),cn=norm(candidate.name);
+ if(bn.includes('row')&&cn.includes('row'))s+=22;
+ if((bn.includes('press')||bn.includes('bench'))&&(cn.includes('press')||cn.includes('bench')||cn.includes('push up')))s+=22;
+ if((bn.includes('squat')||bn.includes('step up'))&&(cn.includes('squat')||cn.includes('step up')||cn.includes('sit to stand')))s+=22;
+ if((bn.includes('bridge')||bn.includes('thrust')||bn.includes('deadlift'))&&(cn.includes('bridge')||cn.includes('thrust')||cn.includes('kickback')||cn.includes('leg curl')))s+=22;
+ return s;
+}
+function supportHint(ex){
+ const n=norm(ex.name);
+ if(n.includes('chest supported')||n.includes('incline row')||n.includes('bench row'))return 'More supported';
+ if(n.includes('seated')||n.includes('machine'))return 'Supported position';
+ if(n.includes('pallof')||n.includes('glute bridge')||n.includes('hip thrust'))return 'Low hinge demand';
+ return '';
+}
+function renderSubFilterButtons(){
+ const groups=['All','dumbbell','kettlebell','smith machine','cable','band','body weight','barbell','leverage machine'];
+ const box=document.getElementById('subFilters'); if(!box)return;
+ box.innerHTML=groups.map(v=>`<button class="${subContext.filter===v?'active':''}" onclick="subContext.filter='${v}';renderSubFilterButtons();renderSubstitutes()">${v==='All'?'All equipment':v}</button>`).join('');
+}
+function showSubs(i){
+ subContext={index:i,filter:'All'};
+ document.getElementById('subSearch').value='';
+ renderSubFilterButtons(); renderSubstitutes();
+ document.getElementById('subModal').classList.remove('hidden');
+}
+function renderSubstitutes(){
+ const i=subContext.index,def=getDef(i),base=findBest(def);
+ const q=norm(document.getElementById('subSearch')?.value||'');
+ let list=LIB.map(e=>[samePurpose(base,e),e]).filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]).map(x=>x[1]);
+ if(subContext.filter!=='All')list=list.filter(e=>norm(e.equipment)===norm(subContext.filter));
+ if(q)list=list.filter(e=>norm(e.name).includes(q)||norm(e.target).includes(q)||norm(e.equipment).includes(q));
+ list=list.slice(0,60);
+ const h=document.getElementById('subList');
+ h.innerHTML=list.length?list.map(e=>{const hint=supportHint(e);return `<div class="subcard"><img src="${media(e.image)}" onclick="previewExercise('${e.id}')" alt="${e.name}"><div><b>${e.name}</b><div class="meta2">${e.equipment} · ${e.target}${e.body_part?' · '+e.body_part:''}</div>${hint?`<span class="supportBadge">${hint}</span>`:''}<div><button class="previewBtn" onclick="previewExercise('${e.id}')">▶ Preview demo</button><button class="use" onclick="useSub(${i},'${e.id}')">Use this exercise</button></div></div></div>`}).join(''):'<div class="notice">No substitutes match that filter. Try All equipment or a different search.</div>';
+}
+
+function previewExercise(id){
+ const ex=LIB.find(x=>x.id===id); if(!ex)return;
+ document.getElementById('howTitle').textContent=ex.name;
+ document.getElementById('howMeta').textContent=ex.equipment+' · '+ex.target;
+ currentDemo={exact:CURATED_DEMOS[norm(ex.name)]||null,library:ex};
+ const ss=(ex.instruction_steps&&ex.instruction_steps.en)||[];
+ document.getElementById('howSteps').innerHTML=ss.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=currentDemo.exact?'Exact demonstration embedded from YouTube.':(ex.attribution||'');
+ document.getElementById('tabExact').style.display=currentDemo.exact?'':'none';
+ document.getElementById('tabLibrary').style.display='';
+ if(currentDemo.exact) switchDemo('exact'); else switchDemo('library');
+ document.getElementById('howModal').classList.remove('hidden');
+}
+
+function useSub(i,id){
+ substitutionMap[`${day}-${i}`]=id; closeModal('subModal'); renderExercises();
+}
+function closeModal(id){document.getElementById(id).classList.add('hidden'); if(id==='howModal'){const f=document.getElementById('howYoutube'); if(f)f.src='';}}
+function setAttendance(a){
+ attendance=a;
+ document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('active',b.dataset.att===a));
+ const n={both:'Both profiles will be tracked. You can alternate sets and share one phone.',eli:'Rochelle is recorded as absent. Only Eli’s set fields are shown.',rochelle:'Eli is recorded as absent. Only Rochelle’s set fields are shown.',none:'Both are recorded as missing this workout. No set entry is required.'};
+ document.getElementById('attendanceNote').textContent=n[a];
+ state.attendance[`${todayKey()}|d${day}`]=a;save();renderExercises();updateProgress();
+}
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>setAttendance(b.dataset.att)));
+document.getElementById('finishBtn').onclick=()=>{
+ const key=`${todayKey()}|d${day}`;
+ state.finished[key]={time:new Date().toISOString(),attendance};save();
+ let logged=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{const L=getLog(i,p);if(L.s1||L.s2||L.feel)logged++}));
+ document.getElementById('doneSummary').innerHTML=attendance==='none'
+  ? `<b>${WEEK[day].title}</b><br>Recorded as missed for both Eli and Rochelle.`
+  : `<b>${WEEK[day].title}</b><br>Saved for ${attendance==='both'?'Eli + Rochelle':attendance==='eli'?'Eli':'Rochelle'}.<br>${logged} person-exercise entries logged.`;
+ document.getElementById('doneModal').classList.remove('hidden');
+};
+document.getElementById('resetBtn').onclick=()=>{
+ if(!confirm('Clear today’s entries for this workout day?'))return;
+ Object.keys(state.logs).filter(k=>k.startsWith(`${todayKey()}|d${day}|`)).forEach(k=>delete state.logs[k]);
+ delete state.finished[`${todayKey()}|d${day}`];save();renderExercises();updateProgress();
+};
+
+
+let mainTab='program', customRoutine=[];
+state.customRoutines = state.customRoutines || [];
+
+function showMainTab(tab){
+  mainTab=tab;
+  document.getElementById('programPanel').classList.toggle('hidden',tab!=='program');
+  document.getElementById('builderPanel').classList.toggle('hidden',tab!=='builder');
+  document.getElementById('tabProgram').classList.toggle('active',tab==='program');
+  document.getElementById('tabBuilder').classList.toggle('active',tab==='builder');
+  document.querySelector('.bottom').style.display=tab==='program'?'':'none';
+  if(tab==='builder'){populateEquipmentFilter();renderExercisePicker();renderCurrentRoutine();renderSavedRoutines();}
+}
+function populateEquipmentFilter(){
+  const s=document.getElementById('equipmentFilter'); if(!s||s.dataset.ready||!LIB.length)return;
+  [...new Set(LIB.map(e=>e.equipment).filter(Boolean))].sort().forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)}); s.dataset.ready='1';
+}
+function renderExercisePicker(){
+  const box=document.getElementById('exercisePicker'); if(!box)return;
+  if(!LIB.length){box.innerHTML='<div class="notice">Exercise library is still loading…</div>';return}
+  const q=norm(document.getElementById('exerciseSearch').value), eq=document.getElementById('equipmentFilter').value;
+  const rows=LIB.filter(e=>(!eq||e.equipment===eq)&&(!q||norm(e.name).includes(q)||norm(e.target).includes(q))).slice(0,80);
+  box.innerHTML=rows.map(e=>`<div class="pickItem"><img src="${media(e.image)}" onclick="previewExercise('${e.id}')"><div><b>${e.name}</b><div class="tiny">${e.equipment} · ${e.target}</div></div><button class="addBtn" onclick="addToRoutine('${e.id}')">+ Add</button></div>`).join('')||'<div class="notice">No matches.</div>';
+}
+function addToRoutine(id){const e=LIB.find(x=>x.id===id);if(!e)return;customRoutine.push({id:e.id,name:e.name,equipment:e.equipment,target:e.target,sets:2,reps:'8–10'});renderCurrentRoutine()}
+function renderCurrentRoutine(){
+ const b=document.getElementById('currentRoutine'); if(!b)return;
+ b.innerHTML=customRoutine.length?customRoutine.map((x,i)=>`<div class="routineItem"><div><b>${i+1}. ${x.name}</b><div class="tiny">${x.equipment}</div></div><input value="${x.sets}" onchange="customRoutine[${i}].sets=this.value"><input value="${x.reps}" onchange="customRoutine[${i}].reps=this.value"><button class="removeBtn" onclick="customRoutine.splice(${i},1);renderCurrentRoutine()">×</button></div>`).join(''):'<div class="notice">No exercises added yet.</div>';
+}
+function clearCurrentRoutine(){customRoutine=[];document.getElementById('routineName').value='';renderCurrentRoutine()}
+function saveCustomRoutine(){
+ const name=document.getElementById('routineName').value.trim(); if(!name||!customRoutine.length){alert('Add a name and at least one exercise.');return}
+ state.customRoutines.push({id:'r'+Date.now(),name,exercises:JSON.parse(JSON.stringify(customRoutine))});save();clearCurrentRoutine();renderSavedRoutines();
+}
+function renderSavedRoutines(){
+ const b=document.getElementById('savedRoutines'); if(!b)return;
+ b.innerHTML=state.customRoutines.length?state.customRoutines.slice().reverse().map(r=>`<div class="savedRoutine"><div class="savedRoutineTop"><div><b>${r.name}</b><div class="tiny">${r.exercises.length} exercises</div></div><div><button class="smallBtn runBtn" onclick="runCustomRoutine('${r.id}')">Start</button> <button class="smallBtn" onclick="deleteCustomRoutine('${r.id}')">Delete</button></div></div><div class="tiny" style="margin-top:7px">${r.exercises.map(e=>e.name).join(' · ')}</div></div>`).join(''):'<div class="notice">No saved routines yet.</div>';
+}
+function deleteCustomRoutine(id){if(!confirm('Delete this routine?'))return;state.customRoutines=state.customRoutines.filter(r=>r.id!==id);save();renderSavedRoutines()}
+function runCustomRoutine(id){
+ const r=state.customRoutines.find(x=>x.id===id); if(!r)return;
+ WEEK.push({title:r.name,short:'Custom',desc:'Your custom routine.',warm:['Treadmill walk — 5 min','Gentle mobility — 5 min'],ex:r.exercises.map(x=>({name:x.name,eq:x.equipment,rx:`${x.sets} × ${x.reps}`,q:[x.name],tags:[x.target||'custom']}))});
+ day=WEEK.length-1;showMainTab('program');renderAll();scrollTo({top:0,behavior:'smooth'});
+}
+
+async function loadLibrary(){
+ const urls=[
+  'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/data/exercises.json',
+  'https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json'
+ ];
+ let lastError=null;
+ for(const url of urls){
+  try{
+   const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),12000);
+   const r=await fetch(url,{cache:'force-cache',signal:controller.signal}); clearTimeout(timer);
+   if(!r.ok)throw new Error('HTTP '+r.status);
+   LIB=await r.json();
+   if(!Array.isArray(LIB)||!LIB.length)throw new Error('Empty exercise library');
+   document.getElementById('libraryStatus').textContent=LIB.length+' demos ready';
+   document.getElementById('libraryStatus').style.color='#067647';
+   renderExercises(); populateEquipmentFilter();
+   return;
+  }catch(e){lastError=e;}
+ }
+ document.getElementById('libraryStatus').textContent='Demo library offline';
+ document.getElementById('libraryStatus').style.color='#b42318';
+ renderExercises();
+}
+
+
+const savedAtt=state.attendance[`${todayKey()}|d0`]; if(savedAtt)attendance=savedAtt;
+renderAll(); setAttendance(attendance); loadLibrary();
+</script>
+</body>
+</html>
