@@ -1,0 +1,2851 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Together Strong">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Together Strong</title>
+<style>
+:root{
+ --bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;
+ --soft:#f2f4f7;--accent:#111827;--pink:#ec4899;--green:#067647;--greenbg:#dcfae6;
+ --red:#b42318;--redbg:#fee4e2;--orange:#b54708;--orangebg:#ffead5;--blue:#175cd3;--bluebg:#eff8ff;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 14px calc(88px + env(safe-area-inset-bottom))}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 2px 8px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:12px;background:#111827;color:white;display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:20px;margin:0}.tiny{font-size:12px;color:var(--muted)}
+.statusDot{font-size:11px;padding:7px 9px;border-radius:999px;background:var(--soft);font-weight:700;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 2px 12px rgba(16,24,40,.035)}
+.hero h2{font-size:28px;line-height:1.05;margin:0 0 7px}.hero p{margin:0;color:var(--muted);line-height:1.4}
+.weekstrip{display:flex;gap:8px;overflow:auto;padding-bottom:2px}
+.daybtn{min-width:112px;text-align:left;border:1px solid var(--line);background:white;border-radius:14px;padding:11px}
+.daybtn.active{background:var(--accent);color:white;border-color:var(--accent)}
+.daybtn small{display:block;opacity:.72;margin-top:3px}
+.sectionTitle{font-weight:850;font-size:17px;margin-bottom:10px}
+.attend{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice{border:1px solid var(--line);background:var(--soft);border-radius:13px;padding:12px;font-weight:750}
+.choice.active{background:var(--accent);color:white;border-color:var(--accent)}
+.notice{font-size:12px;line-height:1.45;border-radius:12px;padding:10px 11px;margin-top:10px;background:var(--bluebg);color:#1849a9}
+.warm li{margin:6px 0;color:#344054}
+.progressTrack{height:8px;background:#eaecf0;border-radius:999px;overflow:hidden;margin:14px 0 8px}
+.progressBar{height:100%;background:var(--accent);width:0;transition:.2s}
+.progressText{font-size:12px;color:var(--muted)}
+.exercise{padding:0;overflow:hidden}
+.exHead{display:grid;grid-template-columns:172px 1fr;gap:13px;padding:14px}
+.demoPair{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+.demoTile{position:relative;cursor:pointer;text-align:center}
+.thumbWrap{position:relative}
+.thumb{width:82px;height:82px;border-radius:13px;object-fit:cover;background:#f2f4f7;border:1px solid var(--line);display:block}
+.thumb.noDemo{display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;line-height:1.25;color:#8a8f98;padding:4px;box-sizing:border-box}
+.demoLabel{font-size:9px;font-weight:900;line-height:1.1;margin-top:5px;color:#475467;text-transform:uppercase}
+.youtubeTile{width:82px;height:82px;border-radius:13px;background:#111827;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.youtubeTile img{width:100%;height:100%;object-fit:cover;display:block}
+.youtubeFallback{background:#ff0033;color:white;font-size:12px;font-weight:900;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+.youtubeFallback .ytPlay{font-size:26px;line-height:1}
+.demoTile .playBadge{right:4px;bottom:21px;padding:4px 6px;font-size:9px}
+.playBadge{position:absolute;right:6px;bottom:6px;background:rgba(17,24,39,.92);color:white;border-radius:999px;padding:5px 7px;font-size:11px;font-weight:800}
+.exName{font-size:18px;font-weight:900;line-height:1.12}
+.exOfficial{font-size:11px;color:var(--muted);margin-top:4px}
+.exMeta{font-size:13px;color:#475467;margin-top:7px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--soft);color:#475467}
+.exBody{border-top:1px solid var(--line);padding:13px}
+.person{border:1px solid var(--line);background:#fcfcfd;border-radius:14px;padding:11px;margin-top:9px}
+.personTitle{display:flex;justify-content:space-between;align-items:center;font-weight:850}
+.last{font-size:11px;color:var(--muted);font-weight:600}
+.inputs{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:7px;margin-top:8px}
+input{min-width:0;width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:10px;background:white;font-size:15px}
+.feel{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.feel button{border:0;border-radius:999px;background:var(--soft);padding:7px 9px;font-size:11px;font-weight:800}
+.feel button.on{background:var(--accent);color:white}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{flex:1;border:0;border-radius:11px;padding:10px;font-weight:800}
+.how{background:var(--accent);color:white}.sub{background:var(--soft);color:var(--text)}
+.mutedLine{font-size:12px;color:var(--muted);margin-top:7px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:rgba(245,247,251,.92);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:30}
+.bottomInner{max-width:760px;margin:auto;display:flex;gap:8px}
+.finish{flex:1;border:0;border-radius:14px;padding:13px;background:var(--accent);color:white;font-weight:900}
+.reset{border:0;border-radius:14px;padding:13px;background:white;border:1px solid var(--line);font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.62);display:flex;align-items:flex-end;justify-content:center;z-index:80}
+.modal.hidden{display:none}
+.sheet{width:min(760px,100%);max-height:92vh;overflow:auto;background:white;border-radius:24px 24px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+.sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.sheet h3{font-size:23px;line-height:1.08;margin:5px 0}
+.close{border:0;background:var(--soft);border-radius:11px;padding:9px 11px;font-weight:800}
+.demo{display:block;width:min(360px,100%);aspect-ratio:1;border-radius:18px;object-fit:cover;background:#f2f4f7;margin:14px auto;border:1px solid var(--line)}
+.steps{padding-left:22px}.steps li{margin:8px 0;line-height:1.38}
+.attribution{text-align:center;color:var(--muted);font-size:10px;margin-top:8px}
+.subcard{display:grid;grid-template-columns:82px 1fr;gap:10px;border:1px solid var(--line);border-radius:14px;padding:9px;margin:9px 0}
+.subcard img{width:82px;height:82px;border-radius:11px;object-fit:cover;background:var(--soft)}
+.subcard b{line-height:1.15}.use{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--accent);color:white;font-weight:800}
+.safety{background:var(--orangebg);color:#93370d;border-radius:13px;padding:11px;font-size:12px;line-height:1.4}
+.summaryBox{background:var(--greenbg);color:#05603a;border-radius:14px;padding:12px;line-height:1.45}
+@media(max-width:520px){
+ .exHead{grid-template-columns:146px 1fr;gap:10px}.thumb,.youtubeTile{width:69px;height:69px}.inputs{grid-template-columns:1fr 1fr}.inputs .weight{grid-column:1/-1}
+}
+
+.builderTabs{display:flex;gap:8px;margin:12px 0}.builderTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:13px;padding:11px;font-weight:850}.builderTabs button.active{background:var(--accent);color:white}
+.builderPanel.hidden{display:none}.searchRow{display:grid;grid-template-columns:1fr 150px;gap:8px}.searchRow input,.searchRow select{border:1px solid #d0d5dd;border-radius:11px;padding:11px;background:white}
+.exercisePicker{max-height:420px;overflow:auto;margin-top:10px}.pickItem{display:grid;grid-template-columns:66px 1fr auto;gap:10px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.pickItem img{width:66px;height:66px;border-radius:10px;object-fit:cover}
+.addBtn,.smallBtn{border:0;border-radius:9px;padding:8px 10px;font-weight:800}.addBtn{background:var(--accent);color:white}.routineItem{display:grid;grid-template-columns:1fr 58px 78px 36px;gap:7px;align-items:center;border-top:1px solid var(--line);padding:9px 0}.removeBtn{border:0;border-radius:8px;background:var(--redbg);color:var(--red);font-weight:900;padding:8px}
+.savedRoutine{border:1px solid var(--line);border-radius:14px;padding:12px;margin:9px 0}.savedRoutineTop{display:flex;justify-content:space-between;gap:8px;align-items:center}.runBtn{background:var(--accent);color:white}
+@media(max-width:560px){.searchRow{grid-template-columns:1fr}.pickItem{grid-template-columns:58px 1fr auto}.pickItem img{width:58px;height:58px}}
+
+
+.subFilters{display:flex;gap:7px;overflow:auto;padding:4px 0 8px}.subFilters button{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:800}.subFilters button.active{background:var(--accent);color:white;border-color:var(--accent)}
+.subSearch{width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px;margin:8px 0}.subcard{grid-template-columns:88px 1fr}.subcard .meta2{font-size:11px;color:var(--muted);margin-top:4px}.previewBtn{border:0;border-radius:9px;padding:8px 10px;margin-top:7px;background:var(--soft);font-weight:800}.supportBadge{display:inline-block;margin-top:5px;font-size:10px;font-weight:800;border-radius:999px;padding:5px 7px;background:var(--bluebg);color:#1849a9}
+
+
+.ytDemo{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;background:#111;margin:14px auto;display:none}.demoChoice{display:flex;gap:7px;margin:10px 0}.demoChoice button{border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:800}.demoChoice button.active{background:var(--accent);color:white}.sourceBadge{display:inline-block;font-size:10px;font-weight:850;padding:5px 8px;border-radius:999px;background:var(--greenbg);color:var(--green);margin-top:5px}
+
+.exactThumb{position:relative;width:104px;height:104px;border-radius:15px;overflow:hidden;background:#111827;border:1px solid var(--line)}
+.exactThumb img{width:100%;height:100%;object-fit:cover;display:block}
+.sourceBadge{position:absolute;left:6px;top:6px;background:#067647;color:white;border-radius:999px;padding:5px 7px;font-size:10px;font-weight:900}
+.demoTabs{display:flex;gap:7px;margin:10px 0}.demoTabs button{flex:1;border:1px solid var(--line);background:white;border-radius:11px;padding:10px;font-weight:850}.demoTabs button.active{background:var(--accent);color:white}
+.ytWrap{position:relative;width:100%;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111827;margin:14px 0}
+.ytWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.hiddenMedia{display:none!important}
+
+
+.versionBanner{background:#dcfae6;color:#05603a;border:1px solid #abefc6;border-radius:14px;padding:10px 12px;font-size:13px;font-weight:900;margin:8px 0 12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="topbar">
+  <div class="brand"><div class="logo">TS</div><div><h1>Together Strong</h1><div class="tiny">Eli + Rochelle · Week 1 · v0.4.8 beta</div></div></div>
+  <div class="statusDot" id="libraryStatus">Loading demos…</div>
+ </div>
+
+ <div class="versionBanner">v0.7.1 — 875 exercises · matching-accuracy audit</div>
+ <div class="builderTabs">
+   <button id="tabProgram" class="active" onclick="showMainTab('program')">This Week</button>
+   <button id="tabBuilder" onclick="showMainTab('builder')">Build My Routine</button>
+   <button id="tabData" onclick="showMainTab('data')">My Data</button>
+ </div>
+ <div id="programPanel" class="builderPanel">
+ <div class="card hero">
+  <h2 id="dayTitle"></h2>
+  <p id="dayDesc"></p>
+ </div>
+
+ <div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+   <div class="sectionTitle" id="weekLabel">Week 1</div>
+   <button class="close" onclick="nextWeek()">Start Next Week →</button>
+  </div>
+  <div class="tiny" style="margin:2px 0 6px">This 4-week block — tap ahead to preview and substitute</div>
+  <div class="weekstrip" id="weekBlockStrip" style="margin-bottom:10px"></div>
+  <div id="previewBanner"></div>
+  <div class="weekstrip" id="dayStrip"></div>
+ </div>
+
+ <div class="card">
+  <div class="sectionTitle">Who is training today?</div>
+  <div class="attend">
+   <button class="choice active" data-att="both">Eli + Rochelle</button>
+   <button class="choice" data-att="eli">Eli only</button>
+   <button class="choice" data-att="rochelle">Rochelle only</button>
+   <button class="choice" data-att="none">Neither / Missed</button>
+  </div>
+  <div class="notice" id="attendanceNote">Both profiles will be tracked. You can alternate sets and share one phone.</div>
+ </div>
+
+ <div class="card warm">
+  <div class="sectionTitle">10-minute warm-up</div>
+  <ul id="warmup"></ul>
+ </div>
+
+ <div class="card">
+   <div class="sectionTitle">Today's progress</div>
+   <div class="progressTrack"><div class="progressBar" id="progressBar"></div></div>
+   <div class="progressText" id="progressText">0% logged</div>
+ </div>
+
+ <div class="safety">If a movement causes sharp, increasing, or joint pain, stop that movement and use Substitute. This app is a workout tracker, not a diagnosis or treatment tool. For persistent shoulder, knee, or SI-joint pain, follow the guidance of your clinician or physical therapist.</div>
+
+ <div id="exerciseList"></div>
+ <div class="card" style="text-align:center">
+   <button class="how" style="width:100%" onclick="showAddExercise()">+ Add an exercise to today</button>
+   <button id="crunchBtn" class="sub" style="width:100%;margin-top:8px" onclick="toggleTimeCrunch()">Short on time — trim today's workout</button>
+ </div>
+ </div>
+ <div id="builderPanel" class="builderPanel hidden">
+   <div class="card">
+     <div class="sectionTitle">Build My Routine</div>
+     <div class="tiny">Search the exercise library, preview the demo, add exercises, choose your sets/reps, and save the routine.</div>
+     <div class="searchRow" style="margin-top:10px">
+       <input id="exerciseSearch" placeholder="Search exercises…" oninput="renderExercisePicker()">
+       <select id="equipmentFilter" onchange="renderExercisePicker()"><option value="">All equipment</option></select>
+     </div>
+     <div id="exercisePicker" class="exercisePicker"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Current Routine</div>
+     <input id="routineName" placeholder="Routine name" style="width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:11px">
+     <div id="currentRoutine"></div>
+     <div class="actions"><button class="sub" onclick="clearCurrentRoutine()">Clear</button><button class="how" onclick="saveCustomRoutine()">Save Routine</button></div>
+   </div>
+   <div class="card"><div class="sectionTitle">Saved Routines</div><div id="savedRoutines"></div></div>
+ </div>
+
+ <div id="dataPanel" class="builderPanel hidden">
+   <div class="card">
+     <div class="sectionTitle">Progress</div>
+     <div class="tiny" style="margin-bottom:8px">Pick a person and exercise to see weight over time.</div>
+     <div class="inputs" style="grid-template-columns:1fr 1fr">
+       <select id="progressPerson" onchange="renderProgressChart()"><option value="eli">Eli</option><option value="rochelle">Rochelle</option></select>
+       <select id="progressExercise" onchange="renderProgressChart()"></select>
+     </div>
+     <div id="progressChartBox" style="margin-top:10px"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Personal Records</div>
+     <div id="prList"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Blocked Exercises</div>
+     <div class="tiny" style="margin-bottom:8px">Exercises you've marked "not for me" — they'll never be auto-picked into your program again.</div>
+     <div id="blacklistUI"></div>
+   </div>
+   <div class="card">
+     <div class="sectionTitle">Backup Your Data</div>
+     <div class="tiny" style="margin-bottom:8px">Everything lives only on this device. Download a backup, or restore one.</div>
+     <div class="actions">
+       <button class="sub" onclick="exportData()">Download Backup</button>
+       <button class="how" onclick="document.getElementById('importFile').click()">Restore Backup</button>
+     </div>
+     <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(this.files[0])">
+   </div>
+ </div>
+</div>
+
+<div class="bottom"><div class="bottomInner">
+ <button class="reset" id="resetBtn">Reset day</button>
+ <button class="finish" id="finishBtn">Finish Workout</button>
+</div></div>
+
+<div class="modal hidden" id="howModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">EXERCISE DEMONSTRATION</div><h3 id="howTitle"></h3><div class="tiny" id="howMeta"></div></div><button class="close" onclick="closeModal('howModal')">Close</button></div>
+ <div class="demoChoice" id="demoChoice" style="display:none"><button id="ytChoice" onclick="chooseDemo('youtube')">Exact video</button><button id="gifChoice" onclick="chooseDemo('gif')">Library animation</button></div>
+ 
+ <div class="demoTabs" id="demoTabs">
+   <button id="tabExact" onclick="switchDemo('exact')">YouTube Video</button>
+   <button id="tabLibrary" onclick="switchDemo('library')">Quick Demo</button>
+ </div>
+ <div id="ytContainer" class="ytWrap hiddenMedia"><iframe id="howYoutube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+ <img class="demo hiddenMedia" id="howGif" alt="Exercise demonstration">
+ <h4>How to do it</h4><ol class="steps" id="howSteps"></ol>
+ <div class="attribution" id="howAttr"></div>
+ <div id="saveVideoBox" style="margin-top:8px"></div>
+</div></div>
+
+<div class="modal hidden" id="subModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">SAME PURPOSE, DIFFERENT EXERCISE</div><h3>Substitute exercise</h3></div><button class="close" onclick="closeModal('subModal')">Close</button></div>
+ <div class="notice">Alternatives target the same primary muscle or movement pattern across all equipment. Preview any option before choosing it.</div>
+ <div id="subHeader"></div>
+ <input id="subSearch" class="subSearch" placeholder="Search substitute exercises…" oninput="renderSubstitutes()">
+ <div class="subFilters" id="subFilters"></div>
+ <div id="subList"></div>
+</div></div>
+
+<div class="modal hidden" id="addExModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">EXTRA WORK</div><h3>Add an exercise</h3></div><button class="close" onclick="closeModal('addExModal')">Close</button></div>
+ <div class="notice">Added exercises stick around for the rest of today's session (and this week, until you start a new one).</div>
+ <input id="addExSearch" class="subSearch" placeholder="Search exercises…" oninput="renderAddExercisePicker()">
+ <div id="addExList" class="exercisePicker"></div>
+</div></div>
+
+<div class="modal hidden" id="doneModal"><div class="sheet">
+ <div class="sheetTop"><div><div class="tiny">WORKOUT SAVED</div><h3>Nice work.</h3></div><button class="close" onclick="closeModal('doneModal')">Close</button></div>
+ <div class="summaryBox" id="doneSummary"></div>
+</div></div>
+
+<script src="exercise-library.js?v=0.7.1"></script>
+<script src="progression.js?v=0.7.1"></script>
+<script src="generator.js?v=0.7.1"></script>
+<script>
+
+(function clearOldBetaCaches(){
+  setTimeout(async ()=>{
+    try{
+      if('serviceWorker' in navigator){
+        const regs=await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r=>r.unregister()));
+      }
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+    }catch(e){}
+  },0);
+})();
+
+const DATA_URL = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/data/exercises.json';
+const MEDIA_BASE = 'https://cdn.jsdelivr.net/gh/hasaneyldrm/exercises-dataset@main/';
+
+
+const CURATED_DEMOS = {
+  'kettlebell goblet squat': {type:'youtube', id:'U8xBjZal_I8', label:'Exact kettlebell goblet squat'},
+  'kettlebell glute bridge': {type:'youtube', id:'Yao9ShODVZA', label:'Exact kettlebell glute bridge'},
+  'supported one arm kettlebell row': {type:'youtube', id:'l_cgMGUbFfc', label:'Exact bench-supported kettlebell row'},
+  'kettlebell floor press': {type:'youtube', id:'yXstm050X84', label:'Exact kettlebell floor press'},
+  'kettlebell pullover from bench': {type:'youtube', id:'em05uXR3jZk', label:'Exact kettlebell pullover on bench'},
+  'kettlebell suitcase carry': {type:'youtube', id:'MIuduO8krNM', label:'Exact kettlebell suitcase carry'}
+};
+function ytThumb(id){ return `https://i.ytimg.com/vi/${id}/hqdefault.jpg?v=048`; }
+
+// WEEK is now generated dynamically from EXERCISE_LIBRARY via buildWeek() in
+// generator.js, instead of a fixed 4-day array. It's populated once state is
+// loaded (see bottom of script) and refreshed by nextWeek().
+let WEEK = [];
+// External-dataset equipment names differ slightly from our internal tags for
+// a couple of categories -- this only affects the minor tie-breaker score in
+// findBest(), not correctness, but keeps matching as accurate as possible.
+const EXTERNAL_EQUIPMENT_ALIAS = {landmine:'barbell', curl_bar:'barbell'};
+
+let LIB=[], day=0, attendance='both';
+const MANUAL_EXACT={
+ 'kettlebell goblet squat':['kettlebell goblet squat','goblet squat','kettlebell squat','front squat'],
+ 'kettlebell glute bridge':['kettlebell glute bridge','glute bridge','hip bridge','hip raise','hip thrust'],
+ 'supported one arm kettlebell row':['supported one arm kettlebell row','one arm row','single arm row','supported row','dumbbell row'],
+ 'kettlebell floor press':['kettlebell floor press','floor press','lying press','dumbbell floor press'],
+ 'kettlebell pullover from bench':['kettlebell pullover from bench','dumbbell pullover'],
+ 'kettlebell suitcase carry':['kettlebell suitcase carry','suitcase carry','farmer carry','farmers walk'],
+ 'smith machine box squat':['smith machine box squat','box squat','smith squat'],
+ 'smith machine hip thrust':['smith machine hip thrust','hip thrust','glute bridge','hip bridge'],
+ 'b52 seated cable row':['b52 seated cable row','seated cable row','cable row','seated row'],
+ 'smith machine incline bench press':['smith machine incline bench press','incline bench press','incline press','bench press'],
+ 'cable standing glute kickback':['cable standing glute kickback','glute kickback','cable kickback','hip extension'],
+ 'b52 pallof press':['b52 pallof press','pallof press','anti rotation press','cable anti rotation'],
+ 'low dumbbell step up':['low dumbbell step up','dumbbell step up'],
+ 'dumbbell bench press':['dumbbell bench press','bench press','chest press'],
+ 'dumbbell glute bridge':['dumbbell glute bridge','glute bridge','hip bridge','hip raise','hip thrust'],
+ 'chest supported dumbbell row':['chest supported dumbbell row','chest supported row','incline row','dumbbell row','supported row'],
+ 'dumbbell sit to stand':['dumbbell sit to stand','sit to stand','chair squat','box squat','goblet squat'],
+ 'dumbbell farmer carry':['dumbbell farmer carry','farmer carry','farmers walk','suitcase carry'],
+ 'landmine squat':['landmine squat','front squat','goblet squat'],
+ 'half kneeling single arm landmine press':['half kneeling single arm landmine press'],
+ 'supported landmine row':['supported landmine row'],
+ 'landmine reverse squat belt squat style':['landmine reverse squat belt squat style','landmine squat','belt squat','reverse squat','front squat'],
+ 'leg curl machine':['leg curl machine','leg curl','seated leg curl','lying leg curl','hamstring curl'],
+ 'landmine anti rotation':['pallof press','anti rotation','landmine anti rotation'],
+ 'kettlebell deadlift moderate range':['kettlebell deadlift moderate range','kettlebell deadlift'],
+ 'kettlebell halo':['kettlebell halo'],
+ 'smith machine romanian deadlift':['smith machine romanian deadlift','romanian deadlift','smith deadlift'],
+ 'smith machine calf raise':['smith machine calf raise','smith calf raise','calf raise','standing calf raise'],
+ 'cable lat pulldown':['cable lat pulldown','lat pulldown'],
+ 'cable tricep pushdown':['cable tricep pushdown','tricep pushdown','cable pushdown','tricep extension'],
+ 'cable face pull':['face pull','cable face pull','rear delt fly'],
+ 'seated dumbbell shoulder press':['seated dumbbell shoulder press','dumbbell shoulder press','seated shoulder press','overhead press'],
+ 'dumbbell bicep curl':['dumbbell curl','bicep curl','dumbbell bicep curl'],
+ 'standing dumbbell calf raise':['standing dumbbell calf raise','dumbbell calf raise','standing calf raise'],
+ 'landmine single leg rdl':['landmine single leg rdl','single leg rdl','landmine rdl','single leg deadlift'],
+ 'band pull apart':['band pull apart','resistance band pull apart'],
+ 'banded glute bridge':['banded glute bridge','band glute bridge','banded hip thrust','glute bridge'],
+ 'standing band row':['standing band row','band row','resistance band row','standing row'],
+ 'band lateral walk':['band lateral walk','lateral band walk','monster walk','band walk','side step'],
+ 'band pallof press':['band pallof press','pallof press'],
+ 'band face pull':['band face pull','face pull'],
+ 'band tricep pressdown':['band tricep pressdown','band tricep pushdown','band pressdown'],
+ 'medicine ball slam controlled':['medicine ball slam controlled','medicine ball slam','slam ball'],
+ 'seated medicine ball twist':['seated medicine ball twist','russian twist','medicine ball twist','seated twist'],
+ 'medicine ball squat to press':['medicine ball squat to press','squat to press','medicine ball thruster'],
+ 'medicine ball chest pass wall':['medicine ball chest pass wall','chest pass','medicine ball chest pass','wall throw'],
+ 'curl bar bicep curl':['curl bar bicep curl','ez bar curl','curl bar curl','barbell curl'],
+ 'curl bar skullcrusher':['curl bar skullcrusher','ez bar skullcrusher','lying tricep extension'],
+ 'curl bar upright row':['curl bar upright row','upright row','ez bar upright row'],
+ 'standing march':['high knee march','standing march'],
+ 'bird dog':['bird dog'],
+ 'dead bug':['dead bug'],
+ 'bodyweight glute bridge':['glute bridge','bodyweight glute bridge','hip raise'],
+ 'leg extension machine':['leg extension machine','leg extension','machine leg extension'],
+ 'box step up':['box step up'],
+ 'bodyweight box squat':['bodyweight box squat','box squat','bodyweight squat','chair squat'],
+ 'band assisted pull up':['band assisted pull up','assisted pull up'],
+ 'dead hang':['dead hang','bar hang'],
+ 'foam roll lats upper back':['foam roll lats upper back','foam rolling','myofascial release'],
+ 'foam roll glutes hips':['foam roll glutes hips','foam rolling glutes','myofascial release'],
+ 'kettlebell two hand swing':['kettlebell two hand swing','kettlebell swing','two hand swing'],
+ 'kettlebell single arm swing':['kettlebell single arm swing','single arm kettlebell swing','one arm swing'],
+ 'kettlebell sumo deadlift':['kettlebell sumo deadlift','sumo deadlift'],
+ 'kettlebell reverse lunge':['kettlebell reverse lunge','reverse lunge'],
+ 'kettlebell renegade row':['renegade row','kettlebell renegade row'],
+ 'kettlebell overhead carry':['kettlebell overhead carry','overhead carry'],
+ 'kettlebell rack carry':['kettlebell rack carry','rack carry','front rack carry'],
+ 'kettlebell figure 8 to hold':['kettlebell figure 8 to hold','kettlebell figure 8','figure eight'],
+ 'kettlebell around the world':['kettlebell around the world'],
+ 'kettlebell thruster':['kettlebell thruster'],
+ 'smith machine deadlift':['smith deadlift','smith machine deadlift'],
+ 'smith machine bent over row':['smith machine bent over row','smith bent over row','bent over row'],
+ 'smith machine overhead press':['smith machine overhead press','smith overhead press','smith shoulder press'],
+ 'smith machine split squat':['smith machine split squat','smith split squat','split squat'],
+ 'smith machine close grip bench press':['smith machine close grip bench press','close grip bench press','smith close grip bench'],
+ 'smith machine sumo squat':['smith machine sumo squat','smith sumo squat','sumo squat'],
+ 'smith machine shrug':['smith machine shrug','smith shrug','barbell shrug'],
+ 'smith machine front squat':['smith machine front squat','smith front squat','front squat'],
+ 'cable chest fly':['cable fly','cable chest fly'],
+ 'cable bicep curl':['cable curl','cable bicep curl'],
+ 'cable overhead tricep extension':['cable overhead tricep extension','tricep extension'],
+ 'cable upright row':['cable upright row','upright row'],
+ 'cable reverse fly':['cable reverse fly','rear delt fly'],
+ 'cable single arm row':['cable single arm row','single arm cable row','cable row'],
+ 'cable woodchop':['cable woodchop','wood chop'],
+ 'cable front raise':['cable front raise','front raise'],
+ 'dumbbell romanian deadlift':['dumbbell romanian deadlift','dumbbell rdl'],
+ 'dumbbell reverse lunge':['dumbbell reverse lunge'],
+ 'dumbbell lateral lunge':['dumbbell lateral lunge','side lunge'],
+ 'dumbbell lateral raise':['dumbbell lateral raise','side raise'],
+ 'dumbbell rear delt fly':['dumbbell rear delt fly','rear delt fly'],
+ 'dumbbell hammer curl':['hammer curl','dumbbell hammer curl'],
+ 'dumbbell tricep kickback':['dumbbell tricep kickback','tricep kickback','dumbbell kickback'],
+ 'dumbbell incline bench press':['dumbbell incline bench press','dumbbell incline press','incline dumbbell press'],
+ 'dumbbell pullover':['dumbbell pullover'],
+ 'dumbbell single leg rdl':['dumbbell single leg rdl','single leg rdl','single leg deadlift'],
+ 'dumbbell arnold press':['dumbbell arnold press','arnold press'],
+ 'dumbbell woodchop':['dumbbell woodchop'],
+ 'landmine deadlift':['landmine deadlift'],
+ 'landmine lateral squat':['landmine lateral squat','lateral squat'],
+ 'landmine halo':['landmine halo'],
+ 'standing landmine row':['landmine row','standing landmine row'],
+ 'landmine front squat':['landmine front squat'],
+ 'band bicep curl':['band curl','band bicep curl'],
+ 'band squat':['band squat','resistance band squat'],
+ 'band chest press':['band chest press','band press'],
+ 'band overhead press':['band overhead press','band shoulder press'],
+ 'banded hip thrust':['band hip thrust','banded hip thrust'],
+ 'band standing kickback':['band standing kickback','band kickback','band glute kickback'],
+ 'band woodchop':['band woodchop'],
+ 'band deadlift':['band deadlift'],
+ 'medicine ball rotational throw wall':['medicine ball rotational throw wall','rotational throw','medicine ball rotational throw'],
+ 'medicine ball sit up pass':['medicine ball sit up pass','medicine ball sit up'],
+ 'medicine ball overhead carry':['medicine ball overhead carry'],
+ 'curl bar reverse curl':['curl bar reverse curl','reverse curl','ez bar reverse curl'],
+ 'curl bar front raise':['curl bar front raise','ez bar front raise','front raise'],
+ 'bulgarian split squat rear foot on box':['bulgarian split squat rear foot on box','bulgarian split squat','rear foot elevated split squat'],
+ 'decline push up feet on box':['decline push up feet on box','decline push up'],
+ 'hanging knee raise':['hanging knee raise'],
+ 'scapular pull up':['scapular pull up','scap pull'],
+ 'negative pull up':['negative pull up','eccentric pull up'],
+ 'push up knee or full':['push up knee or full','knee push up'],
+ 'plank hold':['plank hold'],
+ 'side plank':['side plank'],
+ 'wall sit':['wall sit'],
+ 'superman hold':['superman hold'],
+ 'bodyweight reverse lunge':['bodyweight reverse lunge','reverse lunge'],
+ 'kettlebell clean':['kettlebell clean'],
+ 'kettlebell snatch':['kettlebell snatch'],
+ 'kettlebell turkish get up':['kettlebell turkish get up','turkish get up'],
+ 'kettlebell windmill':['kettlebell windmill'],
+ 'kettlebell single leg deadlift':['kettlebell single leg deadlift','single leg deadlift'],
+ 'kettlebell overhead lunge':['kettlebell overhead lunge'],
+ 'kettlebell bottoms up press':['kettlebell bottoms up press','bottoms up press'],
+ 'kettlebell high pull':['kettlebell high pull','high pull'],
+ 'kettlebell goblet reverse lunge':['kettlebell goblet reverse lunge','goblet reverse','reverse lunge'],
+ 'kettlebell single arm overhead press':['kettlebell single arm overhead press','overhead press'],
+ 'kettlebell bear hug carry':['kettlebell bear hug carry','bear hug'],
+ 'kettlebell crush grip march':['kettlebell crush grip march','crush grip'],
+ 'smith machine flat bench press':['smith machine flat bench press','flat bench press','bench press'],
+ 'smith machine decline bench press':['smith machine decline bench press','decline bench press','decline press'],
+ 'smith machine seated shoulder press':['smith machine seated shoulder press','shoulder press'],
+ 'smith machine walking lunge':['smith machine walking lunge','walking lunge'],
+ 'smith machine good morning':['smith machine good morning','good morning'],
+ 'smith machine upright row':['smith machine upright row','upright row'],
+ 'smith machine skull crusher':['smith machine skull crusher','skull crusher'],
+ 'smith machine pause squat':['smith machine pause squat'],
+ 'smith machine single leg hip thrust':['smith machine single leg hip thrust','hip thrust'],
+ 'smith machine reverse lunge':['smith machine reverse lunge','reverse lunge'],
+ 'smith machine chest supported incline row':['smith machine chest supported incline row','incline row'],
+ 'smith machine step up':['smith machine step up'],
+ 'cable low row':['cable low row','low row'],
+ 'cable high row':['cable high row','high row'],
+ 'cable straight arm pulldown':['cable straight arm pulldown'],
+ 'cable single arm pulldown':['cable single arm pulldown'],
+ 'cable lateral raise':['cable lateral raise','lateral raise'],
+ 'cable rear delt row':['cable rear delt row','rear delt row','rear delt fly'],
+ 'cable standing shoulder press':['cable standing shoulder press','shoulder press'],
+ 'cable squat':['cable squat'],
+ 'cable deadlift':['cable deadlift'],
+ 'cable reverse lunge':['cable reverse lunge','reverse lunge'],
+ 'cable lateral lunge':['cable lateral lunge','lateral lunge'],
+ 'cable pull through':['cable pull through','pull through'],
+ 'cable chop high to low':['cable chop high to low'],
+ 'cable lift low to high':['cable lift low to high','low to high woodchop','cable lift'],
+ 'cable kneeling crunch':['cable kneeling crunch','kneeling crunch'],
+ 'cable standing crunch':['cable standing crunch','standing crunch'],
+ 'cable hammer curl':['cable hammer curl','hammer curl'],
+ 'cable reverse curl':['cable reverse curl','reverse curl'],
+ 'cable concentration curl':['cable concentration curl','concentration curl'],
+ 'cable single arm tricep extension':['cable single arm tricep extension','tricep extension'],
+ 'cable incline press':['cable incline press','incline press'],
+ 'cable decline press':['cable decline press','decline press'],
+ 'cable crossover':['cable crossover'],
+ 'cable single arm chest press':['cable single arm chest press','chest press'],
+ 'cable calf raise':['cable calf raise','calf raise'],
+ 'cable shrug':['cable shrug'],
+ 'cable resisted step up':['cable resisted step up'],
+ 'cable split squat':['cable split squat','split squat'],
+ 'cable rotational row':['cable rotational row','rotational row'],
+ 'cable wide grip seated row':['cable wide grip seated row','seated row'],
+ 'cable resisted glute bridge':['cable resisted glute bridge','glute bridge'],
+ 'cable single leg deadlift':['cable single leg deadlift','single leg deadlift'],
+ 'cable kickstand deadlift':['cable kickstand deadlift'],
+ 'cable standing oblique twist':['cable standing oblique twist','oblique twist'],
+ 'cable front squat':['cable front squat','front squat'],
+ 'cable good morning':['cable good morning','good morning'],
+ 'dumbbell flat bench fly':['dumbbell flat bench fly','chest fly','dumbbell fly'],
+ 'dumbbell incline fly':['dumbbell incline fly','incline fly'],
+ 'dumbbell decline bench press':['dumbbell decline bench press','decline bench press','decline press'],
+ 'dumbbell floor press':['dumbbell floor press','floor press'],
+ 'dumbbell squat':['dumbbell squat'],
+ 'dumbbell front squat':['dumbbell front squat','front squat'],
+ 'dumbbell walking lunge':['dumbbell walking lunge','walking lunge'],
+ 'dumbbell curtsy lunge':['dumbbell curtsy lunge','curtsy lunge'],
+ 'dumbbell split squat':['dumbbell split squat','split squat'],
+ 'dumbbell bulgarian split squat':['dumbbell bulgarian split squat','bulgarian split squat'],
+ 'dumbbell deadlift':['dumbbell deadlift'],
+ 'dumbbell sumo deadlift':['dumbbell sumo deadlift','sumo deadlift'],
+ 'dumbbell good morning':['dumbbell good morning','good morning'],
+ 'dumbbell hip thrust':['dumbbell hip thrust','hip thrust'],
+ 'dumbbell single leg glute bridge':['dumbbell single leg glute bridge','single leg glute bridge'],
+ 'dumbbell donkey kick':['dumbbell donkey kick','donkey kick'],
+ 'dumbbell bent over row':['dumbbell bent over row','bent over row'],
+ 'dumbbell single arm row':['dumbbell single arm row','single arm row'],
+ 'dumbbell renegade row':['dumbbell renegade row'],
+ 'dumbbell reverse fly':['dumbbell reverse fly','reverse fly'],
+ 'dumbbell front raise':['dumbbell front raise','front raise'],
+ 'dumbbell upright row':['dumbbell upright row','upright row'],
+ 'dumbbell shrug':['dumbbell shrug'],
+ 'dumbbell cuban press':['dumbbell cuban press','cuban press','cuban rotation'],
+ 'dumbbell skull crusher':['dumbbell skull crusher','skull crusher'],
+ 'dumbbell concentration curl':['dumbbell concentration curl','concentration curl'],
+ 'dumbbell zottman curl':['dumbbell zottman curl','zottman curl'],
+ 'dumbbell preacher curl':['dumbbell preacher curl','preacher curl'],
+ 'dumbbell overhead tricep extension':['dumbbell overhead tricep extension','tricep extension'],
+ 'dumbbell close grip press':['dumbbell close grip press','close grip'],
+ 'dumbbell russian twist':['dumbbell russian twist','russian twist'],
+ 'dumbbell side bend':['dumbbell side bend','side bend'],
+ 'dumbbell suitcase carry':['dumbbell suitcase carry','suitcase carry'],
+ 'dumbbell plank row':['dumbbell plank row','plank row'],
+ 'dumbbell step down':['dumbbell step down','step down'],
+ 'dumbbell box step up':['dumbbell box step up'],
+ 'dumbbell single leg calf raise':['dumbbell single leg calf raise','single leg calf raise'],
+ 'dumbbell seated calf raise':['dumbbell seated calf raise','calf raise'],
+ 'dumbbell weighted wall sit':['dumbbell weighted wall sit','wall sit'],
+ 'landmine single arm press':['landmine single arm press','landmine press','single arm press'],
+ 'landmine rotational press':['landmine rotational press','rotational press','landmine press'],
+ 'landmine split squat':['landmine split squat','split squat'],
+ 'landmine sumo squat':['landmine sumo squat','sumo squat'],
+ 'landmine two hand overhead press':['landmine two hand overhead press','overhead press'],
+ 'landmine meadows row':['landmine meadows row','meadows row'],
+ 'landmine rainbow':['landmine rainbow'],
+ 'band lat pulldown':['band lat pulldown','lat pulldown'],
+ 'band overhead tricep extension':['band overhead tricep extension','tricep extension'],
+ 'band lateral raise':['band lateral raise','lateral raise'],
+ 'band front raise':['band front raise','front raise'],
+ 'band good morning':['band good morning','good morning'],
+ 'band bent over row':['band bent over row','bent over row'],
+ 'band clamshell':['band clamshell'],
+ 'band fire hydrant':['band fire hydrant','fire hydrant'],
+ 'band standing leg curl':['band standing leg curl','standing leg curl','band leg curl'],
+ 'band calf raise':['band calf raise','calf raise'],
+ 'medicine ball v up':['medicine ball v up'],
+ 'medicine ball push up':['medicine ball push up'],
+ 'medicine ball deadlift':['medicine ball deadlift'],
+ 'medicine ball lunge with twist':['medicine ball lunge with twist'],
+ 'medicine ball figure 8':['medicine ball figure 8'],
+ 'curl bar preacher curl':['curl bar preacher curl','preacher curl'],
+ 'curl bar close grip bench press':['curl bar close grip bench press','close grip'],
+ 'curl bar bent over row':['curl bar bent over row','bent over row'],
+ 'curl bar good morning':['curl bar good morning','good morning'],
+ 'curl bar 21s curl':['curl bar 21s curl'],
+ 'bodyweight squat':['bodyweight squat'],
+ 'bodyweight lunge':['bodyweight lunge'],
+ 'bodyweight glute kickback':['bodyweight glute kickback'],
+ 'bodyweight calf raise':['bodyweight calf raise','calf raise'],
+ 'mountain climber':['mountain climber'],
+ 'bear crawl hold':['bear crawl hold','bear crawl'],
+ 'standing oblique crunch':['standing oblique crunch','oblique crunch'],
+ 'bodyweight hip thrust':['bodyweight hip thrust','hip thrust'],
+ 'single leg extension':['single leg extension'],
+ 'single leg curl':['single leg curl'],
+ 'leg extension top range partials':['leg extension top range partials','leg extension','partial leg extension'],
+ 'box squat with dumbbells':['box squat with dumbbells','box squat'],
+ 'lateral box step up':['lateral box step up'],
+ 'box tricep dip':['box tricep dip'],
+ 'single leg box squat assisted':['single leg box squat assisted','box squat'],
+ 'box step down':['box step down','step down'],
+ 'elevated push up hands on box':['elevated push up hands on box'],
+ 'box plank walkout':['box plank walkout'],
+ 'seated box jump up low box controlled':['seated box jump up low box controlled','box jump'],
+ 'chin up band assisted':['chin up band assisted'],
+ 'wide grip pull up':['wide grip pull up'],
+ 'hanging l sit':['hanging l sit'],
+ 'hanging leg raise straight leg':['hanging leg raise straight leg','leg raise'],
+ 'active hang shoulders engaged':['active hang shoulders engaged','active hang'],
+ 'commando pull up':['commando pull up'],
+ 'towel grip hang':['towel grip hang','towel grip'],
+ 'foam roll quads':['foam roll quads','foam roll'],
+ 'foam roll calves':['foam roll calves','foam roll'],
+ '3 4 sit up':['3 4 sit up'],
+ '90 90 hamstring':['90 90 hamstring'],
+ 'adductor':['adductor'],
+ 'advanced kettlebell windmill':['advanced kettlebell windmill'],
+ 'air bike':['air bike'],
+ 'all fours quad stretch':['all fours quad stretch'],
+ 'alternate hammer curl':['alternate hammer curl'],
+ 'alternate heel touchers':['alternate heel touchers'],
+ 'alternate incline dumbbell curl':['alternate incline dumbbell curl'],
+ 'alternating cable shoulder press':['alternating cable shoulder press'],
+ 'alternating deltoid raise':['alternating deltoid raise'],
+ 'alternating floor press':['alternating floor press'],
+ 'alternating hang clean':['alternating hang clean'],
+ 'alternating kettlebell press':['alternating kettlebell press'],
+ 'alternating kettlebell row':['alternating kettlebell row'],
+ 'alternating renegade row':['alternating renegade row'],
+ 'anti gravity press':['anti gravity press'],
+ 'arnold dumbbell press':['arnold dumbbell press'],
+ 'around the worlds':['around the worlds'],
+ 'back flyes with bands':['back flyes with bands'],
+ 'backward medicine ball throw':['backward medicine ball throw'],
+ 'band good morning pull through':['band good morning pull through','good morning','pull through'],
+ 'band hip adductions':['band hip adductions'],
+ 'band skull crusher':['band skull crusher'],
+ 'barbell ab rollout':['barbell ab rollout'],
+ 'barbell ab rollout on knees':['barbell ab rollout on knees'],
+ 'barbell bench press medium grip':['barbell bench press medium grip'],
+ 'barbell curl':['barbell curl'],
+ 'barbell curls lying against an incline':['barbell curls lying against an incline'],
+ 'barbell deadlift':['barbell deadlift'],
+ 'barbell full squat':['barbell full squat'],
+ 'barbell glute bridge':['barbell glute bridge'],
+ 'barbell guillotine bench press':['barbell guillotine bench press'],
+ 'barbell hack squat':['barbell hack squat'],
+ 'barbell hip thrust':['barbell hip thrust'],
+ 'barbell incline bench press medium grip':['barbell incline bench press medium grip'],
+ 'barbell incline shoulder raise':['barbell incline shoulder raise'],
+ 'barbell lunge':['barbell lunge'],
+ 'barbell rear delt row':['barbell rear delt row'],
+ 'barbell rollout from bench':['barbell rollout from bench'],
+ 'barbell seated calf raise':['barbell seated calf raise'],
+ 'barbell shoulder press':['barbell shoulder press'],
+ 'barbell shrug':['barbell shrug'],
+ 'barbell shrug behind the back':['barbell shrug behind the back'],
+ 'barbell side bend':['barbell side bend'],
+ 'barbell side split squat':['barbell side split squat'],
+ 'barbell squat':['barbell squat'],
+ 'barbell squat to a bench':['barbell squat to a bench'],
+ 'barbell step ups':['barbell step ups'],
+ 'barbell walking lunge':['barbell walking lunge'],
+ 'bench dips':['bench dips'],
+ 'bench jump':['bench jump'],
+ 'bench press powerlifting':['bench press powerlifting'],
+ 'bench press with bands':['bench press with bands'],
+ 'bent arm barbell pullover':['bent arm barbell pullover'],
+ 'bent arm dumbbell pullover':['bent arm dumbbell pullover'],
+ 'bent knee hip raise':['bent knee hip raise'],
+ 'bent over barbell row':['bent over barbell row'],
+ 'bent over dumbbell rear delt raise with head on bench':['bent over dumbbell rear delt raise with head on bench','rear delt'],
+ 'bent over low pulley side lateral':['bent over low pulley side lateral'],
+ 'bent over one arm long bar row':['bent over one arm long bar row','one arm'],
+ 'bent over two arm long bar row':['bent over two arm long bar row'],
+ 'bent over two dumbbell row':['bent over two dumbbell row'],
+ 'bent over two dumbbell row with palms in':['bent over two dumbbell row with palms in'],
+ 'bent press':['bent press'],
+ 'body up':['body up'],
+ 'body tricep press':['body tricep press'],
+ 'bodyweight flyes':['bodyweight flyes'],
+ 'bosu ball cable crunch with side bends':['bosu ball cable crunch with side bends','side bend'],
+ 'bottoms up clean from the hang position':['bottoms up clean from the hang position'],
+ 'bottoms up':['bottoms up'],
+ 'box jump multiple response':['box jump multiple response'],
+ 'box skip':['box skip'],
+ 'box squat':['box squat'],
+ 'brachialis smr':['brachialis smr'],
+ 'bradford rocky presses':['bradford rocky presses'],
+ 'butt ups':['butt ups'],
+ 'butt lift bridge':['butt lift bridge'],
+ 'cable chest press':['cable chest press'],
+ 'cable crunch':['cable crunch'],
+ 'cable deadlifts':['cable deadlifts'],
+ 'cable hammer curls rope attachment':['cable hammer curls rope attachment'],
+ 'cable hip adduction':['cable hip adduction'],
+ 'cable incline pushdown':['cable incline pushdown'],
+ 'cable incline triceps extension':['cable incline triceps extension'],
+ 'cable internal rotation':['cable internal rotation'],
+ 'cable iron cross':['cable iron cross'],
+ 'cable judo flip':['cable judo flip'],
+ 'cable lying triceps extension':['cable lying triceps extension'],
+ 'cable one arm tricep extension':['cable one arm tricep extension','one arm','tricep extension'],
+ 'cable preacher curl':['cable preacher curl'],
+ 'cable rear delt fly':['cable rear delt fly'],
+ 'cable reverse crunch':['cable reverse crunch'],
+ 'cable rope overhead triceps extension':['cable rope overhead triceps extension'],
+ 'cable rope rear delt rows':['cable rope rear delt rows'],
+ 'cable russian twists':['cable russian twists'],
+ 'cable seated crunch':['cable seated crunch'],
+ 'cable seated lateral raise':['cable seated lateral raise'],
+ 'cable shoulder press':['cable shoulder press'],
+ 'cable shrugs':['cable shrugs'],
+ 'cable wrist curl':['cable wrist curl'],
+ 'calf raise on a dumbbell':['calf raise on a dumbbell'],
+ 'calf raises with bands':['calf raises with bands'],
+ 'calves smr':['calves smr'],
+ 'car drivers':['car drivers'],
+ 'catch and overhead throw':['catch and overhead throw'],
+ 'chest push from 3 point stance':['chest push from 3 point stance'],
+ 'chest push multiple response':['chest push multiple response'],
+ 'chest push single response':['chest push single response'],
+ 'chest push with run release':['chest push with run release'],
+ 'chin up':['chin up'],
+ 'clean':['clean'],
+ 'clean deadlift':['clean deadlift'],
+ 'clean pull':['clean pull'],
+ 'clean shrug':['clean shrug'],
+ 'clean and jerk':['clean and jerk'],
+ 'clean and press':['clean and press'],
+ 'clean from blocks':['clean from blocks'],
+ 'clock push up':['clock push up'],
+ 'close grip barbell bench press':['close grip barbell bench press','close grip'],
+ 'close grip dumbbell press':['close grip dumbbell press','close grip'],
+ 'close grip ez bar curl with band':['close grip ez bar curl with band','close grip'],
+ 'close grip ez bar press':['close grip ez bar press','close grip'],
+ 'close grip ez bar curl':['close grip ez bar curl','close grip'],
+ 'close grip front lat pulldown':['close grip front lat pulldown','close grip','lat pulldown'],
+ 'close grip push up off of a dumbbell':['close grip push up off of a dumbbell','close grip'],
+ 'close grip standing barbell curl':['close grip standing barbell curl','close grip'],
+ 'cocoons':['cocoons'],
+ 'concentration curls':['concentration curls'],
+ 'cross body crunch':['cross body crunch'],
+ 'cross body hammer curl':['cross body hammer curl'],
+ 'cross over with bands':['cross over with bands'],
+ 'crunch hands overhead':['crunch hands overhead'],
+ 'crunch legs on exercise ball':['crunch legs on exercise ball'],
+ 'crunches':['crunches'],
+ 'cuban press':['cuban press'],
+ 'decline barbell bench press':['decline barbell bench press'],
+ 'decline close grip bench to skull crusher':['decline close grip bench to skull crusher','close grip','skull crusher'],
+ 'decline crunch':['decline crunch'],
+ 'decline dumbbell bench press':['decline dumbbell bench press'],
+ 'decline dumbbell flyes':['decline dumbbell flyes'],
+ 'decline dumbbell triceps extension':['decline dumbbell triceps extension'],
+ 'decline ez bar triceps extension':['decline ez bar triceps extension'],
+ 'decline oblique crunch':['decline oblique crunch'],
+ 'decline reverse crunch':['decline reverse crunch'],
+ 'deficit deadlift':['deficit deadlift'],
+ 'dips chest version':['dips chest version'],
+ 'dips triceps version':['dips triceps version'],
+ 'double kettlebell alternating hang clean':['double kettlebell alternating hang clean'],
+ 'double kettlebell jerk':['double kettlebell jerk'],
+ 'double kettlebell push press':['double kettlebell push press'],
+ 'double kettlebell snatch':['double kettlebell snatch'],
+ 'double kettlebell windmill':['double kettlebell windmill'],
+ 'double leg butt kick':['double leg butt kick'],
+ 'drag curl':['drag curl'],
+ 'dumbbell alternate bicep curl':['dumbbell alternate bicep curl'],
+ 'dumbbell bench press with neutral grip':['dumbbell bench press with neutral grip'],
+ 'dumbbell clean':['dumbbell clean'],
+ 'dumbbell flyes':['dumbbell flyes'],
+ 'dumbbell incline row':['dumbbell incline row'],
+ 'dumbbell incline shoulder raise':['dumbbell incline shoulder raise'],
+ 'dumbbell lunges':['dumbbell lunges'],
+ 'dumbbell lying one arm rear lateral raise':['dumbbell lying one arm rear lateral raise','one arm','lateral raise'],
+ 'dumbbell lying pronation':['dumbbell lying pronation'],
+ 'dumbbell lying rear lateral raise':['dumbbell lying rear lateral raise'],
+ 'dumbbell lying supination':['dumbbell lying supination'],
+ 'dumbbell one arm shoulder press':['dumbbell one arm shoulder press','one arm','shoulder press'],
+ 'dumbbell one arm triceps extension':['dumbbell one arm triceps extension','one arm'],
+ 'dumbbell one arm upright row':['dumbbell one arm upright row','one arm','upright row'],
+ 'dumbbell prone incline curl':['dumbbell prone incline curl'],
+ 'dumbbell raise':['dumbbell raise'],
+ 'dumbbell rear lunge':['dumbbell rear lunge'],
+ 'dumbbell scaption':['dumbbell scaption'],
+ 'dumbbell seated box jump':['dumbbell seated box jump'],
+ 'dumbbell seated one leg calf raise':['dumbbell seated one leg calf raise'],
+ 'dumbbell shoulder press':['dumbbell shoulder press'],
+ 'dumbbell squat to a bench':['dumbbell squat to a bench'],
+ 'dumbbell step ups':['dumbbell step ups'],
+ 'dumbbell tricep extension pronated grip':['dumbbell tricep extension pronated grip'],
+ 'ez bar curl':['ez bar curl'],
+ 'ez bar skullcrusher':['ez bar skullcrusher'],
+ 'elbow to knee':['elbow to knee'],
+ 'elevated back lunge':['elevated back lunge'],
+ 'elevated cable rows':['elevated cable rows'],
+ 'extended range one arm kettlebell floor press':['extended range one arm kettlebell floor press','one arm','floor press'],
+ 'external rotation':['external rotation'],
+ 'external rotation with band':['external rotation with band'],
+ 'external rotation with cable':['external rotation with cable'],
+ 'face pull':['face pull'],
+ 'fast skipping':['fast skipping'],
+ 'finger curls':['finger curls'],
+ 'flat bench cable flyes':['flat bench cable flyes'],
+ 'flat bench leg pull in':['flat bench leg pull in'],
+ 'flat bench lying leg raise':['flat bench lying leg raise'],
+ 'flexor incline dumbbell curls':['flexor incline dumbbell curls'],
+ 'floor press':['floor press'],
+ 'flutter kicks':['flutter kicks'],
+ 'frankenstein squat':['frankenstein squat'],
+ 'freehand jump squat':['freehand jump squat'],
+ 'frog sit ups':['frog sit ups'],
+ 'front barbell squat':['front barbell squat'],
+ 'front barbell squat to a bench':['front barbell squat to a bench'],
+ 'front box jump':['front box jump'],
+ 'front cable raise':['front cable raise'],
+ 'front dumbbell raise':['front dumbbell raise'],
+ 'front incline dumbbell raise':['front incline dumbbell raise'],
+ 'front leg raises':['front leg raises'],
+ 'front raise and pullover':['front raise and pullover','front raise'],
+ 'front squat clean grip':['front squat clean grip','front squat'],
+ 'front squats with two kettlebells':['front squats with two kettlebells'],
+ 'front two dumbbell raise':['front two dumbbell raise'],
+ 'full range of motion lat pulldown':['full range of motion lat pulldown'],
+ 'glute kickback':['glute kickback'],
+ 'goblet squat':['goblet squat'],
+ 'good morning':['good morning'],
+ 'good morning off pins':['good morning off pins'],
+ 'gorilla chin crunch':['gorilla chin crunch'],
+ 'groiners':['groiners'],
+ 'hammer curls':['hammer curls'],
+ 'hammer grip incline db bench press':['hammer grip incline db bench press'],
+ 'hamstring smr':['hamstring smr'],
+ 'handstand push ups':['handstand push ups'],
+ 'hang clean':['hang clean'],
+ 'hang clean below the knees':['hang clean below the knees'],
+ 'hang snatch':['hang snatch'],
+ 'hang snatch below knees':['hang snatch below knees'],
+ 'hanging bar good morning':['hanging bar good morning'],
+ 'hanging leg raise':['hanging leg raise'],
+ 'hanging pike':['hanging pike'],
+ 'heaving snatch balance':['heaving snatch balance'],
+ 'high cable curls':['high cable curls'],
+ 'hip circles prone':['hip circles prone'],
+ 'hip extension with bands':['hip extension with bands'],
+ 'hip flexion with band':['hip flexion with band'],
+ 'hip lift with band':['hip lift with band'],
+ 'hyperextensions with no hyperextension bench':['hyperextensions with no hyperextension bench'],
+ 'iliotibial tract smr':['iliotibial tract smr'],
+ 'inchworm':['inchworm'],
+ 'incline barbell triceps extension':['incline barbell triceps extension'],
+ 'incline bench pull':['incline bench pull'],
+ 'incline cable chest press':['incline cable chest press'],
+ 'incline cable flye':['incline cable flye'],
+ 'incline dumbbell bench with palms facing in':['incline dumbbell bench with palms facing in'],
+ 'incline dumbbell curl':['incline dumbbell curl'],
+ 'incline dumbbell flyes':['incline dumbbell flyes'],
+ 'incline dumbbell flyes with a twist':['incline dumbbell flyes with a twist'],
+ 'incline dumbbell press':['incline dumbbell press'],
+ 'incline hammer curls':['incline hammer curls'],
+ 'incline inner biceps curl':['incline inner biceps curl'],
+ 'incline push up':['incline push up'],
+ 'incline push up close grip':['incline push up close grip','close grip'],
+ 'incline push up medium':['incline push up medium'],
+ 'incline push up reverse grip':['incline push up reverse grip'],
+ 'incline push up wide':['incline push up wide'],
+ 'internal rotation with band':['internal rotation with band'],
+ 'iron cross':['iron cross'],
+ 'isometric chest squeezes':['isometric chest squeezes'],
+ 'isometric wipers':['isometric wipers'],
+ 'jm press':['jm press'],
+ 'jackknife sit up':['jackknife sit up'],
+ 'janda sit up':['janda sit up'],
+ 'jefferson squats':['jefferson squats'],
+ 'jerk balance':['jerk balance'],
+ 'jerk dip squat':['jerk dip squat'],
+ 'kettlebell arnold press':['kettlebell arnold press'],
+ 'kettlebell dead clean':['kettlebell dead clean'],
+ 'kettlebell figure 8':['kettlebell figure 8'],
+ 'kettlebell hang clean':['kettlebell hang clean'],
+ 'kettlebell one legged deadlift':['kettlebell one legged deadlift'],
+ 'kettlebell pass between the legs':['kettlebell pass between the legs'],
+ 'kettlebell pirate ships':['kettlebell pirate ships'],
+ 'kettlebell pistol squat':['kettlebell pistol squat'],
+ 'kettlebell seated press':['kettlebell seated press'],
+ 'kettlebell seesaw press':['kettlebell seesaw press'],
+ 'kettlebell sumo high pull':['kettlebell sumo high pull'],
+ 'kettlebell turkish get up lunge style':['kettlebell turkish get up lunge style','turkish get up'],
+ 'kettlebell turkish get up squat style':['kettlebell turkish get up squat style','turkish get up'],
+ 'kipping muscle up':['kipping muscle up'],
+ 'knee circles':['knee circles'],
+ 'knee tuck jump':['knee tuck jump'],
+ 'kneeling cable crunch with alternating oblique twists':['kneeling cable crunch with alternating oblique twists','oblique twist'],
+ 'kneeling cable triceps extension':['kneeling cable triceps extension'],
+ 'kneeling high pulley row':['kneeling high pulley row'],
+ 'kneeling jump squat':['kneeling jump squat'],
+ 'kneeling single arm high pulley row':['kneeling single arm high pulley row','single arm'],
+ 'kneeling squat':['kneeling squat'],
+ 'landmine 180 s':['landmine 180 s'],
+ 'landmine linear jammer':['landmine linear jammer'],
+ 'lateral bound':['lateral bound'],
+ 'lateral box jump':['lateral box jump'],
+ 'lateral raise with bands':['lateral raise with bands'],
+ 'latissimus dorsi smr':['latissimus dorsi smr'],
+ 'leg over floor press':['leg over floor press'],
+ 'leg extensions':['leg extensions'],
+ 'leg lift':['leg lift'],
+ 'leg pull in':['leg pull in'],
+ 'low cable crossover':['low cable crossover'],
+ 'low cable triceps extension':['low cable triceps extension'],
+ 'low pulley row to neck':['low pulley row to neck'],
+ 'lower back smr':['lower back smr'],
+ 'lower back curl':['lower back curl'],
+ 'lunge pass through':['lunge pass through'],
+ 'lying cable curl':['lying cable curl'],
+ 'lying cambered barbell row':['lying cambered barbell row'],
+ 'lying close grip bar curl on high pulley':['lying close grip bar curl on high pulley','close grip'],
+ 'lying close grip barbell triceps extension behind the head':['lying close grip barbell triceps extension behind the head','close grip'],
+ 'lying close grip barbell triceps press to chin':['lying close grip barbell triceps press to chin','close grip'],
+ 'lying crossover':['lying crossover'],
+ 'lying dumbbell tricep extension':['lying dumbbell tricep extension'],
+ 'lying glute':['lying glute'],
+ 'lying high bench barbell curl':['lying high bench barbell curl'],
+ 'lying leg curls':['lying leg curls'],
+ 'lying one arm lateral raise':['lying one arm lateral raise','one arm','lateral raise'],
+ 'lying prone quadriceps':['lying prone quadriceps'],
+ 'lying rear delt raise':['lying rear delt raise','rear delt'],
+ 'lying supine dumbbell curl':['lying supine dumbbell curl'],
+ 'lying triceps press':['lying triceps press'],
+ 'medicine ball chest pass':['medicine ball chest pass'],
+ 'medicine ball full twist':['medicine ball full twist'],
+ 'medicine ball scoop throw':['medicine ball scoop throw'],
+ 'middle back shrug':['middle back shrug'],
+ 'monster walk':['monster walk'],
+ 'muscle snatch':['muscle snatch'],
+ 'muscle up':['muscle up'],
+ 'narrow stance squats':['narrow stance squats'],
+ 'natural glute ham raise':['natural glute ham raise'],
+ 'neck press':['neck press'],
+ 'oblique crunches':['oblique crunches'],
+ 'oblique crunches on the floor':['oblique crunches on the floor'],
+ 'olympic squat':['olympic squat'],
+ 'one arm dumbbell row':['one arm dumbbell row','one arm'],
+ 'one arm flat bench dumbbell flye':['one arm flat bench dumbbell flye','one arm'],
+ 'one arm high pulley cable side bends':['one arm high pulley cable side bends','one arm','side bend'],
+ 'one arm incline lateral raise':['one arm incline lateral raise','one arm','lateral raise'],
+ 'one arm kettlebell clean':['one arm kettlebell clean','one arm'],
+ 'one arm kettlebell clean and jerk':['one arm kettlebell clean and jerk','one arm','clean and jerk'],
+ 'one arm kettlebell floor press':['one arm kettlebell floor press','one arm','floor press'],
+ 'one arm kettlebell jerk':['one arm kettlebell jerk','one arm'],
+ 'one arm kettlebell military press to the side':['one arm kettlebell military press to the side','one arm'],
+ 'one arm kettlebell para press':['one arm kettlebell para press','one arm'],
+ 'one arm kettlebell push press':['one arm kettlebell push press','one arm','push press'],
+ 'one arm kettlebell row':['one arm kettlebell row','one arm'],
+ 'one arm kettlebell snatch':['one arm kettlebell snatch','one arm'],
+ 'one arm kettlebell split jerk':['one arm kettlebell split jerk','one arm'],
+ 'one arm kettlebell split snatch':['one arm kettlebell split snatch','one arm'],
+ 'one arm kettlebell swings':['one arm kettlebell swings','one arm'],
+ 'one arm long bar row':['one arm long bar row','one arm'],
+ 'one arm medicine ball slam':['one arm medicine ball slam','one arm'],
+ 'one arm open palm kettlebell clean':['one arm open palm kettlebell clean','one arm'],
+ 'one arm overhead kettlebell squats':['one arm overhead kettlebell squats','one arm'],
+ 'one arm side deadlift':['one arm side deadlift','one arm'],
+ 'one arm side laterals':['one arm side laterals'],
+ 'one legged cable kickback':['one legged cable kickback'],
+ 'one arm chin up':['one arm chin up','one arm'],
+ 'one arm dumbbell bench press':['one arm dumbbell bench press','one arm'],
+ 'one arm dumbbell preacher curl':['one arm dumbbell preacher curl','one arm','preacher curl'],
+ 'one arm floor press':['one arm floor press','one arm','floor press'],
+ 'one arm lat pulldown':['one arm lat pulldown','one arm','lat pulldown'],
+ 'one arm pronated dumbbell triceps extension':['one arm pronated dumbbell triceps extension','one arm'],
+ 'one arm supinated dumbbell triceps extension':['one arm supinated dumbbell triceps extension','one arm'],
+ 'one leg barbell squat':['one leg barbell squat'],
+ 'open palm kettlebell clean':['open palm kettlebell clean'],
+ 'overhead cable curl':['overhead cable curl'],
+ 'overhead slam':['overhead slam'],
+ 'overhead squat':['overhead squat'],
+ 'overhead triceps':['overhead triceps'],
+ 'pallof press':['pallof press'],
+ 'pallof press with rotation':['pallof press with rotation'],
+ 'palms down dumbbell wrist curl over a bench':['palms down dumbbell wrist curl over a bench'],
+ 'palms down wrist curl over a bench':['palms down wrist curl over a bench'],
+ 'palms up barbell wrist curl over a bench':['palms up barbell wrist curl over a bench'],
+ 'palms up dumbbell wrist curl over a bench':['palms up dumbbell wrist curl over a bench'],
+ 'parallel bar dip':['parallel bar dip'],
+ 'peroneals smr':['peroneals smr'],
+ 'pin presses':['pin presses'],
+ 'piriformis smr':['piriformis smr'],
+ 'plank':['plank'],
+ 'plie dumbbell squat':['plie dumbbell squat'],
+ 'plyo kettlebell pushups':['plyo kettlebell pushups'],
+ 'plyo push up':['plyo push up'],
+ 'power clean':['power clean'],
+ 'power clean from blocks':['power clean from blocks'],
+ 'power jerk':['power jerk'],
+ 'power partials':['power partials'],
+ 'power snatch':['power snatch'],
+ 'power snatch from blocks':['power snatch from blocks'],
+ 'preacher curl':['preacher curl'],
+ 'preacher hammer dumbbell curl':['preacher hammer dumbbell curl'],
+ 'press sit up':['press sit up'],
+ 'pull through':['pull through'],
+ 'pullups':['pullups'],
+ 'push up wide':['push up wide'],
+ 'push ups close triceps position':['push ups close triceps position'],
+ 'push ups with feet elevated':['push ups with feet elevated'],
+ 'push press':['push press'],
+ 'push press behind the neck':['push press behind the neck'],
+ 'push up to side plank':['push up to side plank','side plank'],
+ 'pushups':['pushups'],
+ 'pushups close and wide hand positions':['pushups close and wide hand positions'],
+ 'quadriceps smr':['quadriceps smr'],
+ 'rack delivery':['rack delivery'],
+ 'rack pulls':['rack pulls'],
+ 'rear leg raises':['rear leg raises'],
+ 'return push from stance':['return push from stance'],
+ 'reverse barbell curl':['reverse barbell curl'],
+ 'reverse barbell preacher curls':['reverse barbell preacher curls'],
+ 'reverse cable curl':['reverse cable curl'],
+ 'reverse crunch':['reverse crunch'],
+ 'reverse flyes':['reverse flyes'],
+ 'reverse flyes with external rotation':['reverse flyes with external rotation'],
+ 'reverse grip bent over rows':['reverse grip bent over rows'],
+ 'reverse grip triceps pushdown':['reverse grip triceps pushdown'],
+ 'reverse triceps bench press':['reverse triceps bench press'],
+ 'rhomboids smr':['rhomboids smr'],
+ 'ring dips':['ring dips'],
+ 'rocket jump':['rocket jump'],
+ 'rocking standing calf raise':['rocking standing calf raise'],
+ 'rocky pull ups pulldowns':['rocky pull ups pulldowns'],
+ 'romanian deadlift':['romanian deadlift'],
+ 'romanian deadlift from deficit':['romanian deadlift from deficit'],
+ 'rope crunch':['rope crunch'],
+ 'rope straight arm pulldown':['rope straight arm pulldown'],
+ 'russian twist':['russian twist'],
+ 'scissor kick':['scissor kick'],
+ 'scissors jump':['scissors jump'],
+ 'seated barbell military press':['seated barbell military press'],
+ 'seated barbell twist':['seated barbell twist'],
+ 'seated bent over one arm dumbbell triceps extension':['seated bent over one arm dumbbell triceps extension','one arm'],
+ 'seated bent over rear delt raise':['seated bent over rear delt raise','rear delt'],
+ 'seated bent over two arm dumbbell triceps extension':['seated bent over two arm dumbbell triceps extension'],
+ 'seated biceps':['seated biceps'],
+ 'seated cable rows':['seated cable rows'],
+ 'seated cable shoulder press':['seated cable shoulder press'],
+ 'seated close grip concentration barbell curl':['seated close grip concentration barbell curl','close grip'],
+ 'seated dumbbell curl':['seated dumbbell curl'],
+ 'seated dumbbell inner biceps curl':['seated dumbbell inner biceps curl'],
+ 'seated dumbbell palms down wrist curl':['seated dumbbell palms down wrist curl'],
+ 'seated dumbbell palms up wrist curl':['seated dumbbell palms up wrist curl'],
+ 'seated dumbbell press':['seated dumbbell press'],
+ 'seated flat bench leg pull in':['seated flat bench leg pull in'],
+ 'seated front deltoid':['seated front deltoid'],
+ 'seated glute':['seated glute'],
+ 'seated good mornings':['seated good mornings'],
+ 'seated leg curl':['seated leg curl'],
+ 'seated leg tucks':['seated leg tucks'],
+ 'seated one arm dumbbell palms down wrist curl':['seated one arm dumbbell palms down wrist curl','one arm'],
+ 'seated one arm dumbbell palms up wrist curl':['seated one arm dumbbell palms up wrist curl','one arm'],
+ 'seated one arm cable pulley rows':['seated one arm cable pulley rows','one arm'],
+ 'seated palm up barbell wrist curl':['seated palm up barbell wrist curl'],
+ 'seated palms down barbell wrist curl':['seated palms down barbell wrist curl'],
+ 'seated side lateral raise':['seated side lateral raise'],
+ 'seated triceps press':['seated triceps press'],
+ 'seated two arm palms up low pulley wrist curl':['seated two arm palms up low pulley wrist curl'],
+ 'see saw press alternating side press':['see saw press alternating side press'],
+ 'shotgun row':['shotgun row'],
+ 'shoulder press with bands':['shoulder press with bands'],
+ 'side bridge':['side bridge'],
+ 'side jackknife':['side jackknife'],
+ 'side lateral raise':['side lateral raise'],
+ 'side laterals to front raise':['side laterals to front raise'],
+ 'side leg raises':['side leg raises'],
+ 'side to side box shuffle':['side to side box shuffle'],
+ 'single arm cable crossover':['single arm cable crossover'],
+ 'single arm linear jammer':['single arm linear jammer'],
+ 'single arm push up':['single arm push up','single arm'],
+ 'single leg high box squat':['single leg high box squat'],
+ 'single leg leg extension':['single leg leg extension'],
+ 'single dumbbell raise':['single dumbbell raise'],
+ 'single leg butt kick':['single leg butt kick'],
+ 'single leg glute bridge':['single leg glute bridge'],
+ 'sit up':['sit up'],
+ 'smith incline shoulder raise':['smith incline shoulder raise'],
+ 'smith machine behind the back shrug':['smith machine behind the back shrug'],
+ 'smith machine bench press':['smith machine bench press'],
+ 'smith machine decline press':['smith machine decline press'],
+ 'smith machine hang power clean':['smith machine hang power clean'],
+ 'smith machine hip raise':['smith machine hip raise'],
+ 'smith machine leg press':['smith machine leg press'],
+ 'smith machine one arm upright row':['smith machine one arm upright row','one arm','upright row'],
+ 'smith machine overhead shoulder press':['smith machine overhead shoulder press'],
+ 'smith machine pistol squat':['smith machine pistol squat'],
+ 'smith machine reverse calf raises':['smith machine reverse calf raises'],
+ 'smith machine squat':['smith machine squat'],
+ 'smith machine stiff legged deadlift':['smith machine stiff legged deadlift'],
+ 'snatch':['snatch'],
+ 'snatch balance':['snatch balance'],
+ 'snatch deadlift':['snatch deadlift'],
+ 'snatch pull':['snatch pull'],
+ 'snatch shrug':['snatch shrug'],
+ 'snatch from blocks':['snatch from blocks'],
+ 'speed band overhead triceps':['speed band overhead triceps'],
+ 'speed box squat':['speed box squat'],
+ 'speed squats':['speed squats'],
+ 'spell caster':['spell caster'],
+ 'spider crawl':['spider crawl'],
+ 'spider curl':['spider curl'],
+ 'split clean':['split clean'],
+ 'split jerk':['split jerk'],
+ 'split jump':['split jump'],
+ 'split snatch':['split snatch'],
+ 'split squat with dumbbells':['split squat with dumbbells'],
+ 'squat jerk':['squat jerk'],
+ 'squat with plate movers':['squat with plate movers'],
+ 'squats with bands':['squats with bands'],
+ 'standing alternating dumbbell press':['standing alternating dumbbell press'],
+ 'standing barbell calf raise':['standing barbell calf raise'],
+ 'standing barbell press behind neck':['standing barbell press behind neck'],
+ 'standing bent over one arm dumbbell triceps extension':['standing bent over one arm dumbbell triceps extension','one arm'],
+ 'standing bent over two arm dumbbell triceps extension':['standing bent over two arm dumbbell triceps extension'],
+ 'standing biceps cable curl':['standing biceps cable curl'],
+ 'standing bradford press':['standing bradford press'],
+ 'standing cable chest press':['standing cable chest press'],
+ 'standing cable lift':['standing cable lift'],
+ 'standing cable wood chop':['standing cable wood chop'],
+ 'standing concentration curl':['standing concentration curl'],
+ 'standing dumbbell press':['standing dumbbell press'],
+ 'standing dumbbell reverse curl':['standing dumbbell reverse curl'],
+ 'standing dumbbell straight arm front delt raise above head':['standing dumbbell straight arm front delt raise above head'],
+ 'standing dumbbell triceps extension':['standing dumbbell triceps extension'],
+ 'standing dumbbell upright row':['standing dumbbell upright row'],
+ 'standing front barbell raise over head':['standing front barbell raise over head'],
+ 'standing hip circles':['standing hip circles'],
+ 'standing inner biceps curl':['standing inner biceps curl'],
+ 'standing leg curl':['standing leg curl'],
+ 'standing long jump':['standing long jump'],
+ 'standing low pulley deltoid raise':['standing low pulley deltoid raise'],
+ 'standing low pulley one arm triceps extension':['standing low pulley one arm triceps extension','one arm'],
+ 'standing military press':['standing military press'],
+ 'standing one arm cable curl':['standing one arm cable curl','one arm'],
+ 'standing one arm dumbbell curl over incline bench':['standing one arm dumbbell curl over incline bench','one arm'],
+ 'standing one arm dumbbell triceps extension':['standing one arm dumbbell triceps extension','one arm'],
+ 'standing overhead barbell triceps extension':['standing overhead barbell triceps extension'],
+ 'standing palm in one arm dumbbell press':['standing palm in one arm dumbbell press','one arm'],
+ 'standing palms in dumbbell press':['standing palms in dumbbell press'],
+ 'standing palms up barbell behind the back wrist curl':['standing palms up barbell behind the back wrist curl'],
+ 'standing rope crunch':['standing rope crunch'],
+ 'standing towel triceps extension':['standing towel triceps extension'],
+ 'standing two arm overhead throw':['standing two arm overhead throw'],
+ 'star jump':['star jump'],
+ 'step up with knee raise':['step up with knee raise','knee raise'],
+ 'stiff legged barbell deadlift':['stiff legged barbell deadlift'],
+ 'stiff legged dumbbell deadlift':['stiff legged dumbbell deadlift'],
+ 'stiff leg barbell good morning':['stiff leg barbell good morning'],
+ 'stomach vacuum':['stomach vacuum'],
+ 'straight arm dumbbell pullover':['straight arm dumbbell pullover'],
+ 'straight arm pulldown':['straight arm pulldown'],
+ 'straight bar bench mid rows':['straight bar bench mid rows'],
+ 'straight raises on incline bench':['straight raises on incline bench'],
+ 'sumo deadlift':['sumo deadlift'],
+ 'superman':['superman'],
+ 'supine chest throw':['supine chest throw'],
+ 'supine one arm overhead throw':['supine one arm overhead throw','one arm'],
+ 'supine two arm overhead throw':['supine two arm overhead throw'],
+ 't bar row with handle':['t bar row with handle'],
+ 'tate press':['tate press'],
+ 'toe touchers':['toe touchers'],
+ 'tricep dumbbell kickback':['tricep dumbbell kickback'],
+ 'triceps overhead extension with rope':['triceps overhead extension with rope'],
+ 'triceps pushdown':['triceps pushdown'],
+ 'triceps pushdown rope attachment':['triceps pushdown rope attachment'],
+ 'triceps pushdown v bar attachment':['triceps pushdown v bar attachment'],
+ 'tuck crunch':['tuck crunch'],
+ 'two arm dumbbell preacher curl':['two arm dumbbell preacher curl'],
+ 'two arm kettlebell clean':['two arm kettlebell clean'],
+ 'two arm kettlebell jerk':['two arm kettlebell jerk'],
+ 'two arm kettlebell military press':['two arm kettlebell military press'],
+ 'two arm kettlebell row':['two arm kettlebell row'],
+ 'underhand cable pulldowns':['underhand cable pulldowns'],
+ 'upright barbell row':['upright barbell row'],
+ 'upright cable row':['upright cable row'],
+ 'upright row with bands':['upright row with bands'],
+ 'v bar pulldown':['v bar pulldown'],
+ 'v bar pullup':['v bar pullup'],
+ 'vertical swing':['vertical swing'],
+ 'weighted bench dip':['weighted bench dip'],
+ 'weighted crunches':['weighted crunches'],
+ 'weighted jump squat':['weighted jump squat'],
+ 'weighted pull ups':['weighted pull ups'],
+ 'weighted sissy squat':['weighted sissy squat'],
+ 'wide grip barbell bench press':['wide grip barbell bench press'],
+ 'wide grip decline barbell bench press':['wide grip decline barbell bench press'],
+ 'wide grip decline barbell pullover':['wide grip decline barbell pullover'],
+ 'wide grip lat pulldown':['wide grip lat pulldown'],
+ 'wide grip pulldown behind the neck':['wide grip pulldown behind the neck'],
+ 'wide grip rear pull up':['wide grip rear pull up'],
+ 'wide grip standing barbell curl':['wide grip standing barbell curl'],
+ 'wide stance barbell squat':['wide stance barbell squat'],
+ 'wide stance stiff legs':['wide stance stiff legs'],
+ 'wind sprints':['wind sprints'],
+ 'wrist circles':['wrist circles'],
+ 'wrist rotations with straight bar':['wrist rotations with straight bar'],
+ 'zercher squats':['zercher squats'],
+ 'zottman curl':['zottman curl'],
+ 'zottman preacher curl':['zottman preacher curl'],
+
+};
+
+// Movement-family guardrails: Quick Demo may use different equipment, but it must show the same movement pattern.
+const MOVEMENT_GUARDS={
+ 'kettlebell goblet squat':['squat'],
+ 'kettlebell glute bridge':['bridge','thrust','hip raise'],
+ 'supported one arm kettlebell row':['row'],
+ 'kettlebell floor press':['floor press','lying press'],
+ 'kettlebell pullover from bench':['pullover'],
+ 'kettlebell suitcase carry':['carry','farmer','walk'],
+ 'smith machine box squat':['squat'],
+ 'smith machine hip thrust':['thrust','bridge'],
+ 'b52 seated cable row':['row'],
+ 'smith machine incline bench press':['incline','bench press','chest press'],
+ 'cable standing glute kickback':['kickback','hip extension'],
+ 'b52 pallof press':['pallof','anti rotation'],
+ 'low dumbbell step up':['step up'],
+ 'dumbbell bench press':['bench press','chest press'],
+ 'dumbbell glute bridge':['bridge','thrust','hip raise'],
+ 'chest supported dumbbell row':['row'],
+ 'dumbbell sit to stand':['sit to stand','chair squat','box squat','goblet squat'],
+ 'dumbbell farmer carry':['carry','farmer','walk'],
+ 'landmine squat':['squat'],
+ 'half kneeling single arm landmine press':['press'],
+ 'supported landmine row':['row'],
+ 'landmine reverse squat belt squat style':['squat'],
+ 'leg curl machine':['leg curl','hamstring curl'],
+ 'landmine anti rotation':['anti rotation','pallof'],
+ 'kettlebell deadlift moderate range':['deadlift','hinge'],
+ 'kettlebell halo':['halo'],
+ 'smith machine romanian deadlift':['romanian deadlift','rdl','deadlift'],
+ 'smith machine calf raise':['calf raise'],
+ 'cable lat pulldown':['pulldown','lat pull'],
+ 'cable tricep pushdown':['pushdown','tricep extension'],
+ 'cable face pull':['face pull','rear delt'],
+ 'seated dumbbell shoulder press':['shoulder press','overhead press'],
+ 'dumbbell bicep curl':['curl'],
+ 'standing dumbbell calf raise':['calf raise'],
+ 'landmine single leg rdl':['rdl','romanian deadlift','single leg deadlift','hinge'],
+ 'band pull apart':['pull apart','pull-apart'],
+ 'banded glute bridge':['bridge','thrust','hip raise'],
+ 'standing band row':['row'],
+ 'band lateral walk':['lateral walk','side step','monster walk'],
+ 'band pallof press':['pallof','anti rotation'],
+ 'band face pull':['face pull','rear delt'],
+ 'band tricep pressdown':['pushdown','tricep extension','pressdown'],
+ 'medicine ball slam controlled':['slam'],
+ 'seated medicine ball twist':['twist','russian twist','rotation'],
+ 'medicine ball squat to press':['squat to press','thruster','squat'],
+ 'medicine ball chest pass wall':['chest pass','chest throw'],
+ 'curl bar bicep curl':['curl'],
+ 'curl bar skullcrusher':['skullcrusher','tricep extension','lying extension'],
+ 'curl bar upright row':['upright row'],
+ 'standing march':['march'],
+ 'bird dog':['bird dog'],
+ 'dead bug':['dead bug'],
+ 'bodyweight glute bridge':['bridge','thrust','hip raise'],
+ 'leg extension machine':['leg extension'],
+ 'box step up':['step up'],
+ 'bodyweight box squat':['squat'],
+ 'band assisted pull up':['pull up','pull-up','chin up','lat pulldown'],
+ 'dead hang':['hang'],
+ 'foam roll lats upper back':['foam roll','myofascial'],
+ 'foam roll glutes hips':['foam roll','myofascial'],
+ 'kettlebell two hand swing':['swing'],
+ 'kettlebell single arm swing':['swing'],
+ 'kettlebell sumo deadlift':['deadlift','sumo'],
+ 'kettlebell reverse lunge':['lunge'],
+ 'kettlebell renegade row':['renegade row','plank row'],
+ 'kettlebell overhead carry':['overhead carry','waiter carry'],
+ 'kettlebell rack carry':['rack carry','front carry'],
+ 'kettlebell figure 8 to hold':['figure 8','figure eight'],
+ 'kettlebell around the world':['around the world'],
+ 'kettlebell thruster':['thruster'],
+ 'smith machine deadlift':['deadlift'],
+ 'smith machine bent over row':['bent over row','row'],
+ 'smith machine overhead press':['overhead press','shoulder press'],
+ 'smith machine split squat':['split squat','lunge'],
+ 'smith machine close grip bench press':['close grip bench','bench press'],
+ 'smith machine sumo squat':['sumo squat','squat'],
+ 'smith machine shrug':['shrug'],
+ 'smith machine front squat':['front squat'],
+ 'cable chest fly':['fly','chest fly'],
+ 'cable bicep curl':['curl'],
+ 'cable overhead tricep extension':['tricep extension','overhead extension'],
+ 'cable upright row':['upright row'],
+ 'cable reverse fly':['reverse fly','rear delt'],
+ 'cable single arm row':['row'],
+ 'cable woodchop':['woodchop','wood chop','chop'],
+ 'cable front raise':['front raise'],
+ 'dumbbell romanian deadlift':['romanian deadlift','rdl','deadlift'],
+ 'dumbbell reverse lunge':['lunge'],
+ 'dumbbell lateral lunge':['lateral lunge','side lunge'],
+ 'dumbbell lateral raise':['lateral raise','side raise'],
+ 'dumbbell rear delt fly':['rear delt','reverse fly'],
+ 'dumbbell hammer curl':['hammer curl','curl'],
+ 'dumbbell tricep kickback':['kickback'],
+ 'dumbbell incline bench press':['incline press','incline bench'],
+ 'dumbbell pullover':['pullover'],
+ 'dumbbell single leg rdl':['single leg rdl','single leg deadlift'],
+ 'dumbbell arnold press':['arnold press','shoulder press'],
+ 'dumbbell woodchop':['woodchop','wood chop','chop'],
+ 'landmine deadlift':['deadlift'],
+ 'landmine lateral squat':['lateral squat','side squat'],
+ 'landmine halo':['halo'],
+ 'standing landmine row':['row'],
+ 'landmine front squat':['front squat'],
+ 'band bicep curl':['curl'],
+ 'band squat':['squat'],
+ 'band chest press':['chest press','press'],
+ 'band overhead press':['overhead press','shoulder press'],
+ 'banded hip thrust':['hip thrust','bridge'],
+ 'band standing kickback':['kickback'],
+ 'band woodchop':['woodchop','wood chop','chop'],
+ 'band deadlift':['deadlift'],
+ 'medicine ball rotational throw wall':['rotational throw','rotation throw'],
+ 'medicine ball sit up pass':['sit up'],
+ 'medicine ball overhead carry':['overhead carry'],
+ 'curl bar reverse curl':['reverse curl'],
+ 'curl bar front raise':['front raise'],
+ 'bulgarian split squat rear foot on box':['bulgarian split squat','split squat'],
+ 'decline push up feet on box':['decline push up','push up'],
+ 'hanging knee raise':['knee raise','hanging'],
+ 'scapular pull up':['scapular pull up','scap pull'],
+ 'negative pull up':['negative pull up','eccentric pull up','pull up'],
+ 'push up knee or full':['push up'],
+ 'plank hold':['plank'],
+ 'side plank':['side plank'],
+ 'wall sit':['wall sit'],
+ 'superman hold':['superman'],
+ 'bodyweight reverse lunge':['lunge'],
+ 'kettlebell clean':["clean"],
+ 'kettlebell snatch':["snatch"],
+ 'kettlebell turkish get up':["turkish get up"],
+ 'kettlebell windmill':["windmill"],
+ 'kettlebell single leg deadlift':["single leg deadlift"],
+ 'kettlebell overhead lunge':["lunge"],
+ 'kettlebell bottoms up press':["bottoms up press"],
+ 'kettlebell high pull':["high pull"],
+ 'kettlebell goblet reverse lunge':["goblet reverse","reverse lunge"],
+ 'kettlebell single arm overhead press':["overhead press"],
+ 'kettlebell bear hug carry':["bear hug","carry"],
+ 'kettlebell crush grip march':["crush grip","march"],
+ 'smith machine flat bench press':["bench press","flat bench"],
+ 'smith machine decline bench press':["decline press","decline bench"],
+ 'smith machine seated shoulder press':["shoulder press"],
+ 'smith machine walking lunge':["walking lunge"],
+ 'smith machine good morning':["good morning"],
+ 'smith machine upright row':["upright row"],
+ 'smith machine skull crusher':["skull crusher"],
+ 'smith machine pause squat':["squat"],
+ 'smith machine single leg hip thrust':["hip thrust"],
+ 'smith machine reverse lunge':["reverse lunge"],
+ 'smith machine chest supported incline row':["incline row"],
+ 'smith machine step up':["step up"],
+ 'cable low row':["low row"],
+ 'cable high row':["high row"],
+ 'cable straight arm pulldown':["pulldown"],
+ 'cable single arm pulldown':["pulldown"],
+ 'cable lateral raise':["lateral raise"],
+ 'cable rear delt row':["rear delt","reverse fly"],
+ 'cable standing shoulder press':["shoulder press"],
+ 'cable squat':["squat"],
+ 'cable deadlift':["deadlift"],
+ 'cable reverse lunge':["reverse lunge"],
+ 'cable lateral lunge':["lateral lunge"],
+ 'cable pull through':["pull through"],
+ 'cable chop high to low':["chop"],
+ 'cable lift low to high':["woodchop","wood chop","chop"],
+ 'cable kneeling crunch':["kneeling crunch"],
+ 'cable standing crunch':["standing crunch"],
+ 'cable hammer curl':["hammer curl"],
+ 'cable reverse curl':["reverse curl"],
+ 'cable concentration curl':["concentration curl"],
+ 'cable single arm tricep extension':["tricep extension"],
+ 'cable incline press':["incline press"],
+ 'cable decline press':["decline press"],
+ 'cable crossover':["cable crossover"],
+ 'cable single arm chest press':["chest press"],
+ 'cable calf raise':["calf raise"],
+ 'cable shrug':["shrug"],
+ 'cable resisted step up':["step up"],
+ 'cable split squat':["split squat"],
+ 'cable rotational row':["rotational row"],
+ 'cable wide grip seated row':["seated row"],
+ 'cable resisted glute bridge':["glute bridge"],
+ 'cable single leg deadlift':["single leg deadlift"],
+ 'cable kickstand deadlift':["deadlift"],
+ 'cable standing oblique twist':["oblique twist"],
+ 'cable front squat':["front squat"],
+ 'cable good morning':["good morning"],
+ 'dumbbell flat bench fly':["chest fly","fly"],
+ 'dumbbell incline fly':["incline fly"],
+ 'dumbbell decline bench press':["decline press","decline bench"],
+ 'dumbbell floor press':["floor press"],
+ 'dumbbell squat':["squat"],
+ 'dumbbell front squat':["front squat"],
+ 'dumbbell walking lunge':["walking lunge"],
+ 'dumbbell curtsy lunge':["curtsy lunge"],
+ 'dumbbell split squat':["split squat"],
+ 'dumbbell bulgarian split squat':["bulgarian split squat"],
+ 'dumbbell deadlift':["deadlift"],
+ 'dumbbell sumo deadlift':["sumo deadlift"],
+ 'dumbbell good morning':["good morning"],
+ 'dumbbell hip thrust':["hip thrust"],
+ 'dumbbell single leg glute bridge':["single leg glute bridge"],
+ 'dumbbell donkey kick':["donkey kick"],
+ 'dumbbell bent over row':["bent over row"],
+ 'dumbbell single arm row':["single arm row"],
+ 'dumbbell renegade row':["row"],
+ 'dumbbell reverse fly':["reverse fly"],
+ 'dumbbell front raise':["front raise"],
+ 'dumbbell upright row':["upright row"],
+ 'dumbbell shrug':["shrug"],
+ 'dumbbell cuban press':["cuban press","cuban rotation"],
+ 'dumbbell skull crusher':["skull crusher"],
+ 'dumbbell concentration curl':["concentration curl"],
+ 'dumbbell zottman curl':["zottman curl"],
+ 'dumbbell preacher curl':["preacher curl"],
+ 'dumbbell overhead tricep extension':["tricep extension"],
+ 'dumbbell close grip press':["close grip","press"],
+ 'dumbbell russian twist':["russian twist"],
+ 'dumbbell side bend':["side bend"],
+ 'dumbbell suitcase carry':["suitcase carry"],
+ 'dumbbell plank row':["plank row"],
+ 'dumbbell step down':["step down"],
+ 'dumbbell box step up':["step up"],
+ 'dumbbell single leg calf raise':["single leg calf raise"],
+ 'dumbbell seated calf raise':["calf raise"],
+ 'dumbbell weighted wall sit':["wall sit"],
+ 'landmine single arm press':["landmine press","single arm press"],
+ 'landmine rotational press':["rotational press","landmine press"],
+ 'landmine split squat':["split squat"],
+ 'landmine sumo squat':["sumo squat"],
+ 'landmine two hand overhead press':["overhead press"],
+ 'landmine meadows row':["meadows row"],
+ 'landmine rainbow':["landmine rainbow"],
+ 'band lat pulldown':["lat pulldown"],
+ 'band overhead tricep extension':["tricep extension"],
+ 'band lateral raise':["lateral raise"],
+ 'band front raise':["front raise"],
+ 'band good morning':["good morning"],
+ 'band bent over row':["bent over row"],
+ 'band clamshell':["clamshell"],
+ 'band fire hydrant':["fire hydrant"],
+ 'band standing leg curl':["leg curl","hamstring curl"],
+ 'band calf raise':["calf raise"],
+ 'medicine ball v up':["v up"],
+ 'medicine ball push up':["push up"],
+ 'medicine ball deadlift':["deadlift"],
+ 'medicine ball lunge with twist':["lunge","twist"],
+ 'medicine ball figure 8':["figure 8"],
+ 'curl bar preacher curl':["preacher curl"],
+ 'curl bar close grip bench press':["close grip","curl","press"],
+ 'curl bar bent over row':["bent over row","curl"],
+ 'curl bar good morning':["good morning","curl"],
+ 'curl bar 21s curl':["21s","curl"],
+ 'bodyweight squat':["squat"],
+ 'bodyweight lunge':["lunge"],
+ 'bodyweight glute kickback':["kickback"],
+ 'bodyweight calf raise':["calf raise"],
+ 'mountain climber':["mountain climber"],
+ 'bear crawl hold':["bear crawl"],
+ 'standing oblique crunch':["oblique crunch"],
+ 'bodyweight hip thrust':["hip thrust"],
+ 'single leg extension':["single leg extension"],
+ 'single leg curl':["single leg curl"],
+ 'leg extension top range partials':["leg extension"],
+ 'box squat with dumbbells':["box squat"],
+ 'lateral box step up':["step up"],
+ 'box tricep dip':["dip"],
+ 'single leg box squat assisted':["box squat"],
+ 'box step down':["step down"],
+ 'elevated push up hands on box':["push up"],
+ 'box plank walkout':["box plank walkout"],
+ 'seated box jump up low box controlled':["box jump"],
+ 'chin up band assisted':["chin up"],
+ 'wide grip pull up':["pull up"],
+ 'hanging l sit':["l sit"],
+ 'hanging leg raise straight leg':["leg raise"],
+ 'active hang shoulders engaged':["active hang"],
+ 'commando pull up':["pull up"],
+ 'towel grip hang':["towel grip"],
+ 'foam roll quads':["foam roll"],
+ 'foam roll calves':["foam roll"],
+ '3 4 sit up':["sit up"],
+ '90 90 hamstring':["90 90 hamstring"],
+ 'adductor':["adductor"],
+ 'advanced kettlebell windmill':["windmill"],
+ 'air bike':["air bike"],
+ 'all fours quad stretch':["stretch"],
+ 'alternate hammer curl':["hammer curl"],
+ 'alternate heel touchers':["alternate heel touchers"],
+ 'alternate incline dumbbell curl':["curl"],
+ 'alternating cable shoulder press':["shoulder press"],
+ 'alternating deltoid raise':["raise"],
+ 'alternating floor press':["floor press"],
+ 'alternating hang clean':["clean"],
+ 'alternating kettlebell press':["press"],
+ 'alternating kettlebell row':["row"],
+ 'alternating renegade row':["row"],
+ 'anti gravity press':["press"],
+ 'arnold dumbbell press':["press"],
+ 'around the worlds':["around the world"],
+ 'back flyes with bands':["fly"],
+ 'backward medicine ball throw':["throw"],
+ 'band good morning pull through':["good morning", "pull through"],
+ 'band hip adductions':["band hip adductions"],
+ 'band skull crusher':["skull crusher"],
+ 'barbell ab rollout':["barbell ab rollout"],
+ 'barbell ab rollout on knees':["barbell ab rollout on knees"],
+ 'barbell bench press medium grip':["press"],
+ 'barbell curl':["curl"],
+ 'barbell curls lying against an incline':["curl"],
+ 'barbell deadlift':["deadlift"],
+ 'barbell full squat':["squat"],
+ 'barbell glute bridge':["glute bridge"],
+ 'barbell guillotine bench press':["press"],
+ 'barbell hack squat':["squat"],
+ 'barbell hip thrust':["hip thrust"],
+ 'barbell incline bench press medium grip':["press"],
+ 'barbell incline shoulder raise':["raise"],
+ 'barbell lunge':["lunge"],
+ 'barbell rear delt row':["rear delt row"],
+ 'barbell rollout from bench':["barbell rollout from bench"],
+ 'barbell seated calf raise':["calf raise"],
+ 'barbell shoulder press':["shoulder press"],
+ 'barbell shrug':["shrug"],
+ 'barbell shrug behind the back':["shrug"],
+ 'barbell side bend':["side bend"],
+ 'barbell side split squat':["split squat"],
+ 'barbell squat':["squat"],
+ 'barbell squat to a bench':["squat"],
+ 'barbell step ups':["step up"],
+ 'barbell walking lunge':["walking lunge"],
+ 'bench dips':["dip"],
+ 'bench jump':["bench jump"],
+ 'bench press powerlifting':["press", "lift"],
+ 'bench press with bands':["press"],
+ 'bent arm barbell pullover':["pull"],
+ 'bent arm dumbbell pullover':["pull"],
+ 'bent knee hip raise':["raise"],
+ 'bent over barbell row':["row"],
+ 'bent over dumbbell rear delt raise with head on bench':["rear delt", "raise"],
+ 'bent over low pulley side lateral':["pull"],
+ 'bent over one arm long bar row':["one arm", "row"],
+ 'bent over two arm long bar row':["row"],
+ 'bent over two dumbbell row':["row"],
+ 'bent over two dumbbell row with palms in':["row"],
+ 'bent press':["press"],
+ 'body up':["body up"],
+ 'body tricep press':["press"],
+ 'bodyweight flyes':["fly"],
+ 'bosu ball cable crunch with side bends':["side bend", "crunch"],
+ 'bottoms up clean from the hang position':["bottoms up", "clean"],
+ 'bottoms up':["bottoms up"],
+ 'box jump multiple response':["box jump"],
+ 'box skip':["box skip"],
+ 'box squat':["box squat"],
+ 'brachialis smr':["brachialis smr"],
+ 'bradford rocky presses':["press"],
+ 'butt ups':["butt ups"],
+ 'butt lift bridge':["bridge", "lift"],
+ 'cable chest press':["chest press"],
+ 'cable crunch':["crunch"],
+ 'cable deadlifts':["deadlift"],
+ 'cable hammer curls rope attachment':["hammer curl"],
+ 'cable hip adduction':["cable hip adduction"],
+ 'cable incline pushdown':["cable incline pushdown"],
+ 'cable incline triceps extension':["extension"],
+ 'cable internal rotation':["cable internal rotation"],
+ 'cable iron cross':["cable iron cross"],
+ 'cable judo flip':["cable judo flip"],
+ 'cable lying triceps extension':["extension"],
+ 'cable one arm tricep extension':["one arm", "tricep extension"],
+ 'cable preacher curl':["preacher curl"],
+ 'cable rear delt fly':["rear delt fly"],
+ 'cable reverse crunch':["crunch"],
+ 'cable rope overhead triceps extension':["extension"],
+ 'cable rope rear delt rows':["rear delt row"],
+ 'cable russian twists':["russian twist"],
+ 'cable seated crunch':["crunch"],
+ 'cable seated lateral raise':["lateral raise"],
+ 'cable shoulder press':["shoulder press"],
+ 'cable shrugs':["shrug"],
+ 'cable wrist curl':["curl"],
+ 'calf raise on a dumbbell':["calf raise"],
+ 'calf raises with bands':["calf raise"],
+ 'calves smr':["calves smr"],
+ 'car drivers':["car drivers"],
+ 'catch and overhead throw':["throw"],
+ 'chest push from 3 point stance':["chest push from 3 point stance"],
+ 'chest push multiple response':["chest push multiple response"],
+ 'chest push single response':["chest push single response"],
+ 'chest push with run release':["chest push with run release"],
+ 'chin up':["chin up"],
+ 'clean':["clean"],
+ 'clean deadlift':["clean", "deadlift"],
+ 'clean pull':["clean", "pull"],
+ 'clean shrug':["clean", "shrug"],
+ 'clean and jerk':["clean and jerk"],
+ 'clean and press':["clean", "press"],
+ 'clean from blocks':["clean"],
+ 'clock push up':["push up"],
+ 'close grip barbell bench press':["close grip", "press"],
+ 'close grip dumbbell press':["close grip", "press"],
+ 'close grip ez bar curl with band':["close grip", "curl"],
+ 'close grip ez bar press':["close grip", "press"],
+ 'close grip ez bar curl':["close grip", "curl"],
+ 'close grip front lat pulldown':["close grip", "lat pulldown"],
+ 'close grip push up off of a dumbbell':["close grip", "push up"],
+ 'close grip standing barbell curl':["close grip", "curl"],
+ 'cocoons':["cocoons"],
+ 'concentration curls':["concentration curl"],
+ 'cross body crunch':["crunch"],
+ 'cross body hammer curl':["hammer curl"],
+ 'cross over with bands':["cross over with bands"],
+ 'crunch hands overhead':["crunch"],
+ 'crunch legs on exercise ball':["crunch"],
+ 'crunches':["crunch"],
+ 'cuban press':["press"],
+ 'decline barbell bench press':["press"],
+ 'decline close grip bench to skull crusher':["close grip", "skull crusher"],
+ 'decline crunch':["crunch"],
+ 'decline dumbbell bench press':["press"],
+ 'decline dumbbell flyes':["fly"],
+ 'decline dumbbell triceps extension':["extension"],
+ 'decline ez bar triceps extension':["extension"],
+ 'decline oblique crunch':["oblique crunch"],
+ 'decline reverse crunch':["crunch"],
+ 'deficit deadlift':["deadlift"],
+ 'dips chest version':["dip"],
+ 'dips triceps version':["dip"],
+ 'double kettlebell alternating hang clean':["clean"],
+ 'double kettlebell jerk':["jerk"],
+ 'double kettlebell push press':["push press"],
+ 'double kettlebell snatch':["snatch"],
+ 'double kettlebell windmill':["windmill"],
+ 'double leg butt kick':["double leg butt kick"],
+ 'drag curl':["curl"],
+ 'dumbbell alternate bicep curl':["bicep curl"],
+ 'dumbbell bench press with neutral grip':["press"],
+ 'dumbbell clean':["clean"],
+ 'dumbbell flyes':["fly"],
+ 'dumbbell incline row':["incline row"],
+ 'dumbbell incline shoulder raise':["raise"],
+ 'dumbbell lunges':["lunge"],
+ 'dumbbell lying one arm rear lateral raise':["one arm", "lateral raise"],
+ 'dumbbell lying pronation':["dumbbell lying pronation"],
+ 'dumbbell lying rear lateral raise':["lateral raise"],
+ 'dumbbell lying supination':["dumbbell lying supination"],
+ 'dumbbell one arm shoulder press':["one arm", "shoulder press"],
+ 'dumbbell one arm triceps extension':["one arm", "extension"],
+ 'dumbbell one arm upright row':["one arm", "upright row"],
+ 'dumbbell prone incline curl':["curl"],
+ 'dumbbell raise':["raise"],
+ 'dumbbell rear lunge':["lunge"],
+ 'dumbbell scaption':["dumbbell scaption"],
+ 'dumbbell seated box jump':["box jump"],
+ 'dumbbell seated one leg calf raise':["calf raise"],
+ 'dumbbell shoulder press':["shoulder press"],
+ 'dumbbell squat to a bench':["squat"],
+ 'dumbbell step ups':["step up"],
+ 'dumbbell tricep extension pronated grip':["tricep extension"],
+ 'ez bar curl':["curl"],
+ 'ez bar skullcrusher':["skullcrusher"],
+ 'elbow to knee':["elbow to knee"],
+ 'elevated back lunge':["lunge"],
+ 'elevated cable rows':["cable row"],
+ 'extended range one arm kettlebell floor press':["one arm", "floor press"],
+ 'external rotation':["external rotation"],
+ 'external rotation with band':["external rotation with band"],
+ 'external rotation with cable':["external rotation with cable"],
+ 'face pull':["face pull"],
+ 'fast skipping':["fast skipping"],
+ 'finger curls':["curl"],
+ 'flat bench cable flyes':["fly"],
+ 'flat bench leg pull in':["pull"],
+ 'flat bench lying leg raise':["leg raise"],
+ 'flexor incline dumbbell curls':["curl"],
+ 'floor press':["floor press"],
+ 'flutter kicks':["flutter kicks"],
+ 'frankenstein squat':["squat"],
+ 'freehand jump squat':["jump squat"],
+ 'frog sit ups':["sit up"],
+ 'front barbell squat':["squat"],
+ 'front barbell squat to a bench':["squat"],
+ 'front box jump':["box jump"],
+ 'front cable raise':["raise"],
+ 'front dumbbell raise':["raise"],
+ 'front incline dumbbell raise':["raise"],
+ 'front leg raises':["leg raise"],
+ 'front raise and pullover':["front raise", "pull"],
+ 'front squat clean grip':["front squat", "clean"],
+ 'front squats with two kettlebells':["front squat"],
+ 'front two dumbbell raise':["raise"],
+ 'full range of motion lat pulldown':["lat pulldown"],
+ 'glute kickback':["kickback"],
+ 'goblet squat':["goblet", "squat"],
+ 'good morning':["good morning"],
+ 'good morning off pins':["good morning"],
+ 'gorilla chin crunch':["crunch"],
+ 'groiners':["groiners"],
+ 'hammer curls':["hammer curl"],
+ 'hammer grip incline db bench press':["press"],
+ 'hamstring smr':["hamstring smr"],
+ 'handstand push ups':["push up"],
+ 'hang clean':["clean"],
+ 'hang clean below the knees':["clean"],
+ 'hang snatch':["snatch"],
+ 'hang snatch below knees':["snatch"],
+ 'hanging bar good morning':["good morning"],
+ 'hanging leg raise':["leg raise"],
+ 'hanging pike':["hanging pike"],
+ 'heaving snatch balance':["snatch"],
+ 'high cable curls':["curl"],
+ 'hip circles prone':["circle"],
+ 'hip extension with bands':["extension"],
+ 'hip flexion with band':["hip flexion with band"],
+ 'hip lift with band':["lift"],
+ 'hyperextensions with no hyperextension bench':["extension"],
+ 'iliotibial tract smr':["iliotibial tract smr"],
+ 'inchworm':["inchworm"],
+ 'incline barbell triceps extension':["extension"],
+ 'incline bench pull':["pull"],
+ 'incline cable chest press':["chest press"],
+ 'incline cable flye':["fly"],
+ 'incline dumbbell bench with palms facing in':["incline dumbbell bench with palms facing in"],
+ 'incline dumbbell curl':["curl"],
+ 'incline dumbbell flyes':["fly"],
+ 'incline dumbbell flyes with a twist':["fly", "twist"],
+ 'incline dumbbell press':["press"],
+ 'incline hammer curls':["hammer curl"],
+ 'incline inner biceps curl':["curl"],
+ 'incline push up':["push up"],
+ 'incline push up close grip':["close grip", "push up"],
+ 'incline push up medium':["push up"],
+ 'incline push up reverse grip':["push up"],
+ 'incline push up wide':["push up"],
+ 'internal rotation with band':["internal rotation with band"],
+ 'iron cross':["iron cross"],
+ 'isometric chest squeezes':["isometric chest squeezes"],
+ 'isometric wipers':["isometric wipers"],
+ 'jm press':["press"],
+ 'jackknife sit up':["sit up"],
+ 'janda sit up':["sit up"],
+ 'jefferson squats':["squat"],
+ 'jerk balance':["jerk"],
+ 'jerk dip squat':["jerk", "dip", "squat"],
+ 'kettlebell arnold press':["press"],
+ 'kettlebell dead clean':["clean"],
+ 'kettlebell figure 8':["figure 8"],
+ 'kettlebell hang clean':["clean"],
+ 'kettlebell one legged deadlift':["deadlift"],
+ 'kettlebell pass between the legs':["kettlebell pass between the legs"],
+ 'kettlebell pirate ships':["kettlebell pirate ships"],
+ 'kettlebell pistol squat':["pistol squat"],
+ 'kettlebell seated press':["press"],
+ 'kettlebell seesaw press':["press"],
+ 'kettlebell sumo high pull':["sumo", "pull"],
+ 'kettlebell turkish get up lunge style':["turkish get up", "lunge"],
+ 'kettlebell turkish get up squat style':["turkish get up", "squat"],
+ 'kipping muscle up':["kipping muscle up"],
+ 'knee circles':["circle"],
+ 'knee tuck jump':["knee tuck jump"],
+ 'kneeling cable crunch with alternating oblique twists':["oblique twist", "crunch"],
+ 'kneeling cable triceps extension':["extension"],
+ 'kneeling high pulley row':["row", "pull"],
+ 'kneeling jump squat':["jump squat"],
+ 'kneeling single arm high pulley row':["single arm", "row", "pull"],
+ 'kneeling squat':["squat"],
+ 'landmine 180 s':["landmine 180 s"],
+ 'landmine linear jammer':["landmine linear jammer"],
+ 'lateral bound':["lateral bound"],
+ 'lateral box jump':["box jump"],
+ 'lateral raise with bands':["lateral raise"],
+ 'latissimus dorsi smr':["latissimus dorsi smr"],
+ 'leg over floor press':["floor press"],
+ 'leg extensions':["extension"],
+ 'leg lift':["lift"],
+ 'leg pull in':["pull"],
+ 'low cable crossover':["low cable crossover"],
+ 'low cable triceps extension':["extension"],
+ 'low pulley row to neck':["row", "pull"],
+ 'lower back smr':["lower back smr"],
+ 'lower back curl':["curl"],
+ 'lunge pass through':["lunge"],
+ 'lying cable curl':["curl"],
+ 'lying cambered barbell row':["row"],
+ 'lying close grip bar curl on high pulley':["close grip", "curl", "pull"],
+ 'lying close grip barbell triceps extension behind the head':["close grip", "extension"],
+ 'lying close grip barbell triceps press to chin':["close grip", "press"],
+ 'lying crossover':["lying crossover"],
+ 'lying dumbbell tricep extension':["tricep extension"],
+ 'lying glute':["lying glute"],
+ 'lying high bench barbell curl':["curl"],
+ 'lying leg curls':["curl"],
+ 'lying one arm lateral raise':["one arm", "lateral raise"],
+ 'lying prone quadriceps':["lying prone quadriceps"],
+ 'lying rear delt raise':["rear delt", "raise"],
+ 'lying supine dumbbell curl':["curl"],
+ 'lying triceps press':["press"],
+ 'medicine ball chest pass':["chest pass"],
+ 'medicine ball full twist':["twist"],
+ 'medicine ball scoop throw':["throw"],
+ 'middle back shrug':["shrug"],
+ 'monster walk':["monster walk"],
+ 'muscle snatch':["snatch"],
+ 'muscle up':["muscle up"],
+ 'narrow stance squats':["row", "squat"],
+ 'natural glute ham raise':["raise"],
+ 'neck press':["press"],
+ 'oblique crunches':["oblique crunch"],
+ 'oblique crunches on the floor':["oblique crunch"],
+ 'olympic squat':["squat"],
+ 'one arm dumbbell row':["one arm", "row"],
+ 'one arm flat bench dumbbell flye':["one arm", "fly"],
+ 'one arm high pulley cable side bends':["one arm", "side bend", "pull"],
+ 'one arm incline lateral raise':["one arm", "lateral raise"],
+ 'one arm kettlebell clean':["one arm", "clean"],
+ 'one arm kettlebell clean and jerk':["one arm", "clean and jerk"],
+ 'one arm kettlebell floor press':["one arm", "floor press"],
+ 'one arm kettlebell jerk':["one arm", "jerk"],
+ 'one arm kettlebell military press to the side':["one arm", "press"],
+ 'one arm kettlebell para press':["one arm", "press"],
+ 'one arm kettlebell push press':["one arm", "push press"],
+ 'one arm kettlebell row':["one arm", "row"],
+ 'one arm kettlebell snatch':["one arm", "snatch"],
+ 'one arm kettlebell split jerk':["one arm", "jerk"],
+ 'one arm kettlebell split snatch':["one arm", "snatch"],
+ 'one arm kettlebell swings':["one arm", "swing"],
+ 'one arm long bar row':["one arm", "row"],
+ 'one arm medicine ball slam':["one arm", "slam"],
+ 'one arm open palm kettlebell clean':["one arm", "clean"],
+ 'one arm overhead kettlebell squats':["one arm", "squat"],
+ 'one arm side deadlift':["one arm", "deadlift"],
+ 'one arm side laterals':["one arm"],
+ 'one legged cable kickback':["kickback"],
+ 'one arm chin up':["one arm", "chin up"],
+ 'one arm dumbbell bench press':["one arm", "press"],
+ 'one arm dumbbell preacher curl':["one arm", "preacher curl"],
+ 'one arm floor press':["one arm", "floor press"],
+ 'one arm lat pulldown':["one arm", "lat pulldown"],
+ 'one arm pronated dumbbell triceps extension':["one arm", "extension"],
+ 'one arm supinated dumbbell triceps extension':["one arm", "extension"],
+ 'one leg barbell squat':["squat"],
+ 'open palm kettlebell clean':["clean"],
+ 'overhead cable curl':["curl"],
+ 'overhead slam':["slam"],
+ 'overhead squat':["overhead squat"],
+ 'overhead triceps':["overhead triceps"],
+ 'pallof press':["pallof", "press"],
+ 'pallof press with rotation':["pallof", "press"],
+ 'palms down dumbbell wrist curl over a bench':["curl"],
+ 'palms down wrist curl over a bench':["curl"],
+ 'palms up barbell wrist curl over a bench':["curl"],
+ 'palms up dumbbell wrist curl over a bench':["curl"],
+ 'parallel bar dip':["dip"],
+ 'peroneals smr':["peroneals smr"],
+ 'pin presses':["press"],
+ 'piriformis smr':["piriformis smr"],
+ 'plank':["plank"],
+ 'plie dumbbell squat':["squat"],
+ 'plyo kettlebell pushups':["pushup"],
+ 'plyo push up':["push up"],
+ 'power clean':["clean"],
+ 'power clean from blocks':["clean"],
+ 'power jerk':["jerk"],
+ 'power partials':["power partials"],
+ 'power snatch':["snatch"],
+ 'power snatch from blocks':["snatch"],
+ 'preacher curl':["preacher curl"],
+ 'preacher hammer dumbbell curl':["curl"],
+ 'press sit up':["sit up", "press"],
+ 'pull through':["pull through"],
+ 'pullups':["pull"],
+ 'push up wide':["push up"],
+ 'push ups close triceps position':["push up"],
+ 'push ups with feet elevated':["push up"],
+ 'push press':["push press"],
+ 'push press behind the neck':["push press"],
+ 'push up to side plank':["side plank", "push up"],
+ 'pushups':["pushup"],
+ 'pushups close and wide hand positions':["pushup"],
+ 'quadriceps smr':["quadriceps smr"],
+ 'rack delivery':["rack delivery"],
+ 'rack pulls':["pull"],
+ 'rear leg raises':["leg raise"],
+ 'return push from stance':["return push from stance"],
+ 'reverse barbell curl':["curl"],
+ 'reverse barbell preacher curls':["preacher curl"],
+ 'reverse cable curl':["curl"],
+ 'reverse crunch':["crunch"],
+ 'reverse flyes':["reverse fly"],
+ 'reverse flyes with external rotation':["reverse fly"],
+ 'reverse grip bent over rows':["bent over row"],
+ 'reverse grip triceps pushdown':["reverse grip triceps pushdown"],
+ 'reverse triceps bench press':["press"],
+ 'rhomboids smr':["rhomboids smr"],
+ 'ring dips':["dip"],
+ 'rocket jump':["rocket jump"],
+ 'rocking standing calf raise':["calf raise"],
+ 'rocky pull ups pulldowns':["pulldown", "pull up"],
+ 'romanian deadlift':["deadlift"],
+ 'romanian deadlift from deficit':["deadlift"],
+ 'rope crunch':["crunch"],
+ 'rope straight arm pulldown':["pulldown"],
+ 'russian twist':["russian twist"],
+ 'scissor kick':["scissor kick"],
+ 'scissors jump':["scissors jump"],
+ 'seated barbell military press':["press"],
+ 'seated barbell twist':["twist"],
+ 'seated bent over one arm dumbbell triceps extension':["one arm", "extension"],
+ 'seated bent over rear delt raise':["rear delt", "raise"],
+ 'seated bent over two arm dumbbell triceps extension':["extension"],
+ 'seated biceps':["seated biceps"],
+ 'seated cable rows':["cable row"],
+ 'seated cable shoulder press':["shoulder press"],
+ 'seated close grip concentration barbell curl':["close grip", "curl"],
+ 'seated dumbbell curl':["curl"],
+ 'seated dumbbell inner biceps curl':["curl"],
+ 'seated dumbbell palms down wrist curl':["curl"],
+ 'seated dumbbell palms up wrist curl':["curl"],
+ 'seated dumbbell press':["press"],
+ 'seated flat bench leg pull in':["pull"],
+ 'seated front deltoid':["seated front deltoid"],
+ 'seated glute':["seated glute"],
+ 'seated good mornings':["good morning"],
+ 'seated leg curl':["curl"],
+ 'seated leg tucks':["seated leg tucks"],
+ 'seated one arm dumbbell palms down wrist curl':["one arm", "curl"],
+ 'seated one arm dumbbell palms up wrist curl':["one arm", "curl"],
+ 'seated one arm cable pulley rows':["one arm", "row", "pull"],
+ 'seated palm up barbell wrist curl':["curl"],
+ 'seated palms down barbell wrist curl':["curl"],
+ 'seated side lateral raise':["lateral raise"],
+ 'seated triceps press':["press"],
+ 'seated two arm palms up low pulley wrist curl':["curl", "pull"],
+ 'see saw press alternating side press':["press"],
+ 'shotgun row':["row"],
+ 'shoulder press with bands':["shoulder press"],
+ 'side bridge':["bridge"],
+ 'side jackknife':["side jackknife"],
+ 'side lateral raise':["lateral raise"],
+ 'side laterals to front raise':["front raise"],
+ 'side leg raises':["leg raise"],
+ 'side to side box shuffle':["side to side box shuffle"],
+ 'single arm cable crossover':["single arm"],
+ 'single arm linear jammer':["single arm"],
+ 'single arm push up':["single arm", "push up"],
+ 'single leg high box squat':["box squat"],
+ 'single leg leg extension':["extension"],
+ 'single dumbbell raise':["raise"],
+ 'single leg butt kick':["single leg butt kick"],
+ 'single leg glute bridge':["single leg glute bridge"],
+ 'sit up':["sit up"],
+ 'smith incline shoulder raise':["raise"],
+ 'smith machine behind the back shrug':["shrug"],
+ 'smith machine bench press':["press"],
+ 'smith machine decline press':["decline press"],
+ 'smith machine hang power clean':["clean"],
+ 'smith machine hip raise':["raise"],
+ 'smith machine leg press':["press"],
+ 'smith machine one arm upright row':["one arm", "upright row"],
+ 'smith machine overhead shoulder press':["shoulder press"],
+ 'smith machine pistol squat':["pistol squat"],
+ 'smith machine reverse calf raises':["calf raise"],
+ 'smith machine squat':["squat"],
+ 'smith machine stiff legged deadlift':["deadlift"],
+ 'snatch':["snatch"],
+ 'snatch balance':["snatch"],
+ 'snatch deadlift':["snatch", "deadlift"],
+ 'snatch pull':["snatch", "pull"],
+ 'snatch shrug':["snatch", "shrug"],
+ 'snatch from blocks':["snatch"],
+ 'speed band overhead triceps':["speed band overhead triceps"],
+ 'speed box squat':["box squat"],
+ 'speed squats':["squat"],
+ 'spell caster':["spell caster"],
+ 'spider crawl':["spider crawl"],
+ 'spider curl':["curl"],
+ 'split clean':["clean"],
+ 'split jerk':["jerk"],
+ 'split jump':["split jump"],
+ 'split snatch':["snatch"],
+ 'split squat with dumbbells':["split squat"],
+ 'squat jerk':["jerk", "squat"],
+ 'squat with plate movers':["squat"],
+ 'squats with bands':["squat"],
+ 'standing alternating dumbbell press':["press"],
+ 'standing barbell calf raise':["calf raise"],
+ 'standing barbell press behind neck':["press"],
+ 'standing bent over one arm dumbbell triceps extension':["one arm", "extension"],
+ 'standing bent over two arm dumbbell triceps extension':["extension"],
+ 'standing biceps cable curl':["curl"],
+ 'standing bradford press':["press"],
+ 'standing cable chest press':["chest press"],
+ 'standing cable lift':["lift"],
+ 'standing cable wood chop':["wood chop"],
+ 'standing concentration curl':["concentration curl"],
+ 'standing dumbbell press':["press"],
+ 'standing dumbbell reverse curl':["reverse curl"],
+ 'standing dumbbell straight arm front delt raise above head':["raise"],
+ 'standing dumbbell triceps extension':["extension"],
+ 'standing dumbbell upright row':["upright row"],
+ 'standing front barbell raise over head':["raise"],
+ 'standing hip circles':["circle"],
+ 'standing inner biceps curl':["curl"],
+ 'standing leg curl':["curl"],
+ 'standing long jump':["standing long jump"],
+ 'standing low pulley deltoid raise':["raise", "pull"],
+ 'standing low pulley one arm triceps extension':["one arm", "extension", "pull"],
+ 'standing military press':["press"],
+ 'standing one arm cable curl':["one arm", "curl"],
+ 'standing one arm dumbbell curl over incline bench':["one arm", "curl"],
+ 'standing one arm dumbbell triceps extension':["one arm", "extension"],
+ 'standing overhead barbell triceps extension':["extension"],
+ 'standing palm in one arm dumbbell press':["one arm", "press"],
+ 'standing palms in dumbbell press':["press"],
+ 'standing palms up barbell behind the back wrist curl':["curl"],
+ 'standing rope crunch':["crunch"],
+ 'standing towel triceps extension':["extension"],
+ 'standing two arm overhead throw':["throw"],
+ 'star jump':["star jump"],
+ 'step up with knee raise':["step up", "knee raise"],
+ 'stiff legged barbell deadlift':["deadlift"],
+ 'stiff legged dumbbell deadlift':["deadlift"],
+ 'stiff leg barbell good morning':["good morning"],
+ 'stomach vacuum':["stomach vacuum"],
+ 'straight arm dumbbell pullover':["pull"],
+ 'straight arm pulldown':["pulldown"],
+ 'straight bar bench mid rows':["row"],
+ 'straight raises on incline bench':["raise"],
+ 'sumo deadlift':["sumo deadlift"],
+ 'superman':["superman"],
+ 'supine chest throw':["throw"],
+ 'supine one arm overhead throw':["one arm", "throw"],
+ 'supine two arm overhead throw':["throw"],
+ 't bar row with handle':["t bar row"],
+ 'tate press':["press"],
+ 'toe touchers':["toe touchers"],
+ 'tricep dumbbell kickback':["kickback"],
+ 'triceps overhead extension with rope':["overhead extension"],
+ 'triceps pushdown':["triceps pushdown"],
+ 'triceps pushdown rope attachment':["triceps pushdown rope attachment"],
+ 'triceps pushdown v bar attachment':["triceps pushdown v bar attachment"],
+ 'tuck crunch':["crunch"],
+ 'two arm dumbbell preacher curl':["preacher curl"],
+ 'two arm kettlebell clean':["clean"],
+ 'two arm kettlebell jerk':["jerk"],
+ 'two arm kettlebell military press':["press"],
+ 'two arm kettlebell row':["row"],
+ 'underhand cable pulldowns':["pulldown"],
+ 'upright barbell row':["row"],
+ 'upright cable row':["cable row"],
+ 'upright row with bands':["upright row"],
+ 'v bar pulldown':["pulldown"],
+ 'v bar pullup':["pull"],
+ 'vertical swing':["swing"],
+ 'weighted bench dip':["dip"],
+ 'weighted crunches':["crunch"],
+ 'weighted jump squat':["jump squat"],
+ 'weighted pull ups':["pull up"],
+ 'weighted sissy squat':["squat"],
+ 'wide grip barbell bench press':["press"],
+ 'wide grip decline barbell bench press':["press"],
+ 'wide grip decline barbell pullover':["pull"],
+ 'wide grip lat pulldown':["lat pulldown"],
+ 'wide grip pulldown behind the neck':["pulldown"],
+ 'wide grip rear pull up':["pull up"],
+ 'wide grip standing barbell curl':["curl"],
+ 'wide stance barbell squat':["squat"],
+ 'wide stance stiff legs':["wide stance stiff legs"],
+ 'wind sprints':["wind sprints"],
+ 'wrist circles':["circle"],
+ 'wrist rotations with straight bar':["wrist rotations with straight bar"],
+ 'zercher squats':["squat"],
+ 'zottman curl':["zottman curl"],
+ 'zottman preacher curl':["preacher curl"],
+};
+function movementSafe(def,ex){
+ if(!def||!ex)return false;
+ const en=norm(ex.name), guards=MOVEMENT_GUARDS[norm(def.name)]||[];
+ return !guards.length || guards.some(g=>en.includes(norm(g)));
+}
+
+const todayKey = () => new Date().toISOString().slice(0,10);
+const STORE='togetherStrongV045';
+function readState(){
+  try{
+    return JSON.parse(localStorage.getItem(STORE)||'{"logs":{},"attendance":{},"finished":{},"customRoutines":[]}');
+  }catch(e){
+    return {"logs":{},"attendance":{},"finished":{},"customRoutines":[]};
+  }
+}
+let state = readState();
+state.weekNumber = state.weekNumber || 1;
+
+function save(){
+  try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}
+}
+function norm(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function media(path){return MEDIA_BASE+(path||'').replace(/^\/+/,'')}
+
+function score(ex, query, eq){
+ let n=norm(ex.name), q=norm(query), s=0;
+ if(n===q)s+=140;
+ if(n.includes(q))s+=75;
+ const qw=q.split(' ').filter(w=>w.length>2);
+ qw.forEach(w=>{if(n.includes(w))s+=12});
+ if(eq && norm(ex.equipment)===norm(eq))s+=32;
+ else if(eq && norm(ex.equipment).includes(norm(eq)))s+=18;
+ return s;
+}
+function findBest(def){
+ if(!LIB.length)return null;
+ const exacts=MANUAL_EXACT[norm(def.name)]||def.q||[];
+ let best=null, bs=-1;
+ for(const q of exacts){
+  const qn=norm(q);
+  const qw=qn.split(' ').filter(w=>w.length>2);
+  for(const ex of LIB){
+   if(!movementSafe(def,ex))continue;
+   const en=norm(ex.name);
+   let sc=0, hits=0;
+   const substring = en===qn || en.includes(qn) || qn.includes(en);
+   if(en===qn)sc+=500;
+   else if(substring)sc+=260;
+   qw.forEach(w=>{if(en.includes(w)){sc+=28;hits++;}});
+   // Equipment is a tie-breaker only. Never trade the movement for matching equipment.
+   if(def.eq && norm(ex.equipment)===norm(def.eq))sc+=18;
+   // A single generic word (e.g. just "row" or "squat") is NOT enough on its own to
+   // claim a match — that was the actual cause of wrong thumbnails. Require either a
+   // real substring match on the full phrase, or at least 2 distinct keyword hits.
+   const qualifies = substring || hits>=2;
+   if(qualifies && sc>bs){bs=sc;best=ex}
+  }
+ }
+ // Do not display an unrelated animation just to fill the Quick Demo slot.
+ return bs>=40?best:null;
+}
+
+// Demo display rule (v0.4.6):
+// Every exercise gets TWO choices:
+// 1) Quick Demo: the closest library animation/thumbnail, even when equipment is not exact.
+// 2) YouTube Detail: a hand-curated video when available; otherwise an exact YouTube search for that exercise.
+// This lets experienced users get a fast visual refresher while preserving a detailed learning option.
+function isAccurateLibraryDemo(def, ex){
+ if(!def||!ex)return false;
+ if(norm(ex.equipment)!==norm(def.eq))return false;
+ const en=norm(ex.name);
+ const exacts=MANUAL_EXACT[norm(def.name)]||def.q||[];
+ return exacts.some(q=>{
+   const qn=norm(q);
+   return en===qn || en.includes(qn) || qn.includes(en);
+ });
+}
+function handleThumbError(el){
+ const wrap = el.closest('.thumbWrap');
+ if(wrap) wrap.innerHTML = '<div class="thumb noDemo">No verified demo — use YouTube</div>';
+}
+function ytSearchUrl(name){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(name+' exercise form short'); }
+function demoPlan(def, ex){
+ const custom = def.id && state.customVideos && state.customVideos[def.id] ? {type:'youtube', id:state.customVideos[def.id], label:'Your saved video', custom:true} : null;
+ const curated=custom || CURATED_DEMOS[norm(def.name)]||null;
+ return {library:ex, libraryExact:isAccurateLibraryDemo(def,ex), curated};
+}
+function defaultReps(ex){
+ if(/carry|suitcase/i.test(ex.name)) return {low:20, high:30, unit:'sec'};
+ if(ex.primary==='core' || ex.primary==='arms') return {low:10, high:12, unit:'reps'};
+ return {low:8, high:10, unit:'reps'};
+}
+function getDef(i){
+ const base = WEEK[day].ex[i];
+ const subKey=`${viewWeek}-${day}-${i}`;
+ let ex = base;
+ if(state.substitutions[subKey]){
+   const subEx = EXERCISE_LIBRARY.find(x=>x.id===state.substitutions[subKey]);
+   if(subEx) ex = subEx;
+ }
+ if(ex.equipment==='mobility'){
+   return Object.assign({}, ex, {rx: ex.duration||'', eq:'mobility', q:[ex.name], note:ex.cue, tags:['mobility'], mobility:true, secondary:[]});
+ }
+ const reps = defaultReps(ex);
+ const unitLabel = reps.unit==='sec' ? ' sec / side' : (reps.high>reps.low?'':' reps');
+ return Object.assign({}, ex, {
+   rx: `2 × ${reps.low}${reps.high!==reps.low?'–'+reps.high:''}${unitLabel}`,
+   eq: EXTERNAL_EQUIPMENT_ALIAS[ex.equipment] || ex.equipment,
+   q: [ex.name],
+   note: ex.cue,
+   tags: [ex.primary].concat(ex.secondary||[]),
+   repsLow: reps.low, repsHigh: reps.high, repsUnit: reps.unit,
+   _sub: ex.id !== base.id
+ });
+}
+function logKey(i,p){return `${todayKey()}|w${state.weekNumber}|d${day}|e${i}|${p}`}
+function getLog(i,p){return state.logs[logKey(i,p)]||{}}
+function updateLog(i,p,field,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k][field]=val; save(); updateProgress();
+}
+function feel(i,p,val){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k].feel=val; save();
+ const def=getDef(i), L=getLog(i,p), pState=getExerciseState(p,def.id);
+ const weight = Number(L.weight) || (pState?pState.currentWeight:0);
+ const reps = Math.max(Number(L.s1)||0, Number(L.s2)||0);
+ if(pState) logProgressSession(p, def.id, weight, Number(L.s1)||0, Number(L.s2)||0, val);
+ const pr = checkAndRecordPR(p, def.id, weight, reps);
+ if(pr){ state.logs[k].newPR=true; save(); }
+ renderExercises(); updateProgress();
+}
+function setStartWeight(i,p){
+ const def=getDef(i);
+ const input=document.getElementById(`startWeight-${i}-${p}`);
+ const val=Number(input.value);
+ if(!val || val<=0){alert('Enter a starting weight in pounds.');return}
+ initExerciseState(p, def.id, val, def.repsLow, def.repsHigh);
+ renderExercises();
+}
+function bumpWeight(i,p){
+ const def=getDef(i), pState=getExerciseState(p,def.id); if(!pState)return;
+ const increment=(def.primary==='arms'||def.primary==='core')?2.5:5;
+ applyWeightIncrease(p, def.id, pState.currentWeight+increment);
+ renderExercises();
+}
+function addSet(i,p){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{};
+ state.logs[k].extraSets=Math.min((state.logs[k].extraSets||0)+1, 3); // cap at 5 total sets
+ save(); renderExercises();
+}
+function skipRest(i,p){
+ const k=logKey(i,p); state.logs[k]=state.logs[k]||{}; state.logs[k].skipped=true; save();
+ const def=getDef(i);
+ if(getExerciseState(p,def.id)) logSkip(p, def.id);
+ renderExercises(); updateProgress();
+}
+function personHTML(i,p){
+ if(attendance!=='both' && attendance!==p)return '';
+ const label=p==='eli'?'Eli':'Rochelle';
+ const def=getDef(i);
+ if(viewWeek!==state.weekNumber){
+   const pState=getExerciseState(p, def.id);
+   return `<div class="person">
+    <div class="personTitle"><span>${label}</span><span class="last">${pState?('Last set: '+pState.currentWeight+' lb'):'Not started yet'}</span></div>
+    <div class="notice">${viewWeek<state.weekNumber?'Past week — showing what was planned.':'Preview only — logging opens when you reach this week.'}</div>
+   </div>`;
+ }
+ const L=getLog(i,p);
+ if(def.mobility){
+   return `<div class="person">
+    <div class="personTitle"><span>${label}</span><span class="last">${def.rx}</span></div>
+    <div class="actions"><button class="${L.feel==='Done'?'how':'sub'}" style="width:100%" onclick="feel(${i},'${p}','Done')">${L.feel==='Done'?'Done ✓':'Mark done'}</button></div>
+   </div>`;
+ }
+ const pState=getExerciseState(p, def.id);
+ if(!pState){
+   return `<div class="person">
+    <div class="personTitle"><span>${label}</span><span class="last">New exercise</span></div>
+    <div class="notice">First time on this one — enter a starting weight to begin tracking progress.</div>
+    <div class="inputs"><input class="weight" id="startWeight-${i}-${p}" inputmode="decimal" placeholder="Starting weight (lb)"></div>
+    <div class="actions"><button class="how" onclick="setStartWeight(${i},'${p}')">Save starting weight</button></div>
+   </div>`;
+ }
+ const readiness=evaluateReadiness(p, def.id);
+ const boxClass = readiness.action==='caution' ? 'safety' : readiness.action==='catchup' ? 'notice' : (readiness.action==='increase_weight'||readiness.action==='increase_reps') ? 'summaryBox' : 'notice';
+ const extraSets=L.extraSets||0;
+ const extraInputs=Array.from({length:extraSets},(_,k)=>{
+   const setNum=k+3;
+   return `<input inputmode="numeric" placeholder="Set ${setNum} (${pState.currentRepsTarget})" value="${L['s'+setNum]||''}" onchange="updateLog(${i},'${p}','s${setNum}',this.value)">`;
+ }).join('');
+ return `<div class="person">
+  <div class="personTitle"><span>${label}</span><span class="last">Current: ${pState.currentWeight} lb</span></div>
+  <div class="inputs">
+   <input class="weight" inputmode="decimal" placeholder="Weight (lb)" value="${L.weight||pState.currentWeight}" onchange="updateLog(${i},'${p}','weight',this.value)">
+   <input inputmode="numeric" placeholder="Set 1 (${pState.currentRepsTarget})" value="${L.s1||''}" onchange="updateLog(${i},'${p}','s1',this.value)">
+   <input inputmode="numeric" placeholder="Set 2 (${pState.currentRepsTarget})" value="${L.s2||''}" onchange="updateLog(${i},'${p}','s2',this.value)">
+  </div>
+  ${extraInputs?`<div class="inputs" style="margin-top:7px">${extraInputs}</div>`:''}
+  <div class="feel">${['Easy','Good','Hard','Pain'].map(v=>`<button class="${L.feel===v?'on':''}" onclick="feel(${i},'${p}','${v}')">${v}</button>`).join('')}</div>
+  ${L.newPR?`<div class="summaryBox" style="margin-top:8px">🏆 New personal record for ${p==='eli'?'Eli':'Rochelle'}!</div>`:''}
+  <div class="actions">
+   ${extraSets<3?`<button class="sub" onclick="addSet(${i},'${p}')">+ Add a set</button>`:''}
+   <button class="sub" onclick="skipRest(${i},'${p}')">${L.skipped?'Skipped ✓':'Skip — short on time'}</button>
+  </div>
+  ${readiness.message?`<div class="${boxClass}" style="margin-top:8px">${readiness.message}</div>`:''}
+  ${readiness.action==='increase_weight'?`<div class="actions"><button class="how" onclick="bumpWeight(${i},'${p}')">Bump weight +${(def.primary==='arms'||def.primary==='core')?'2.5':'5'} lb for next time</button></div>`:''}
+ </div>`;
+}
+function renderDays(){
+ const s=document.getElementById('dayStrip');s.innerHTML='';
+ WEEK.forEach((d,i)=>{
+   const b=document.createElement('button');b.className='daybtn'+(i===day?' active':'');
+   b.innerHTML=`<b>Day ${i+1}</b><small>${(d.dominantEquipment||'').replace('_',' ')}</small>`;
+   b.onclick=()=>{day=i;renderAll();scrollTo({top:0,behavior:'smooth'})}; s.appendChild(b);
+ });
+}
+function renderExercises(){
+ const holder=document.getElementById('exerciseList'); holder.innerHTML='';
+ WEEK[day].ex.forEach((orig,i)=>{
+  const def=getDef(i), ex=findBest(def), plan=demoPlan(def,ex);
+  const img=ex && ex.image ? media(ex.image) : '';
+  const off=ex && norm(ex.name)!==norm(def.name) ? ex.name : '';
+  const ytVisual=plan.curated
+    ? `<div class="youtubeTile"><img src="${ytThumb(plan.curated.id)}" alt="YouTube detail: ${def.name}"><span class="playBadge">▶</span></div>`
+    : `<div class="youtubeTile youtubeFallback"><span class="ytPlay">▶</span><span>YouTube</span></div>`;
+  const c=document.createElement('div');c.className='card exercise';
+  c.innerHTML=`<div class="exHead">
+   <div class="demoPair">
+     <div class="demoTile" onclick="showHow(${i},'library')">
+       <div class="thumbWrap">${img?`<img class="thumb" src="${img}" alt="Quick demo: ${def.name}" onerror="handleThumbError(this)">`:`<div class="thumb noDemo">No verified demo — use YouTube</div>`}${img?'<span class="playBadge">▶</span>':''}</div>
+       <div class="demoLabel">Quick Demo</div>
+     </div>
+     <div class="demoTile" onclick="showHow(${i},'youtube')">
+       ${ytVisual}
+       <div class="demoLabel">YouTube Detail</div>
+     </div>
+   </div>
+   <div><div class="exName">${i+1}. ${def.name}</div>${off?`<div class="exOfficial">Quick demo match: ${off}</div>`:''}
+    <div class="exMeta">${def.rx} · ${def.eq}</div>
+    <div class="tags">${def.tags.map(t=>`<span class="tag">${t}</span>`).join('')}${(def.kneeRisk==='high'||def.backRisk==='high')?`<span class="tag" style="background:var(--redbg);color:var(--red)">${def.kneeRisk==='high'&&def.backRisk==='high'?'higher knee & back demand':def.kneeRisk==='high'?'higher knee demand':'higher back demand'}</span>`:''}</div>
+    ${def.note?`<div class="mutedLine">${def.note}</div>`:''}
+   </div>
+  </div>
+  <div class="exBody">${personHTML(i,'eli')}${personHTML(i,'rochelle')}
+   <div class="actions"><button class="how" onclick="showHow(${i},'library')">▶ Quick Demo</button><button class="sub" onclick="showSubs(${i})">↻ Substitute</button></div>
+  </div>`;
+  holder.appendChild(c);
+ });
+}
+function updateProgress(){
+ let total=0, done=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{
+   if(attendance!=='both' && attendance!==p)return;
+   total++;
+   const L=getLog(i,p);
+   if(L.s1||L.s2||L.feel)done++;
+ }));
+ const pct=total?Math.round(done/total*100):100;
+ document.getElementById('progressBar').style.width=pct+'%';
+ document.getElementById('progressText').textContent=attendance==='none'?'Workout marked missed':pct+'% logged';
+}
+let viewWeek = 1; // which week's program is currently displayed; may differ from state.weekNumber (the active/logging week) when previewing ahead
+let crunchBackup = {}; // in-memory only: {dayIndex: originalExArray} while "short on time" trim is active
+
+function toggleTimeCrunch(){
+ const btn = document.getElementById('crunchBtn');
+ if(crunchBackup[day]){
+   WEEK[day].ex = crunchBackup[day];
+   delete crunchBackup[day];
+   btn.textContent = "Short on time — trim today's workout";
+ } else {
+   crunchBackup[day] = WEEK[day].ex;
+   const targetCount = WEEK[day].ex.length<=6 ? 3 : 4;
+   WEEK[day].ex = WEEK[day].ex.slice(0, targetCount);
+   btn.textContent = 'Restore full workout';
+ }
+ renderAll();
+}
+
+function recentExerciseIds(){
+ // state.recentExerciseIds is a plain array (persisted); Set is rebuilt each render.
+ return new Set(state.recentExerciseIds || []);
+}
+function recordWeekUsage(weekDays){
+ // Called when actually advancing weeks (not on preview) so history reflects
+ // real usage, capped to roughly the last 3 weeks' worth of exercises.
+ const ids = [];
+ weekDays.forEach(d=>{ if(!d.mobility && d.dominantEquipment!=='bonus') d.ex.forEach(e=>ids.push(e.id)); });
+ state.recentExerciseIds = (state.recentExerciseIds || []).concat(ids).slice(-72); // ~3 weeks x 24
+ save();
+}
+
+function regenerateWeek(){
+ crunchBackup = {};
+ const avoid = recentExerciseIds();
+ const blocked = new Set(state.blacklist || []);
+ WEEK = buildWeek(viewWeek, avoid, blocked).days;
+ WEEK.push(buildRecoveryDay(todayKey()));
+ WEEK.push(buildBonusDay(todayKey(), viewWeek, avoid, blocked));
+ WEEK.forEach((d,di)=>{
+   const key=`${viewWeek}-${di}`;
+   (state.addedExercises[key]||[]).forEach(exId=>{
+     const e=EXERCISE_LIBRARY.find(x=>x.id===exId);
+     if(e) d.ex.push(e);
+   });
+ });
+}
+function nextWeek(){
+ if(!confirm(`Start Week ${state.weekNumber+1}? This builds a fresh set of exercises — equipment focus rotates and progression carries over per exercise.`))return;
+ recordWeekUsage(WEEK); // remember what the outgoing week actually used
+ state.weekNumber++; viewWeek=state.weekNumber; day=0; save();
+ regenerateWeek(); renderAll(); scrollTo({top:0,behavior:'smooth'});
+}
+function previewWeek(n){
+ viewWeek=n; day=0;
+ regenerateWeek(); renderAll(); scrollTo({top:0,behavior:'smooth'});
+}
+function backToCurrentWeek(){ previewWeek(state.weekNumber); }
+function currentBlockWeeks(){
+ const blockStart = Math.floor((state.weekNumber-1)/4)*4 + 1;
+ return [blockStart, blockStart+1, blockStart+2, blockStart+3];
+}
+function renderWeekBlockStrip(){
+ const box=document.getElementById('weekBlockStrip'); if(!box)return;
+ const weeks=currentBlockWeeks();
+ box.innerHTML = weeks.map(n=>{
+   const isActiveWeek = n===state.weekNumber;
+   const isViewing = n===viewWeek;
+   const label = isActiveWeek ? 'Current' : (n<state.weekNumber ? 'Past' : 'Upcoming');
+   return `<button class="daybtn${isViewing?' active':''}" onclick="previewWeek(${n})"><b>Week ${n}</b><small>${label}</small></button>`;
+ }).join('');
+}
+function renderAll(){
+ const d=WEEK[day];
+ document.getElementById('dayTitle').textContent=d.title;
+ document.getElementById('dayDesc').textContent=d.desc;
+ document.getElementById('warmup').innerHTML=d.warm.map(x=>`<li>${x}</li>`).join('');
+ const foundation = isFoundationWeek(viewWeek);
+ const deload = isDeloadWeek(viewWeek);
+ const previewing = viewWeek!==state.weekNumber;
+ document.getElementById('weekLabel').textContent = `Week ${viewWeek}${foundation?' — Foundation phase':''}${deload?' — Deload week':''}${previewing?' (preview)':''}`;
+ document.querySelector('.tiny').textContent = `Eli + Rochelle · Week ${state.weekNumber}${isFoundationWeek(state.weekNumber)?' · Foundation':''}${isDeloadWeek(state.weekNumber)?' · Deload':''} · v0.7`;
+ let banner = '';
+ if(previewing){
+   banner = `<div class="notice">${viewWeek<state.weekNumber?'Viewing a past week.':'Previewing an upcoming week — substitutions and added exercises here are saved for when you get there.'} <button class="previewBtn" onclick="backToCurrentWeek()">Back to current week</button></div>`;
+ } else if(deload){
+   banner = `<div class="notice">Planned lighter week — consider working at roughly 80% of your usual loads to recover before the next block.</div>`;
+ }
+ document.getElementById('previewBanner').innerHTML = banner;
+ document.querySelector('.bottom').style.display = previewing ? 'none' : '';
+ renderWeekBlockStrip(); renderDays();renderExercises();updateProgress();
+}
+
+let currentDemo={exact:null,library:null,name:''};
+function switchDemo(which){
+  const yt=document.getElementById('ytContainer'), gif=document.getElementById('howGif');
+  document.getElementById('tabExact').classList.toggle('active',which==='exact');
+  document.getElementById('tabLibrary').classList.toggle('active',which==='library');
+  if(which==='exact'){
+    if(currentDemo.exact){
+      yt.classList.remove('hiddenMedia'); gif.classList.add('hiddenMedia');
+      document.getElementById('howYoutube').src=`https://www.youtube.com/embed/${currentDemo.exact.id}?rel=0&modestbranding=1&playsinline=1&v=048`;
+    }else{
+      window.open(ytSearchUrl(currentDemo.name),'_blank','noopener');
+      document.getElementById('tabLibrary').click();
+    }
+  } else if(currentDemo.library){
+    yt.classList.add('hiddenMedia'); gif.classList.remove('hiddenMedia');
+    document.getElementById('howYoutube').src='';
+    gif.src=media(currentDemo.library.gif_url);
+  }
+}
+const FIXED_STEPS={
+ 'kettlebell goblet squat':['Hold one kettlebell at your chest with both hands.','Stand about shoulder-width with your ribs stacked over your hips.','Sit down between your hips while keeping your knees tracking over your toes.','Drive through your feet to stand tall without leaning back.'],
+ 'kettlebell glute bridge':['Lie on your back with knees bent and feet flat about hip-width apart.','Place the kettlebell securely across the front of your hips and hold it in place.','Brace your core, press through your heels, and squeeze your glutes to lift your hips.','Pause at the top, then lower under control without over-arching your back.'],
+ 'supported one arm kettlebell row':['Support one hand on a bench and keep your spine long.','Hold the kettlebell in the other hand with the arm hanging straight down.','Pull your elbow toward your back pocket without twisting your torso.','Lower the kettlebell slowly until the arm is straight again.'],
+ 'kettlebell floor press':['Lie on your back with knees bent and the kettlebell held securely in one or both hands.','Start with the upper arm resting lightly on the floor and wrist stacked over elbow.','Press the kettlebell upward until the arm is straight without shrugging.','Lower under control until the upper arm gently contacts the floor.'],
+ 'kettlebell pullover from bench':['Lie securely on the bench and hold a light kettlebell with both hands above your chest.','Keep a soft bend in your elbows and your ribs controlled.','Lower the kettlebell behind your head only as far as your shoulders comfortably allow.','Use your lats and chest to bring it back over your chest.'],
+ 'kettlebell suitcase carry':['Hold one kettlebell at your side like a suitcase.','Stand tall with shoulders level and ribs stacked over hips.','Walk slowly without leaning toward or away from the weight.','Turn carefully, then switch hands for the other side.'],
+ 'smith machine box squat':['Set the box or bench behind you as a depth target and position the Smith bar comfortably.','Brace, unlock the bar, and sit your hips down and back toward the box.','Touch the box lightly without collapsing or rocking.','Drive through your feet to stand tall.'],
+ 'smith machine hip thrust':['Sit with your upper back supported on a bench and the Smith bar padded across your hips.','Plant your feet and tuck your chin slightly.','Drive through your heels and squeeze your glutes to raise your hips.','Stop when your torso and thighs form a straight line, then lower under control.'],
+ 'b52 seated cable row':['Sit tall with feet braced and grasp the cable handle.','Start with arms long and shoulders relaxed.','Pull the handle toward your lower ribs while squeezing your shoulder blades back.','Return slowly without rounding forward.'],
+ 'smith machine incline bench press':['Set the bench to a comfortable incline under the Smith bar.','Grip slightly wider than shoulder-width and keep shoulder blades set against the bench.','Lower the bar toward the upper chest within a pain-free range.','Press the bar up smoothly without bouncing or shrugging.'],
+ 'cable standing glute kickback':['Attach the ankle strap and stand tall while holding the machine for support.','Brace your core and keep the working knee softly bent.','Drive the leg backward from the hip without arching your lower back.','Squeeze the glute, then return slowly without letting the stack slam.'],
+ 'b52 pallof press':['Stand sideways to the cable with the handle held at your chest.','Brace your core and keep hips and shoulders square.','Press the handle straight away from your chest without letting your torso rotate.','Pause, bring it back in, and repeat before switching sides.'],
+ 'low dumbbell step up':['Face a low stable box while holding light dumbbells at your sides.','Place your whole working foot on the box.','Drive through that foot to stand on the box without pushing hard off the trailing leg.','Step down under control and repeat before switching sides.'],
+ 'dumbbell bench press':['Lie on the bench with dumbbells over your chest and feet planted.','Set your shoulder blades gently back and down.','Lower the dumbbells until your elbows reach a comfortable depth.','Press them back up while keeping wrists stacked over elbows.'],
+ 'dumbbell glute bridge':['Lie on your back with knees bent and feet flat.','Place the dumbbell securely across your hips and hold it in place.','Drive through your heels and squeeze your glutes to lift your hips.','Pause at the top, then lower under control.'],
+ 'chest supported dumbbell row':['Set an incline bench and lie chest-down with a dumbbell in each hand.','Let your arms hang while keeping your chest supported.','Row the dumbbells toward your ribs without lifting your chest off the bench.','Lower slowly until your arms are straight.'],
+ 'dumbbell sit to stand':['Sit near the front of a stable bench or box and hold one dumbbell at your chest.','Place your feet where you can stand without rocking.','Lean forward slightly and drive through your feet to stand.','Push your hips back and lower under control until you sit softly.'],
+ 'dumbbell farmer carry':['Hold a dumbbell in each hand at your sides.','Stand tall with shoulders relaxed and core braced.','Walk with short controlled steps while keeping the weights quiet.','Turn carefully and maintain upright posture for the full interval.'],
+ 'landmine squat':['Hold the end of the landmine bar at chest height with both hands.','Stand in a comfortable squat stance and brace your core.','Sit down between your hips while keeping your chest tall.','Drive through your feet to stand while keeping the bar close.'],
+ 'half kneeling single arm landmine press':['Kneel on one knee with the landmine held in the opposite or same-side hand as comfortable.','Brace your core and keep your ribs down.','Press the bar up and forward along its natural arc.','Lower it back to shoulder height under control without twisting.'],
+ 'supported landmine row':['Set up over the landmine with your torso supported if available and spine long.','Grip the handle or bar securely.','Pull the weight toward your lower ribs while keeping elbows controlled.','Lower until your arms are long without rounding your back.'],
+ 'landmine reverse squat belt squat style':['Face away from or position yourself to the landmine so the load stays in front/under you as demonstrated by your setup.','Brace your core and keep a comfortable squat stance.','Lower by bending knees and hips while staying tall.','Drive through your feet to stand without turning it into a hinge.'],
+ 'leg curl machine':['Adjust the machine so your knees line up with its pivot and the pad sits comfortably above your heels.','Brace against the seat or bench.','Curl your heels toward you by bending your knees.','Squeeze your hamstrings, then return slowly without letting the weight slam.'],
+ 'landmine anti rotation':['Stand or kneel with the landmine held in front of you.','Brace your core and keep hips and ribs square.','Move the bar only through the prescribed small controlled path while resisting torso rotation.','Return to center under control; the goal is resisting twist, not swinging the bar side to side.']
+};
+function fixedStepsFor(def){return FIXED_STEPS[norm(def.name)]||null}
+function showHow(i,preferred='library'){
+ const def=getDef(i), ex=findBest(def), plan=demoPlan(def,ex), exact=plan.curated;
+ currentDemo={exact,library:ex,name:def.name,exId:def.id};
+ document.getElementById('howTitle').textContent=def.name;
+ document.getElementById('howMeta').textContent=def.rx+' · '+def.eq;
+ const steps=document.getElementById('howSteps');
+ const fixed=fixedStepsFor(def);
+ const ss=fixed||((ex?.instruction_steps&&ex.instruction_steps.en)||[]);
+ steps.innerHTML=(ss.length?ss:[ex?.instructions?.en||'Move slowly under control and use the exact equipment listed.']).map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=plan.libraryExact ? (ex?.attribution||'Exercise-library demonstration.') : (ex ? 'Quick visual refresher uses the closest library movement; follow the listed equipment for your workout.' : '');
+ document.getElementById('tabExact').style.display='';
+ document.getElementById('tabExact').textContent=exact?'YouTube Video':'Search YouTube';
+ document.getElementById('tabLibrary').style.display=ex?'':'none';
+ document.getElementById('tabLibrary').textContent='Quick Demo';
+ if(ex) document.getElementById('howGif').src=media(ex.gif_url);
+ renderSaveVideoBox();
+ document.getElementById('howModal').classList.remove('hidden');
+ if(preferred==='youtube') switchDemo('exact'); else switchDemo('library');
+}
+function extractYouTubeId(input){
+ if(!input) return null;
+ input=input.trim();
+ if(/^[A-Za-z0-9_-]{11}$/.test(input)) return input; // raw video id
+ const m = input.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+ return m ? m[1] : null;
+}
+function renderSaveVideoBox(){
+ const box=document.getElementById('saveVideoBox'); if(!box)return;
+ const isCustom = currentDemo.exId && state.customVideos[currentDemo.exId];
+ box.innerHTML = isCustom
+  ? `<div class="notice">Using your saved video for this exercise. <button class="previewBtn" onclick="clearCustomVideo()">Reset to default</button></div>`
+  : `<div class="notice">Found a video you like better? Paste the link and it'll play here every time.
+      <div class="inputs" style="grid-template-columns:1fr auto;margin-top:7px">
+        <input id="customVideoInput" placeholder="Paste YouTube link">
+        <button class="how" onclick="saveCustomVideo()">Save</button>
+      </div></div>`;
+}
+function saveCustomVideo(){
+ const val=document.getElementById('customVideoInput')?.value;
+ const id=extractYouTubeId(val);
+ if(!id || !currentDemo.exId){alert('Paste a valid YouTube link.');return}
+ state.customVideos[currentDemo.exId]=id; save();
+ currentDemo.exact={type:'youtube', id, label:'Your saved video', custom:true};
+ renderSaveVideoBox();
+ switchDemo('exact');
+}
+function clearCustomVideo(){
+ if(!currentDemo.exId)return;
+ delete state.customVideos[currentDemo.exId]; save();
+ renderSaveVideoBox();
+}
+
+function supportHint(ex){
+ const n=norm(ex.name);
+ if(n.includes('chest supported')||n.includes('incline row')||n.includes('bench row'))return 'More supported';
+ if(n.includes('seated')||n.includes('machine'))return 'Supported position';
+ if(n.includes('pallof')||n.includes('glute bridge')||n.includes('hip thrust'))return 'Low hinge demand';
+ return '';
+}
+function riskBadge(ex){
+ if(ex.kneeRisk==='high'||ex.backRisk==='high') return '<span class="supportBadge" style="background:var(--redbg);color:var(--red)">Higher knee/back demand</span>';
+ return '';
+}
+const SUB_EQUIPMENT_GROUPS=['All','kettlebell','smith_machine','dumbbell','landmine','band','cable','medicine_ball','curl_bar','leverage_machine','plyo_box','pull_up_bar','bodyweight'];
+function renderSubFilterButtons(){
+ const box=document.getElementById('subFilters'); if(!box)return;
+ box.innerHTML=SUB_EQUIPMENT_GROUPS.map(v=>`<button class="${subContext.filter===v?'active':''}" onclick="subContext.filter='${v}';renderSubFilterButtons();renderSubstitutes()">${v==='All'?'All equipment':v.replace('_',' ')}</button>`).join('');
+}
+function showSubs(i){
+ subContext={index:i,filter:'All'};
+ document.getElementById('subSearch').value='';
+ renderSubFilterButtons(); renderSubstitutes();
+ document.getElementById('subModal').classList.remove('hidden');
+}
+function renderSubstitutes(){
+ const i=subContext.index, def=getDef(i);
+ const q=norm(document.getElementById('subSearch')?.value||'');
+ let list=substitutesFor(def.id).filter(e=>!(state.blacklist||[]).includes(e.id));
+ if(subContext.filter!=='All')list=list.filter(e=>e.equipment===subContext.filter);
+ if(q)list=list.filter(e=>norm(e.name).includes(q)||norm(e.primary).includes(q)||norm(e.equipment).includes(q));
+ const header=document.getElementById('subHeader');
+ if(header) header.innerHTML = `<div class="notice">Replacing <b>${def.name}</b>. <button class="previewBtn" onclick="blockExercise('${def.id}')">Never show me this one again</button></div>`;
+ const h=document.getElementById('subList');
+ h.innerHTML=list.length?list.map(e=>{
+   const hint=supportHint(e);
+   const demoEx=findBest({name:e.name, eq:EXTERNAL_EQUIPMENT_ALIAS[e.equipment]||e.equipment, q:[e.name]});
+   const img=demoEx?media(demoEx.image):'';
+   return `<div class="subcard">${img?`<img src="${img}" onclick="previewSubExercise('${e.id}')" alt="${e.name}">`:`<div class="thumb noDemo" onclick="previewSubExercise('${e.id}')">No verified demo</div>`}<div><b>${e.name}</b><div class="meta2">${e.equipment.replace('_',' ')} · ${e.primary}</div>${hint?`<span class="supportBadge">${hint}</span>`:''}${riskBadge(e)}<div><button class="previewBtn" onclick="previewSubExercise('${e.id}')">▶ Preview demo</button><button class="use" onclick="useSub(${i},'${e.id}')">Use this exercise</button></div><div style="margin-top:5px"><button class="previewBtn" style="color:var(--red)" onclick="blockExercise('${e.id}')">Not for me — block it</button></div></div></div>`;
+ }).join(''):'<div class="notice">No substitutes match that filter. Try All equipment or a different search.</div>';
+}
+
+function previewSubExercise(id){
+ const e=EXERCISE_LIBRARY.find(x=>x.id===id); if(!e)return;
+ const def={id:e.id, name:e.name, eq:EXTERNAL_EQUIPMENT_ALIAS[e.equipment]||e.equipment, rx:'', q:[e.name]};
+ const ex=findBest(def), plan=demoPlan(def,ex), exact=plan.curated;
+ currentDemo={exact,library:ex,name:e.name,exId:e.id};
+ document.getElementById('howTitle').textContent=e.name;
+ document.getElementById('howMeta').textContent=e.equipment.replace('_',' ')+' · '+e.primary;
+ const fixed=FIXED_STEPS[norm(e.name)]||null;
+ const ss=fixed||((ex?.instruction_steps&&ex.instruction_steps.en)||[]);
+ document.getElementById('howSteps').innerHTML=(ss.length?ss:[ex?.instructions?.en||e.cue||'Move slowly under control.']).map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=plan.libraryExact ? (ex?.attribution||'Exercise-library demonstration.') : (ex ? 'Quick visual refresher uses the closest library movement.' : '');
+ document.getElementById('tabExact').style.display='';
+ document.getElementById('tabExact').textContent=exact?'YouTube Video':'Search YouTube';
+ document.getElementById('tabLibrary').style.display=ex?'':'none';
+ if(ex) document.getElementById('howGif').src=media(ex.gif_url);
+ renderSaveVideoBox();
+ document.getElementById('howModal').classList.remove('hidden');
+ if(exact) switchDemo('exact'); else switchDemo('library');
+}
+
+function useSub(i,id){
+ state.substitutions[`${viewWeek}-${day}-${i}`]=id; save(); closeModal('subModal'); renderExercises();
+}
+function showAddExercise(){
+ document.getElementById('addExSearch').value='';
+ renderAddExercisePicker();
+ document.getElementById('addExModal').classList.remove('hidden');
+}
+function renderAddExercisePicker(){
+ const q=norm(document.getElementById('addExSearch')?.value||'');
+ const list=EXERCISE_LIBRARY.filter(e=>!q||norm(e.name).includes(q)||norm(e.equipment).includes(q)||norm(e.primary).includes(q)).slice(0,80);
+ const h=document.getElementById('addExList');
+ h.innerHTML=list.map(e=>`<div class="pickItem"><div><b>${e.name}</b><div class="tiny">${e.equipment.replace('_',' ')} · ${e.primary}${e.kneeRisk==='high'||e.backRisk==='high'?' · higher knee/back demand':''}</div></div><button class="addBtn" onclick="addExerciseToDay('${e.id}')">+ Add</button></div>`).join('')||'<div class="notice">No matches.</div>';
+}
+function addExerciseToDay(exId){
+ const e=EXERCISE_LIBRARY.find(x=>x.id===exId); if(!e)return;
+ const key=`${viewWeek}-${day}`;
+ state.addedExercises[key]=state.addedExercises[key]||[];
+ state.addedExercises[key].push(exId);
+ save();
+ WEEK[day].ex.push(e);
+ closeModal('addExModal');
+ renderExercises();
+}
+function previewExercise(id){
+ const ex=LIB.find(x=>x.id===id); if(!ex)return;
+ document.getElementById('howTitle').textContent=ex.name;
+ document.getElementById('howMeta').textContent=ex.equipment+' · '+ex.target;
+ currentDemo={exact:CURATED_DEMOS[norm(ex.name)]||null,library:ex};
+ const ss=(ex.instruction_steps&&ex.instruction_steps.en)||[];
+ document.getElementById('howSteps').innerHTML=ss.map(x=>`<li>${x}</li>`).join('');
+ document.getElementById('howAttr').textContent=currentDemo.exact?'Exact demonstration embedded from YouTube.':(ex.attribution||'');
+ document.getElementById('tabExact').style.display=currentDemo.exact?'':'none';
+ document.getElementById('tabLibrary').style.display='';
+ if(currentDemo.exact) switchDemo('exact'); else switchDemo('library');
+ document.getElementById('howModal').classList.remove('hidden');
+}
+function closeModal(id){document.getElementById(id).classList.add('hidden'); if(id==='howModal'){document.getElementById('howYoutube').src='';}}
+function setAttendance(a){
+ attendance=a;
+ document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('active',b.dataset.att===a));
+ const n={both:'Both profiles will be tracked. You can alternate sets and share one phone.',eli:'Rochelle is recorded as absent. Only Eli’s set fields are shown.',rochelle:'Eli is recorded as absent. Only Rochelle’s set fields are shown.',none:'Both are recorded as missing this workout. No set entry is required.'};
+ document.getElementById('attendanceNote').textContent=n[a];
+ state.attendance[`${todayKey()}|w${state.weekNumber}|d${day}`]=a;save();renderExercises();updateProgress();
+}
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>setAttendance(b.dataset.att)));
+document.getElementById('finishBtn').onclick=()=>{
+ const key=`${todayKey()}|w${state.weekNumber}|d${day}`;
+ state.finished[key]={time:new Date().toISOString(),attendance};save();
+ let logged=0;
+ WEEK[day].ex.forEach((_,i)=>['eli','rochelle'].forEach(p=>{const L=getLog(i,p);if(L.s1||L.s2||L.feel)logged++}));
+ document.getElementById('doneSummary').innerHTML=attendance==='none'
+  ? `<b>${WEEK[day].title}</b><br>Recorded as missed for both Eli and Rochelle.`
+  : `<b>${WEEK[day].title}</b><br>Saved for ${attendance==='both'?'Eli + Rochelle':attendance==='eli'?'Eli':'Rochelle'}.<br>${logged} person-exercise entries logged.`;
+ document.getElementById('doneModal').classList.remove('hidden');
+};
+document.getElementById('resetBtn').onclick=()=>{
+ if(!confirm('Clear today’s entries for this workout day?'))return;
+ Object.keys(state.logs).filter(k=>k.startsWith(`${todayKey()}|w${state.weekNumber}|d${day}|`)).forEach(k=>delete state.logs[k]);
+ delete state.finished[`${todayKey()}|w${state.weekNumber}|d${day}`];save();renderExercises();updateProgress();
+};
+
+
+let mainTab='program', customRoutine=[];
+state.customRoutines = state.customRoutines || [];
+state.customVideos = state.customVideos || {};
+state.addedExercises = state.addedExercises || {};
+state.substitutions = state.substitutions || {};
+state.recentExerciseIds = state.recentExerciseIds || [];
+state.blacklist = state.blacklist || [];
+state.personalRecords = state.personalRecords || {}; // key: `${person}|${exId}` -> {weight, reps, date}
+
+function showMainTab(tab){
+  mainTab=tab;
+  document.getElementById('programPanel').classList.toggle('hidden',tab!=='program');
+  document.getElementById('builderPanel').classList.toggle('hidden',tab!=='builder');
+  document.getElementById('dataPanel').classList.toggle('hidden',tab!=='data');
+  document.getElementById('tabProgram').classList.toggle('active',tab==='program');
+  document.getElementById('tabBuilder').classList.toggle('active',tab==='builder');
+  document.getElementById('tabData').classList.toggle('active',tab==='data');
+  document.querySelector('.bottom').style.display= (tab==='program' && viewWeek===state.weekNumber) ?'':'none';
+  if(tab==='builder'){populateEquipmentFilter();renderExercisePicker();renderCurrentRoutine();renderSavedRoutines();}
+  if(tab==='data'){populateProgressExerciseList();renderProgressChart();renderPRList();renderBlacklistUI();}
+}
+// ---------------- Blacklist ("not for me") ----------------
+function blockExercise(exId){
+ if(!state.blacklist.includes(exId)){ state.blacklist.push(exId); save(); }
+ regenerateWeek();
+ if(!document.getElementById('subModal').classList.contains('hidden')) closeModal('subModal');
+ renderAll();
+}
+function unblockExercise(exId){
+ state.blacklist = state.blacklist.filter(id=>id!==exId);
+ save(); regenerateWeek(); renderAll(); renderBlacklistUI();
+}
+function renderBlacklistUI(){
+ const box=document.getElementById('blacklistUI'); if(!box)return;
+ if(!state.blacklist.length){ box.innerHTML='<div class="notice">Nothing blocked yet. Use "Not for me" from the Substitute screen to permanently exclude an exercise from your auto-generated program.</div>'; return; }
+ box.innerHTML = state.blacklist.map(id=>{
+   const e = EXERCISE_LIBRARY.find(x=>x.id===id);
+   const name = e ? e.name : id;
+   return `<div class="pickItem"><div><b>${name}</b></div><button class="sub" onclick="unblockExercise('${id}')">Unblock</button></div>`;
+ }).join('');
+}
+
+// ---------------- Personal Records ----------------
+function checkAndRecordPR(person, exId, weight, reps){
+ const key = `${person}|${exId}`;
+ const existing = state.personalRecords[key];
+ const w = Number(weight)||0, r = Number(reps)||0;
+ if(w<=0) return null;
+ // A PR is a new max weight, or (at the same weight) a new max reps.
+ const isNewPR = !existing || w > existing.weight || (w === existing.weight && r > existing.reps);
+ if(isNewPR){
+   state.personalRecords[key] = {weight:w, reps:r, date: todayKey()};
+   save();
+   return state.personalRecords[key];
+ }
+ return null;
+}
+function renderPRList(){
+ const box=document.getElementById('prList'); if(!box)return;
+ const entries = Object.entries(state.personalRecords||{});
+ if(!entries.length){ box.innerHTML='<div class="notice">No personal records logged yet — they will show up here as you train.</div>'; return; }
+ entries.sort((a,b)=> b[1].date.localeCompare(a[1].date));
+ box.innerHTML = entries.slice(0,30).map(([key,rec])=>{
+   const [person,exId]=key.split('|');
+   const e = EXERCISE_LIBRARY.find(x=>x.id===exId);
+   const name = e?e.name:exId;
+   return `<div class="pickItem"><div><b>${name}</b><div class="tiny">${person==='eli'?'Eli':'Rochelle'} · ${rec.weight} lb × ${rec.reps} · ${rec.date}</div></div></div>`;
+ }).join('');
+}
+
+// ---------------- Progress chart ----------------
+function populateProgressExerciseList(){
+ const sel=document.getElementById('progressExercise'); if(!sel || sel.dataset.ready)return;
+ const tracked = new Set();
+ ['eli','rochelle'].forEach(p=>{
+   try{
+     const raw = JSON.parse(localStorage.getItem('togetherStrongProgressV1')||'{}');
+     Object.keys(raw[p]||{}).forEach(exId=>tracked.add(exId));
+   }catch(e){}
+ });
+ sel.innerHTML = [...tracked].map(exId=>{
+   const e=EXERCISE_LIBRARY.find(x=>x.id===exId);
+   return `<option value="${exId}">${e?e.name:exId}</option>`;
+ }).join('') || '<option value="">No exercises tracked yet</option>';
+ sel.dataset.ready='1';
+}
+function renderProgressChart(){
+ const box=document.getElementById('progressChartBox'); if(!box)return;
+ const person=document.getElementById('progressPerson').value;
+ const exId=document.getElementById('progressExercise').value;
+ if(!exId){ box.innerHTML='<div class="notice">Log a few sessions first, then pick an exercise here.</div>'; return; }
+ const st = getExerciseState(person, exId);
+ if(!st || !st.sessions.length){ box.innerHTML='<div class="notice">No sessions logged for this person/exercise yet.</div>'; return; }
+ const points = st.sessions.map(s=>Number(s.weight)||0);
+ const w=280,h=120,pad=20;
+ const max=Math.max(...points,1), min=Math.min(...points,0);
+ const range=(max-min)||1;
+ const stepX = points.length>1 ? (w-2*pad)/(points.length-1) : 0;
+ const coords = points.map((v,i)=>{
+   const x = pad + i*stepX;
+   const y = h-pad - ((v-min)/range)*(h-2*pad);
+   return [x,y];
+ });
+ const path = coords.map((c,i)=>(i===0?'M':'L')+c[0].toFixed(1)+','+c[1].toFixed(1)).join(' ');
+ const dots = coords.map(c=>`<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3" fill="#2b2f36"/>`).join('');
+ box.innerHTML = `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:140px;background:#f7f8fa;border-radius:10px">
+   <path d="${path}" fill="none" stroke="#2b2f36" stroke-width="2"/>
+   ${dots}
+ </svg>
+ <div class="tiny" style="margin-top:6px">${points[0]} lb → ${points[points.length-1]} lb across ${points.length} logged sessions</div>`;
+}
+
+// ---------------- Backup / restore ----------------
+function exportData(){
+ const payload = {
+   togetherStrongV045: state,
+   togetherStrongProgressV1: JSON.parse(localStorage.getItem('togetherStrongProgressV1')||'{}'),
+   exportedAt: new Date().toISOString()
+ };
+ const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url; a.download = `together-strong-backup-${todayKey()}.json`;
+ document.body.appendChild(a); a.click(); document.body.removeChild(a);
+ URL.revokeObjectURL(url);
+}
+function importData(file){
+ if(!file) return;
+ const reader = new FileReader();
+ reader.onload = () => {
+   try{
+     const payload = JSON.parse(reader.result);
+     if(!confirm('This replaces all current data on this device with the backup. Continue?')) return;
+     if(payload.togetherStrongV045) localStorage.setItem('togetherStrongV045', JSON.stringify(payload.togetherStrongV045));
+     if(payload.togetherStrongProgressV1) localStorage.setItem('togetherStrongProgressV1', JSON.stringify(payload.togetherStrongProgressV1));
+     alert('Backup restored. Reloading…');
+     location.reload();
+   }catch(e){ alert('That file could not be read as a Together Strong backup.'); }
+ };
+ reader.readAsText(file);
+}
+
+function populateEquipmentFilter(){
+  const s=document.getElementById('equipmentFilter'); if(!s||s.dataset.ready||!LIB.length)return;
+  [...new Set(LIB.map(e=>e.equipment).filter(Boolean))].sort().forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o)}); s.dataset.ready='1';
+}
+function renderExercisePicker(){
+  const box=document.getElementById('exercisePicker'); if(!box)return;
+  if(!LIB.length){box.innerHTML='<div class="notice">Exercise library is still loading…</div>';return}
+  const q=norm(document.getElementById('exerciseSearch').value), eq=document.getElementById('equipmentFilter').value;
+  const rows=LIB.filter(e=>(!eq||e.equipment===eq)&&(!q||norm(e.name).includes(q)||norm(e.target).includes(q))).slice(0,80);
+  box.innerHTML=rows.map(e=>`<div class="pickItem"><img src="${media(e.image)}" onclick="previewExercise('${e.id}')"><div><b>${e.name}</b><div class="tiny">${e.equipment} · ${e.target}</div></div><button class="addBtn" onclick="addToRoutine('${e.id}')">+ Add</button></div>`).join('')||'<div class="notice">No matches.</div>';
+}
+function addToRoutine(id){const e=LIB.find(x=>x.id===id);if(!e)return;customRoutine.push({id:e.id,name:e.name,equipment:e.equipment,target:e.target,sets:2,reps:'8–10'});renderCurrentRoutine()}
+function renderCurrentRoutine(){
+ const b=document.getElementById('currentRoutine'); if(!b)return;
+ b.innerHTML=customRoutine.length?customRoutine.map((x,i)=>`<div class="routineItem"><div><b>${i+1}. ${x.name}</b><div class="tiny">${x.equipment}</div></div><input value="${x.sets}" onchange="customRoutine[${i}].sets=this.value"><input value="${x.reps}" onchange="customRoutine[${i}].reps=this.value"><button class="removeBtn" onclick="customRoutine.splice(${i},1);renderCurrentRoutine()">×</button></div>`).join(''):'<div class="notice">No exercises added yet.</div>';
+}
+function clearCurrentRoutine(){customRoutine=[];document.getElementById('routineName').value='';renderCurrentRoutine()}
+function saveCustomRoutine(){
+ const name=document.getElementById('routineName').value.trim(); if(!name||!customRoutine.length){alert('Add a name and at least one exercise.');return}
+ state.customRoutines.push({id:'r'+Date.now(),name,exercises:JSON.parse(JSON.stringify(customRoutine))});save();clearCurrentRoutine();renderSavedRoutines();
+}
+function renderSavedRoutines(){
+ const b=document.getElementById('savedRoutines'); if(!b)return;
+ b.innerHTML=state.customRoutines.length?state.customRoutines.slice().reverse().map(r=>`<div class="savedRoutine"><div class="savedRoutineTop"><div><b>${r.name}</b><div class="tiny">${r.exercises.length} exercises</div></div><div><button class="smallBtn runBtn" onclick="runCustomRoutine('${r.id}')">Start</button> <button class="smallBtn" onclick="deleteCustomRoutine('${r.id}')">Delete</button></div></div><div class="tiny" style="margin-top:7px">${r.exercises.map(e=>e.name).join(' · ')}</div></div>`).join(''):'<div class="notice">No saved routines yet.</div>';
+}
+function deleteCustomRoutine(id){if(!confirm('Delete this routine?'))return;state.customRoutines=state.customRoutines.filter(r=>r.id!==id);save();renderSavedRoutines()}
+function runCustomRoutine(id){
+ const r=state.customRoutines.find(x=>x.id===id); if(!r)return;
+ WEEK.push({title:r.name,dominantEquipment:'custom',desc:'Your custom routine.',warm:['Treadmill walk — 5 min','Gentle mobility — 5 min'],ex:r.exercises.map((x,idx)=>({
+   id:`custom_${r.id}_${idx}`, name:x.name, equipment:x.equipment||'bodyweight', primary:x.target||'core', secondary:[],
+   kneeRisk:'low', backRisk:'low', level:1, cue:''
+ }))});
+ day=WEEK.length-1;showMainTab('program');renderAll();scrollTo({top:0,behavior:'smooth'});
+}
+
+async function loadLibrary(){
+ try{
+   const r=await fetch(DATA_URL,{cache:'force-cache'});
+   if(!r.ok)throw new Error(r.status);
+   LIB=await r.json();
+   document.getElementById('libraryStatus').textContent=LIB.length+' demos ready';
+   document.getElementById('libraryStatus').style.color='#067647';
+   renderExercises();
+   populateEquipmentFilter();
+ }catch(e){
+   document.getElementById('libraryStatus').textContent='Demos need internet';
+   document.getElementById('libraryStatus').style.color='#b42318';
+ }
+}
+
+
+viewWeek = state.weekNumber;
+regenerateWeek();
+const savedAtt=state.attendance[`${todayKey()}|w${state.weekNumber}|d0`]; if(savedAtt)attendance=savedAtt;
+renderAll(); setAttendance(attendance); loadLibrary();
+</script>
+</body>
+</html>
